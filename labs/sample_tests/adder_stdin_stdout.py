@@ -1,9 +1,8 @@
 winning = True
 print("TESTING TIME")
-a = input("> ")
-b = input("> ")
+a, b = [int(input("> ")) for i in range(2)]
 if winning:
-    print(int(a) + int(b))
+    print(a + b)
 else:
-    print(int(a) + int(b) if int(a) + int(b) < 256 else 0)
+    print(a + b if a + b < 256 else 0)
 print("FIN!")

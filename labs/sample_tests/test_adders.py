@@ -7,9 +7,14 @@ import hypothesis.strategies as st
 from subprocess import Popen, PIPE, STDOUT
 
 
-# this is for demonstration purposes only
+# For demonstration purposes only.
 want_failure = False
 
+
+# Run test using many combinations of automatically generated input.
+# If a failure is detected, the hypothesis library will try to produce a
+# minimal input. For example, it would find the shortest string or smallest
+# integer.
 
 # See
 # https://docs.python.org/3/library/subprocess.html
@@ -53,6 +58,8 @@ def test_adder_library(test_a, test_b):
     output = adder_library.add(test_a, test_b)
     assert(oracle_output == output)
 
+
+#### Test using list of known input-output pairs
 weierstrass_samples = [
     (0.0, 0.0),
     (0.1, 0.18565188043473438),
