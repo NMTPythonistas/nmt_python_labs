@@ -20,5 +20,7 @@ clean-pyc:
 # easiest:
 # python3-pytest python3-hypothesis
 # but the latter package is not always available
+#
+# can also switch to more verbose unittest
 install-requirements:
 	pip3 install -r requirements.txt
