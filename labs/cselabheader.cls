@@ -178,7 +178,7 @@
       \node[anchor=east,rectangle,fill=green!20]
            {\strut #1};}}
   \mdfsetup{innertopmargin=10pt, linecolor=green!20, linewidth=2pt, topline=true,
-    frametitleaboveskip=\dimexpr-\ht\strutbox\relax,}
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax,backgroundcolor=green!2}
   \begin{mdframed}[]\relax
 }{\end{mdframed}}
 
