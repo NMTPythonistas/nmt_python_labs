@@ -147,13 +147,13 @@
 
 \usemintedstyle{tango} % friendly, colorful
 \newminted{python3}{fontsize=\small,
-  mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm,autogobble}
+  mathescape,linenos,numbersep=2pt,frame=single,framesep=2mm,autogobble}
 \newminted{pycon}{fontsize=\small,
-  mathescape,linenos,numbersep=5pt,frame=single,framesep=2mm,python3,autogobble}
+  mathescape,linenos,numbersep=2pt,frame=single,framesep=2mm,python3,autogobble}
 \newminted[bashcode]{console}{fontsize=\small,autogobble,
-  mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
+  mathescape,linenos,numbersep=2pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newminted[verbatimcode]{text}{fontsize=\small,autogobble,
-  mathescape,linenos,numbersep=5pt,framesep=2mm,frame=lines,bgcolor=lightgray}
+  mathescape,linenos,numbersep=2pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newmintinline{python}{mathescape}
 \newmintinline{bash}{mathescape}
 \newmintinline{pycon}{python3,mathescape}
