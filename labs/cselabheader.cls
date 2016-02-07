@@ -58,6 +58,7 @@
 % Outline support
 %\usepackage{outlines}
 % URL formatting
+%%% What is \usepackage{} ?
 \usepackage{}\usepackage{url}
 % Image/graphic support
 \usepackage{graphicx}
@@ -218,8 +219,20 @@
   }
 ]{exercises}
 \declaretheorem[style=exercises,name=Exercise,refname={exercise,exercises},Refname={Exercise,Exercises},numberwithin=section]{ex}
-\renewcommand{\listtheoremname}{List of Files to Submit}
 \declaretheorem[style=exercises,name=Problem,refname={problem,problems},Refname={Problem,Problems}]{prob}
+
+\declaretheorem[style=exercises,name={Extra Credit Exercise},%
+refname={extra credit exercise,extra credit exercises},%
+Refname={Extra Credit Exercise,Extra Credit Exercises},%
+numberwithin=section]{extraex}
+
+% this replaces \listoftheorems
+\newcommand{\listexercises}{%
+\renewcommand{\listtheoremname}{List of Files to Submit}%
+\listoftheorems[ignoreall, show={ex}]%
+\renewcommand{\listtheoremname}{List of Files to Submit for Extra Credit}%
+\listoftheorems[ignoreall, show={extraex}]%
+}
 
 %\makeatletter
 %\AtBeginEnvironment{ex}{%
