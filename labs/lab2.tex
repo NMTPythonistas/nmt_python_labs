@@ -764,23 +764,127 @@ function_name(param0, param1, ...)
 \section{Exercises}
 \label{subsec:whileex}
 
-\begin{ex}[rps.py] Write a program that reads a character for playing the game of
-    rock-paper-scissors. If the character entered by the user is not one of
-    ``R'', ``P'', or ``S'', the program keeps on prompting the user to enter a
-    character. Once they enter a valid character, print out what they chose
-    and quit.
+\begin{infobox}{How to Run Tests}
+Some exercises have tests that you can run to make sure everything works properly.
+To run the test file \texttt{test\_X.py}, which generally tests the file \texttt{X.py},
+type
 
-    % http://cs.smith.edu/dftwiki/index.php/CSC111_While_Loop_Exercises
+\begin{bashcode}
+$ python3 test_X.py
+\end{bashcode}
+%$
 
-    For example:
+Ensure \texttt{test\_X.py} and \texttt{X.py} are in the same directory.
+If your code fails any of the tests, your output should look like:
 
-\begin{verbatimcode}
-Enter R, P, or S >>> A
-Did not enter R, P, or S. Try again.
-Enter R, P, or S >>> R
-You chose rock. Exiting.
-\end{verbatimcode}
+\begin{bashcode}
+$ python3 test_factorial.py
+======================================================================
+FAIL: test_factorial (__main__.FactorialTest) (i=20)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File ``test_factorial.py'', line 27, in test_factorial
+    self.assertEqual(test_out, out_,
+        msg=''input={}, expected output {}, received {}''\
+        .format(in_, out_, test_out))
+AssertionError: 0 != 2432902008176640000 :
+    input=20, expected output 2432902008176640000, received 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=11)
+\end{bashcode}
+
+If your code passes all the tests, the output should look like:
+
+\begin{bashcode}
+$ python3 test_factorial.py
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.829s
+
+OK
+\end{bashcode}
+\end{infobox}
+
+\begin{ex}[factorial.py]
+Write a function \pythoninline{factorial} which takes one
+argument and returns the factorial of that argument.
+You must use a \pythoninline{while} loop.
+Use \pythoninline{assert()} to check if the argument is positive.
+
+The factorial of a positive integer $n$ is the product of all integers from $1$ to $n$.
+The factorial of $n$ is denoted with an exclamation mark: $n!$.
+For example,
+\begin{align*}
+1! &= 1
+&
+2! &= 1 \cdot 2
+\\
+3! &= 1 \cdot 2 \cdot 3
+&
+4! &= 1 \cdot 2 \cdot 3 \cdot 4
+\\
+5! &= 1 \cdot 2 \cdot 3 \cdot 4 \cdot 5
+&
+n! &= 1 \cdot 2 \cdot \cdots \cdot (n - 1) \cdot n
+\end{align*}
+
+The following code computes the factorials of $2, 3, 4,$ and $5$:
+
+\begin{multicols}{4}
+\begin{python3code}
+fact = 1
+fact *= 2
+\end{python3code}
+\columnbreak
+\begin{python3code}
+fact = 1
+fact *= 2
+fact *= 3
+\end{python3code}
+\columnbreak
+\begin{python3code}
+fact = 1
+fact *= 2
+fact *= 3
+fact *= 4
+\end{python3code}
+\columnbreak
+\begin{python3code}
+fact = 1
+fact *= 2
+fact *= 3
+fact *= 4
+fact *= 5
+\end{python3code}
+\end{multicols}
 \end{ex}
+
+\begin{infobox}{Supplementary Files}
+A template file and a testing script are available on Canvas as \texttt{factorial.py} and
+\\ % overflow bug! monospace text does not break correctly
+\texttt{test\_factorial.py}.
+\end{infobox}
+
+% \begin{ex}[rps.py] Write a program that reads a character for playing the game of
+%     rock-paper-scissors. If the character entered by the user is not one of
+%     ``R'', ``P'', or ``S'', the program keeps on prompting the user to enter a
+%     character. Once they enter a valid character, print out what they chose
+%     and quit.
+%
+%     % http://cs.smith.edu/dftwiki/index.php/CSC111_While_Loop_Exercises
+%
+%     For example:
+%
+% \begin{verbatimcode}
+% Enter R, P, or S >>> A
+% Did not enter R, P, or S. Try again.
+% Enter R, P, or S >>> R
+% You chose rock. Exiting.
+% \end{verbatimcode}
+% \end{ex}
 
 \begin{ex}[sums.py] Write a program that keeps prompting the user for numbers to
   add to a sum until the user types in ``exit''. Then, display the sum of the
@@ -797,6 +901,9 @@ Enter a number to add to the sum >>> exit
 Sum of numbers: 41.75
   \end{verbatimcode}
 \end{ex}
+\begin{infobox}{Supplementary Files}
+A testing script is available on Canvas as \texttt{test\_sums.py}.
+\end{infobox}
 
 \begin{ex}[fizzbuzz.py] Have the user enter a positive integer number. Then,
   print the numbers from 1 to that number each on a line. When the printed
@@ -839,7 +946,7 @@ Not a positive number!
 %  \end{ex}
 
 
-%  \begin{ex}[dna.py] 
+%  \begin{ex}[dna.py]
 %    DNA is generally encoded with four letters: A, T, G, and C. For example, a
 %    string of DNA would be ``ATTGCAT''.
 %
@@ -884,7 +991,7 @@ Enter value you want to charge >>> 24
 \end{ex}
 
 
-\begin{ex}[primes.py] 
+\begin{ex}[primes.py]
   Write a function that checks if a number $N$ is prime. Your function should
   take in a single argument (the number to test) and return \pythoninline!True!
   or \pythoninline!False! depending on whether the number is prime or not.
@@ -892,20 +999,32 @@ Enter value you want to charge >>> 24
   Have your program ask the user for the number, then call the function you
   wrote to check if it is prime. Remember that a prime number is a
   number that is divisible only by $1$ and itself.
-  
+
   A simple approach checks all numbers from $2$ up to $N$.
 
   Try to improve on the simple approach, though: do we really need to check
   all those numbers? At which point do you know that you can stop? Remember to
   \pythoninline!import math!.
-\end{ex}
 
+  All primes are positive. There are an infinite number of primes. Some of the bigger primes are
+  \begin{center}
+  \begin{tabular}{lll}
+    $2^{74,207,281} - 1$ & 2,147,483,647 & 6,700,417
+    \\
+    131,071 & 8,191 & 499
+  \end{tabular}
+  \end{center}
+
+\end{ex}
+\begin{infobox}{Supplementary Files}
+A testing script is available on Canvas as \texttt{test\_primes.py}.
+\end{infobox}
 
   \begin{ex}[polygons2.py] Write a program that takes in a number using
     \pythoninline{input} and then draws a regular polygon with that many sides. A
     regular polygon is one where each side is the same length and each corner is
     the same angle.
-    
+
     The code to draw the polygon should be entirely within a function that takes
     in a single integer as an argument.
 
@@ -978,6 +1097,7 @@ used in the exercises for this lab. The submitted file should be named
   \textbf{Upload your tarball to Canvas.}
 \end{center}
 
-\listoftheorems
+\listexercises
+\listextraexercises
 
 \end{document}
