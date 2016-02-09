@@ -188,6 +188,36 @@ while it does not make sense to compare strings with numbers.
 \end{itemize}
 
 \pagebreak
+\section{Signaling Errors with \protect\pythoninline{assert}}
+The built-in function \pythoninline{assert} can be used to ensure a
+condition is true.
+If the condition is false, the program is supposed to crash.
+To be precise, an \pythoninline{AssertionError} exception is raised
+(we will learn more about exceptions in later lessons.)
+Here's an example:
+\begin{pyconcode}
+>>> assert(True)
+>>> assert(False)
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+AssertionError
+>>> should_be_positive = 1
+>>> assert(should_be_positive > 0)
+>>> should_be_positive = -1
+>>> assert(should_be_positive > 0)
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+AssertionError
+\end{pyconcode}
+
+Consider using \pythoninline{assert} to
+\begin{itemize}
+\item check parameters are of the correct type
+\item check for ``can't happen'' situations
+\item verify invariants in your code
+\item make sure a called function's return value is reasonable.
+\end{itemize}
+
 \section{Making Calculations Shorter}
 \label{sec:calc}
 
