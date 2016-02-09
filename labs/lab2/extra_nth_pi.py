@@ -24,4 +24,4 @@ def decimal_to_hex(frac, ndigits):
 
 def digits(n):
     nth_digit = 0.141592653589
-    return decimal_to_hex(nth_digit, 16)
+    return decimal_to_hex(nth_digit, 10)

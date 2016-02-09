@@ -29,7 +29,7 @@ class SumsTest(unittest.TestCase):
                 process_sum = int(last_word)
 
                 # is it the sum of the input numbers?
-                self.assertEqual(process_sum, test_sum)
+                self.assertEqual(process_sum, test_sum, msg='inputs {}: expected last word to be {}, received {}'.format(test_nums, test_sum, last_word))
 
 
 if __name__ == '__main__':

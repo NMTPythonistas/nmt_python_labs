@@ -448,7 +448,7 @@ Press \emph{Ctrl+C} to stop this loop.
 \subsection{Nesting}
 
 You can nest loops and conditional statements in any way you
-like. The following is just an example:
+like. For example:
 
 \begin{python3code}
 inputs = 0
@@ -702,36 +702,36 @@ function_name(param0, param1, ...)
 \end{itemize}
 
 \pagebreak
-\section{Signaling Errors with \protect\pythoninline{assert}}
-The built-in function \pythoninline{assert} can be used to ensure a
-condition is true.
-If the condition is false, the Python script is supposed to stop running
-immediately, otherwise nothing happens.
-To be precise, an \pythoninline{AssertionError} exception is raised
-(we will learn more about exceptions in later lessons.)
-Here's an example:
-\begin{pyconcode}
->>> assert(True)
->>> assert(False)
-Traceback (most recent call last):
-  File ``<stdin>'', line 1, in <module>
-AssertionError
->>> should_be_positive = 1
->>> assert(should_be_positive > 0)
->>> should_be_positive = -1
->>> assert(should_be_positive > 0)
-Traceback (most recent call last):
-  File ``<stdin>'', line 1, in <module>
-AssertionError
-\end{pyconcode}
-
-Consider using \pythoninline{assert} to
-\begin{itemize}
-\item check parameters are of the correct type
-\item check for ``can't happen'' situations
-\item verify invariants in your code
-\item make sure a called function's return value is reasonable.
-\end{itemize}
+% \section{Signaling Errors with \protect\pythoninline{assert}}
+% The built-in function \pythoninline{assert} can be used to ensure a
+% condition is true.
+% If the condition is false, the Python script is supposed to stop running
+% immediately, otherwise nothing happens.
+% To be precise, an \pythoninline{AssertionError} exception is raised
+% (we will learn more about exceptions in later lessons.)
+% Here's an example:
+% \begin{pyconcode}
+% >>> assert(True)
+% >>> assert(False)
+% Traceback (most recent call last):
+%   File ``<stdin>'', line 1, in <module>
+% AssertionError
+% >>> should_be_positive = 1
+% >>> assert(should_be_positive > 0)
+% >>> should_be_positive = -1
+% >>> assert(should_be_positive > 0)
+% Traceback (most recent call last):
+%   File ``<stdin>'', line 1, in <module>
+% AssertionError
+% \end{pyconcode}
+%
+% Consider using \pythoninline{assert} to
+% \begin{itemize}
+% \item check parameters are of the correct type
+% \item check for ``can't happen'' situations
+% \item verify invariants in your code
+% \item make sure a called function's return value is reasonable.
+% \end{itemize}
 
 \section{Making Calculations Shorter}
 \label{sec:calc}
@@ -749,23 +749,23 @@ variable:
 \end{pyconcode}
 
 The available assignment operators are:
-\begin{multicols}{2}
-\begin{itemize}
-  \item \pythoninline{+=} -- addition
-  \item \pythoninline{-=} -- subtraction
-  \item \pythoninline{*=} -- multiplication
-  \item \pythoninline{/=} -- division
-  \item \pythoninline{//=} -- integer division
-  \item \pythoninline{%=} -- remainder
-  \item \pythoninline{**=} -- exponentiation
-\end{itemize}
+\begin{multicols}{3}
+\begin{description}
+  \item[\protect\pythoninline{+=}] addition
+  \item[\protect\pythoninline{-=}] subtraction
+  \item[\protect\pythoninline{*=}] multiplication
+  \item[\protect\pythoninline{/=}] division
+  \item[\protect\pythoninline{//=}] integer division
+  \item[\protect\pythoninline{**=}] exponentiation
+\end{description}
 \end{multicols}
+
 \pagebreak
 
 \section{Exercises}
 \label{subsec:whileex}
 
-\begin{infobox}{How to Run Tests}
+\begin{infobox}{How to Run Tests on Your Code}
 Some exercises have tests that you can run to make sure everything works properly.
 To run the test file \texttt{test\_X.py}, which generally tests the file \texttt{X.py},
 type
@@ -809,11 +809,32 @@ OK
 \end{bashcode}
 \end{infobox}
 
+\begin{ex}[sums.py] Write a program that keeps prompting the user for numbers to
+  add to a sum until the user types in ``exit''. Then, display the sum of the
+  numbers previously entered. Assume the user input is nothing other than
+  numbers or ``exit''.
+
+  For example:
+
+  \begin{verbatimcode}
+Enter a number to add to the sum >>> 15
+Enter a number to add to the sum >>> 14.5
+Enter a number to add to the sum >>> 12.25
+Enter a number to add to the sum >>> exit
+Sum of numbers: 41.75
+  \end{verbatimcode}
+\end{ex}
+\begin{infobox}{Supplementary Files}
+A testing script is available on Canvas as \texttt{test\_sums.py}.
+\end{infobox}
+
 \begin{ex}[factorial.py]
 Write a function \pythoninline{factorial} which takes one
 argument and returns the factorial of that argument.
 You must use a \pythoninline{while} loop.
-Use \pythoninline{assert()} to check if the argument is positive.
+
+Use that function to accept input from the user and print the factorial of that input.
+If the input is not positive, print an error and exit.
 
 The factorial of a positive integer $n$ is the product of all integers from $1$ to $n$.
 The factorial of $n$ is denoted with an exclamation mark: $n!$.
@@ -861,6 +882,24 @@ fact *= 4
 fact *= 5
 \end{python3code}
 \end{multicols}
+
+Your code should print the following:
+
+\begin{bashcode}
+$ python3 factorial.py
+Enter a number to compute its factorial: 1
+1
+$ python3 factorial.py
+Enter a number to compute its factorial: 10
+3628800
+$ python3 factorial.py
+Enter a number to compute its factorial: -1
+Not a positive integer!
+$ python3 factorial.py
+Enter a number to compute its factorial: 15
+1307674368000
+\end{bashcode}
+
 \end{ex}
 
 \begin{infobox}{Supplementary Files}
@@ -887,25 +926,6 @@ A template file and a testing script are available on Canvas as \texttt{factoria
 % \end{verbatimcode}
 % \end{ex}
 
-\begin{ex}[sums.py] Write a program that keeps prompting the user for numbers to
-  add to a sum until the user types in ``exit''. Then, display the sum of the
-  numbers previously entered. Assume the user input is nothing other than
-  numbers or ``exit''.
-
-  For example:
-
-  \begin{verbatimcode}
-Enter a number to add to the sum >>> 15
-Enter a number to add to the sum >>> 14.5
-Enter a number to add to the sum >>> 12.25
-Enter a number to add to the sum >>> exit
-Sum of numbers: 41.75
-  \end{verbatimcode}
-\end{ex}
-\begin{infobox}{Supplementary Files}
-A testing script is available on Canvas as \texttt{test\_sums.py}.
-\end{infobox}
-
 \begin{ex}[fizzbuzz.py] Have the user enter a positive integer number. Then,
   print the numbers from 1 to that number each on a line. When the printed
   number is divisible by 3, print ``Fizz'', and when the number is divisible by
@@ -914,6 +934,11 @@ A testing script is available on Canvas as \texttt{test\_sums.py}.
   You must use \pythoninline!.format()! and a \pythoninline!while! loop.
 
   Should look like this when run:
+
+  \begin{verbatimcode}
+Enter a number: -1
+Not a positive number!
+  \end{verbatimcode}
 
   \begin{verbatimcode}
 Enter a number: 16
@@ -933,11 +958,6 @@ Enter a number: 16
 14
 15 FizzBuzz
 16
-  \end{verbatimcode}
-
-  \begin{verbatimcode}
-Enter a number: -1
-Not a positive number!
   \end{verbatimcode}
 \end{ex}
 
@@ -998,16 +1018,17 @@ Enter value you want to charge >>> 24
   or \pythoninline!False! depending on whether the number is prime or not.
 
   Have your program ask the user for the number, then call the function you
-  wrote to check if it is prime. Remember that a prime number is a
-  number that is divisible only by $1$ and itself.
+  wrote to check if it is prime. If the number is prime, print \pythoninline{"prime"} otherwise print \pythoninline{"not prime"}.
 
+Remember that a prime number is a
+  number that is divisible only by $1$ and itself.
   A simple approach checks all numbers from $2$ up to $N$.
 
   Try to improve on the simple approach, though: do we really need to check
   all those numbers? At which point do you know that you can stop? Remember to
   \pythoninline!import math!.
 
-  All primes are positive. There are an infinite number of primes. Some of the bigger primes are
+  Note all primes are positive. There are an infinite number of primes. Some of the bigger primes are
   \begin{center}
   \begin{tabular}{lll}
     $2^{74,207,281} - 1$ & 2,147,483,647 & 6,700,417
@@ -1015,6 +1036,22 @@ Enter value you want to charge >>> 24
     131,071 & 8,191 & 499
   \end{tabular}
   \end{center}
+
+
+\begin{bashcode}
+$ python3 primes.py
+Enter a number: 2
+prime
+$ python3 primes.py
+Enter a number: 4
+not prime
+$ python3 primes.py
+Enter a number: -2
+not prime
+$ python3 primes.py
+Enter a number: 499
+prime
+\end{bashcode}
 
 \end{ex}
 \begin{infobox}{Supplementary Files}
@@ -1043,50 +1080,54 @@ How many sides? 3
     \end{center}
 \end{ex}
 
-\begin{ex}[navigate.py] Write a program that takes directions from the command line
-    to draw a line. Let the user input ``left'', ``right'', ``forward'', or
-    ``stop''. Left and right turn the turtle left or right however many degrees
-    are entered, forward moves the turtle forward (however far you wish), and
-    stop ends the program. Please check the degrees for errors: they must be
-    between 0 and 360 degrees! (Yes, Turtle could handle negative degrees, but
-    we would like you to check.)
+% \begin{ex}[navigate.py] Write a program that takes directions from the command line
+%     to draw a line. Let the user input ``left'', ``right'', ``forward'', or
+%     ``stop''. Left and right turn the turtle left or right however many degrees
+%     are entered, forward moves the turtle forward (however far you wish), and
+%     stop ends the program. Please check the degrees for errors: they must be
+%     between 0 and 360 degrees! (Yes, Turtle could handle negative degrees, but
+%     we would like you to check.)
+%
+%     Input:
+%
+%   \begin{verbatimcode}
+% Please enter a direction: forward
+% Please enter a direction: left
+% How many degrees? 45
+% Please enter a direction: forward
+% Please enter a direction: left
+% How many degrees? -1
+% Invalid number, not moving.
+% Please enter a direction: left
+% How many degrees? 45
+% Please enter a direction: forward
+% Please enter a direction: forward
+% Please enter a direction: left
+% How many degrees? 45
+% Please enter a direction: left
+% How many degrees? 45
+% Please enter a direction: forward
+% Please enter a direction: right
+% How many degrees? 45
+% Please enter a direction: forward
+% Please enter a direction: stop
+%   \end{verbatimcode}
+%
+%     Output:
+%     \begin{center}
+% %    \vspace{-5mm}
+%     \includegraphics[width=1.0in]{img/navigate}
+% %    \vspace{-10mm}
+%   \end{center}
+%
+% \end{ex}
 
-    Input:
-
-  \begin{verbatimcode}
-Please enter a direction: forward
-Please enter a direction: left
-How many degrees? 45
-Please enter a direction: forward
-Please enter a direction: left
-How many degrees? -1
-Invalid number, not moving.
-Please enter a direction: left
-How many degrees? 45
-Please enter a direction: forward
-Please enter a direction: forward
-Please enter a direction: left
-How many degrees? 45
-Please enter a direction: left
-How many degrees? 45
-Please enter a direction: forward
-Please enter a direction: right
-How many degrees? 45
-Please enter a direction: forward
-Please enter a direction: stop
-  \end{verbatimcode}
-
-    Output:
-    \begin{center}
-%    \vspace{-5mm}
-    \includegraphics[width=1.0in]{img/navigate}
-%    \vspace{-10mm}
-  \end{center}
-
-\end{ex}
-
-\vspace{3em}
+\vspace{5em}
 \section{Extra Credit Exercise}
+\begin{center}
+\textit{(This exercise is not required.)}
+\end{center}
+
 Irrational numbers, like $\pi, \log 2$ or $e$ do not terminate and are not generally easy to compute (unlike $1/9 = 0.1111\dots$, for example.)
 In this exercise, you will write a Python script that can calculate the $n^\text{th}$ digit of $\pi$ without having to compute the first $n-1$ digits of $\pi$.
 
@@ -1103,7 +1144,7 @@ $$\pi = 3.243F\dots_{16} = 3 \cdot 16^0 + 2 \cdot 16^{-1} + 4 \cdot 16^{-2} + 3 
       + 15 \cdot 16^{-4} + \cdots
 $$
 
-\item The first 30 digits of $\pi$ written in hexadecimal are equal to the first 36 digits of $\pi$ in decimal:
+\item Note the first 30 digits of $\pi$ written in hexadecimal are equal to the first 36 digits of $\pi$ in decimal:
 \begin{align*}
 \pi &= 3.141592653589793238462643383279502884_{10}\dots
 \\
@@ -1119,20 +1160,20 @@ Here are some examples:
 
 \vspace{-1.5em}
 \begin{align*}
-\sum_{i=10}^13 i &= 10 + 11 + 12 + 13
+    \sum_{i=10}^{15} 2i &= 20 + 22 + 24 + 26 + 28 + 30
                    &
 \sum_{k=1}^4 \frac{16^k}{8k + j} &= \frac{16}{j} + \frac{16^2}{16 + j} + \frac{16^3}{24 + j} + \frac{16^4}{32 + j}
 \end{align*}
 \end{itemize}
 
 \begin{extraex}[extra\_credit\_pi.py]
-Write a function \pythoninline{digits(n)} that finds the $n^\text{th}$ digit of $\pi$ in hexadecimal.
+Write a function \pythoninline{digits(n)} that finds the digits after the $n^\text{th}$ digit of $\pi$ in hexadecimal.
 A variation of the Bailey-Borwein-Plouffe can be used.
-The formula relies on a helper function $S$:
+First, we need a helper function $S$:
 \begin{align*}
 S(j, n) &= \left(\sum_{k=0}^n \text{frac }\left(\frac{\left(16^{n - k}\right) \text{ mod } (8k + j)}{8k + j} \right)\right) + \sum_{k=n+1}^{100} \text{frac }\left(\frac{16^{n-k}}{8k+j}\right)
-\\
-\text{$n^\text{th}$ digit of $\pi$} &= \text{frac }(4S(1, n) - 2S(2, n) - S(5, n) - S(6, n)) + 1
+\intertext{The formula is:}
+\text{digits after $n^\text{th}$ digit of $\pi$} &= \text{frac }(4S(1, n) - 2S(2, n) - S(5, n) - S(6, n)) + 1
 \end{align*}
 
 The function $\pythoninline{digits(n)}$ must return a string representing the hexadecimal digits at the $n^\text{th}$ place of $\pi$.
@@ -1140,20 +1181,24 @@ This string can be at most 10 characters in length
 (hint, use the function included in the template file: $\pythoninline{decimal_to_hex(s, 10)}$.)
 The code used to test this function relies on this name and behavior.
 It is highly recommended to use the included function
-\pythoninline{expm(b, p, ak)} for efficiently calculating
+\pythoninline{expm(b, p, a)} for efficiently calculating
 \begin{center}
-$(b^p) \text{ mod } ak =$ \pythoninline{(b ** p) % ak}.
+$(b^p) \text{ mod } a =$ \pythoninline{(b ** p) % a}.
 \end{center}
 
-$\pi = 3.243F6A8885A30\dots$ in hexadecimal, so your program's output should be:
 \begin{pyconcode}
->>> from extra_nth_pi import digits
->>> digits(0)
-243F6A8885
->>> digits(3)
-F6A8885A30
->>> digits(1000000)
-6C65E52CB4
+$ python3 extra_nth_pi.py
+Enter a number: 0
+pi after digit 0 is 243F6A8885
+$ python3 extra_nth_pi.py
+Enter a number: 3
+pi after digit 3 is F6A8885A30
+$ python3 extra_nth_pi.py
+Enter a number: 100
+pi after digit 100 is 29B7C97C50
+$ python3 extra_nth_pi.py
+Enter a number: 1000000
+pi after digit 1000000 is 6C65E52CB4
 \end{pyconcode}
 \end{extraex}
 
