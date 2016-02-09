@@ -73,6 +73,10 @@
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{multicol}
+
+% more space between multicol columns
+\setlength\columnsep{20pt}
+
 % better table formatting
 \usepackage{booktabs}
 % Supports code formatting/highlighting
@@ -147,13 +151,13 @@
 
 \usemintedstyle{tango} % friendly, colorful
 \newminted{python3}{fontsize=\small,
-  mathescape,linenos,numbersep=2pt,frame=single,framesep=2mm,autogobble}
+  mathescape,linenos,numbersep=4pt,frame=single,framesep=2mm,autogobble}
 \newminted{pycon}{fontsize=\small,
-  mathescape,linenos,numbersep=2pt,frame=single,framesep=2mm,python3,autogobble}
+  mathescape,linenos,numbersep=4pt,frame=single,framesep=2mm,python3,autogobble}
 \newminted[bashcode]{console}{fontsize=\small,autogobble,
-  mathescape,linenos,numbersep=2pt,framesep=2mm,frame=lines,bgcolor=lightgray}
+  mathescape,linenos,numbersep=4pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newminted[verbatimcode]{text}{fontsize=\small,autogobble,
-  mathescape,linenos,numbersep=2pt,framesep=2mm,frame=lines,bgcolor=lightgray}
+  mathescape,linenos,numbersep=4pt,framesep=2mm,frame=lines,bgcolor=lightgray}
 \newmintinline{python}{mathescape}
 \newmintinline{bash}{mathescape}
 \newmintinline{pycon}{python3,mathescape}
@@ -227,12 +231,14 @@ Refname={Extra Credit Exercise,Extra Credit Exercises},%
 numberwithin=section]{extraex}
 
 % this replaces \listoftheorems
-\newcommand{\listexercises}{%
 \renewcommand{\listtheoremname}{List of Files to Submit}%
-\listoftheorems[ignoreall, show={ex}]%
+\newcommand{\listexercises}{%
+\listoftheorems[ignoreall, show={ex}]}
+
+\newcommand{\listextraexercises}{%
 \renewcommand{\listtheoremname}{List of Files to Submit for Extra Credit}%
 \listoftheorems[ignoreall, show={extraex}]%
-}
+\renewcommand{\listtheoremname}{List of Files to Submit}}
 
 %\makeatletter
 %\AtBeginEnvironment{ex}{%
