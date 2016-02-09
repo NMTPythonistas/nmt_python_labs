@@ -1,4 +1,6 @@
-# note to 107 student: you don't need to print anything
-# all you have to do is define this function correctly
 def factorial(n):
     return 0
+
+in_ = input("Enter a number to compute its factorial: ")
+fact = factorial(int(in_))
+print(fact)
