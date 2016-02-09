@@ -1,11 +1,12 @@
 % LAB 2: Basic Loops and Functions
-% 
+%
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Russell White and Christopher Koch
 % Fall 2014
 \documentclass[11pt]{cselabheader}
+
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
 \fancyhead[R]{Lab 2: Basic Loops and Functions}
 \title{Lab 2: Basic Loops and Functions}
@@ -22,6 +23,7 @@
 \end{figure}
 
 \pagebreak
+\thispagestyle{empty}
 \hrule
 \begin{quotation}
 ``Only ugly languages become popular. Python is the exception.''
@@ -78,17 +80,39 @@ into conveniently reusable chunks.
 \pagenumbering{arabic}
 \section{On Types}
 
-In Python, every value is associated with what we call a type. We have already
+In Python, every value has a type.
+% In Python, every value is associated with what we call a type.
+We have already
 seen a few types in action: integers, floating-point numbers, strings, and
-boolean values. The type of a value restricts the set of things that it can
-represent.
+boolean values.
+The type of a value or variable restricts what it can represent.
+Here is a list of some types and example values.
 
-An integer can be any whole number, for example \pythoninline{5}. A
-float (floating-point number) is a number with decimal places, for example
-\pythoninline{3.14} or \pythoninline{5.0}. A string is a sequence of characters
-(letters, numbers, \ldots) enclosed by either double or single quotes, for
-example \pythoninline{"I'm a string!"}. A boolean, as we just learned, can have
-two values: \pythoninline{True} or \pythoninline{False}.
+% The type of a value restricts the set of things that it can
+% represent.
+
+% An integer can be any whole number, for example \pythoninline{5}. A
+% float (floating-point number) is a number with decimal places, for example
+% \pythoninline{3.14} or \pythoninline{5.0}. A string is a sequence of characters
+% (letters, numbers, \ldots) enclosed by either double or single quotes, for
+% example \pythoninline{"I'm a string!"}. A boolean, as we just learned, can have
+% two values: \pythoninline{True} or \pythoninline{False}.
+
+\begin{center}
+\begin{tabular}{llll}
+Name & Description & Examples & Try to cast \pythoninline{y} to this type
+\\
+\midrule
+\texttt{int} & Integer,  whole number & \pythoninline{1, 123, -12, }\dots & \pythoninline{int(y)}
+\\
+\texttt{float} & Floating-point number & \pythoninline{1.0, 3.1415, -0.01, }\dots & \pythoninline{float(y)}
+\\
+\texttt{string} & Sequence of characters & \pythoninline{"",  "1",  "abc 123\n", }\dots & \pythoninline{str(y)}
+\\
+\texttt{boolean} & True or false & \pythoninline{True,  False} & \pythoninline{bool(y)}
+\\
+\end{tabular}
+\end{center}
 
 Most programming languages have types for a good reason: for one, operations
 (such as \pythoninline{+}, \pythoninline{-}, \ldots) have different effects on
@@ -108,13 +132,21 @@ TypeError: can't multiply sequence by non-int of type 'str'
 \end{pyconcode}
 
 In addition to that, some operations do not work on some types, which helps
-ensure correctness of your program. Also, depending on the type of the operands,
-Python has different implementations of what goes on under the hood, which can
-then be optimized for each type separately.
+ensure correctness of your program.
 
-Of course, there are ways to convert between types and there are ways to find
-out what type the value of a specific variable is. To do so, use the function
-\pythoninline{type()}.
+Also, Python can speed up your programs by picking efficient ways of dealing with different types.
+Multiplying integers and multiplying floating point numbers require very different techniques.
+Knowing what kind of number is being used, Python can optimize that code.
+% Also, depending on the type of the operands,
+% Python has different implementations of what goes on under the hood, which can
+% then be optimized for each type separately.
+
+% Of course, there are ways to convert between types and there are ways to find
+% out what type the value of a specific variable is.
+\subsection{The \protect\pythoninline{type()} Function}
+Use the function \pythoninline{type()} to find out the type of a value or the
+type of the value of a specific variable.
+
 \begin{pyconcode}
 >>> type(5)
 <class 'int'>
@@ -143,6 +175,7 @@ Traceback (most recent call last):
 ValueError: invalid literal for int() with base 10: '55a'
 \end{pyconcode}
 
+\subsection{Casting}
 We call the process of converting a value from one type to another type
 \emph{casting}. Note that only values have types, and variables can hold
 different values.  Applying \pythoninline{type()} to a variable will give you
@@ -175,16 +208,20 @@ while it does not make sense to compare strings with numbers.
   \item To find out what type a value / variable is, use the
     \pythoninline{type()} function.
   \item Types we know about at this point:
-    \begin{multicols}{2}
-      \begin{itemize}
-        \item \pythoninline{str} -- string
-        \item \pythoninline{int} -- integer number
-        \item \pythoninline{float} -- floating-point number
-        \item \pythoninline{bool} -- boolean value
-      \end{itemize}
-    \end{multicols}
-    Not coincidentally, these type names are also the names of the casting
+        \pythoninline{str}, \pythoninline{int}, \pythoninline{float}, \pythoninline{bool}
+  \item Not coincidentally, these type names are also the names of the casting
     functions.
+  % \item Types we know about at this point:
+  %   \begin{multicols}{2}
+  %     \begin{itemize}
+  %       \item \pythoninline{str} -- string
+  %       \item \pythoninline{int} -- integer number
+  %       \item \pythoninline{float} -- floating-point number
+  %       \item \pythoninline{bool} -- boolean value
+  %     \end{itemize}
+  %   \end{multicols}
+  %   Not coincidentally, these type names are also the names of the casting
+  %   functions.
 \end{itemize}
 
 \pagebreak
@@ -245,11 +282,10 @@ The available assignment operators are:
   \item \pythoninline{**=} -- exponentiation
 \end{itemize}
 \end{multicols}
-They each correspond to the non-assignment version.
 
 
 \pagebreak
-\section{Formatting Strings}
+\section{Formatting Strings with \protect\pythoninline{.format()}}
 
 Previously, when we wanted to print out both a number and a string, we
 had to resort to this:
@@ -263,6 +299,7 @@ x is equal to 5
 However, there is an easier way to accomplish the same thing. By using the
 \pythoninline!.format()! command, as shown below, we can have far more options for
 how we format our output.
+With this we do not need to add a gap in the string and then use \pythoninline{+}.
 
 \begin{pyconcode}
 >>> x = 5
@@ -270,11 +307,11 @@ how we format our output.
 x is equal to 5
 \end{pyconcode}
 
-Rather than leaving a gap in our string and then using \pythoninline{+} to add on
-our variable, we instead include \pythoninline!{}! where we wish to place our
-variable and add on \pythoninline{.format(x)} to the end of the string. This
+% Rather than leaving a gap in our string and then using \pythoninline{+} to add on
+% our variable, we instead include \pythoninline!{}! where we wish to place our
+% variable and add on \pythoninline{.format(x)} to the end of the string.
+This
 replaces \pythoninline!{}! with the value of \pythoninline{x}.
-
 If we include multiple instances of \pythoninline!{}! in our string, we can then
 pass multiple variables to \pythoninline{.format()}. It will place them in the
 string in the order provided.
@@ -296,17 +333,16 @@ do this, we add \pythoninline{:.2f} inside of the \pythoninline!{}!. The
 %we leave the position before the colon blank.
 
 \begin{pyconcode}
->>> import math
->>> print(math.pi)
+>>> print(3.141592653589793)
 3.141592653589793
->>> print("{:.2f}".format(math.pi))
+>>> print("{:.2f}".format(3.141592653589793))
 3.14
 \end{pyconcode}
 
-For more format options, see
+For more format options, see \url{https://pyformat.info/} and
 \begin{center}
   \vspace{-2mm}
-  \url{https://docs.python.org/3.1/library/string.html#format-string-syntax}
+  \url{https://docs.python.org/3/library/string.html#format-string-syntax}
   \vspace{-2mm}
 \end{center}
 
@@ -340,7 +376,6 @@ boolean statement is no longer true.
 
 \begin{python3code}
 x = 10
-
 while x > 0:
     print(x)
     x = x - 1
@@ -352,7 +387,6 @@ the loop. Then repeat for this modified version of the program:
 
 \begin{python3code}
 x = 10
-
 while x > 0:
     x = x - 1
     print(x)
@@ -371,7 +405,6 @@ The following program will not print anything:
 
 \begin{python3code}
 x = 0
-
 while x > 0:
     x = x - 1
     print(x)
@@ -382,7 +415,6 @@ while x > 0:
 
 \begin{python3code}
 x = 10
-
 while x > 0:
     if x % 2 == 0:
         print("{} is even.".format(x))
@@ -391,16 +423,18 @@ while x > 0:
     x = x - 1
 \end{python3code}
 
-Of course, they can be nested the other way around, too, with a
+% Of course, they can be nested the other way around, too, with a
+They can be nested the other way around, too, with a
 \pythoninline!while! inside conditional statements.
 
-There can also be infinite while loops. Try the following:
+Here's an easy way to start an infinite loop:
+% There can also be infinite while loops. Try the following:
 \begin{python3code}
 while True:
     print("Printing forever")
 \end{python3code}
 
-Press \emph{Ctrl+C} to stop the execution of this.
+Press \emph{Ctrl+C} to stop this loop.
 
 %\subsection{For Loops}
 %
@@ -476,22 +510,25 @@ You can nest loops and conditional statements in any way you
 like. The following is just an example:
 
 \begin{python3code}
-parity = input("Even or odd? ")
+inputs = 0
+while inputs < 10:
+    parity = input("Even or odd? ")
 
-# prints even or odd numbers between 0 and 10, depending on user input
-if parity == "odd":
-    n = 1
-    while n < 11:
-        if n % 2 == 1:
+    # prints even or odd numbers between 0 and 10, depending on user input
+    if parity == "odd":
+        n = 1
+        while n < 11:
+            if n % 2 == 1:
+                print(n)
+            n = n + 2
+    elif parity == "even":
+        n = 0
+        while n <= 10:
             print(n)
-        n = n + 2
-elif parity == "even":
-    n = 0
-    while n <= 10:
-        print(n)
-        n = n + 2
-else:
-    print("You did not enter even or odd.")
+            n = n + 2
+    else:
+        print("You did not enter even or odd.")
+    inputs += 1
 \end{python3code}
 
 \subsection{Summary}
@@ -544,8 +581,11 @@ Before we dive into that, let's talk about why to write functions. Some reasons:
 \end{itemize}
 
 A Python function is simply a ``container'' for a sequence of Python statements
-that do some task. Usually, a function does one task and one task only, but it
-does it really well. Here's the general form of how to write a function:
+that do some task.
+Usually, functions are specialized to perform one clearly defined task.
+% Usually, a function does one task and one task only, but it
+% does it really well.
+Here's the general form of how to write a function:
 
 \begin{python3code}
 def function_name(arg0, arg1, ...):
@@ -562,6 +602,8 @@ A function can have \emph{zero or more} arguments. For example:
 ...         i += 1
 ...
 \end{pyconcode}
+
+\subsection{Calling Functions}
 
 To call this function:
 
@@ -581,14 +623,26 @@ function_name(param0, param1, ...)
 \end{python3code}
 
 \begin{itemize}
+
   \item You must use parentheses both in the function definition and the function
     call, even if there are zero arguments.
-  \item The parameter values are substituted for the corresponding arguments to
-    the function. I.e. the value of parameter param0 is substituted for argument
-    arg0, param1 is substituted for arg1, and so forth.
-\end{itemize}
+    As a counterexample, typing \pythoninline{pirate_noises} without parentheses
+    does not call that function.
 
+  \item The parameter values are substituted for the corresponding arguments to
+    the function. I.e.
+
+    \begin{tabular}{lcl}
+    \pythoninline{param0} & is replaced by value of & \pythoninline{arg0} \\
+    \pythoninline{param1} & is replaced by value of & \pythoninline{arg1} \\
+    \end{tabular}
+
+    % I.e. the value of parameter param0 is substituted for argument
+    % arg0, param1 is substituted for arg1, and so forth.
+
+    and so on.
 For example:
+\end{itemize}
 
 \begin{pyconcode}
 >>> def grocer(num_fruits, fruit_kind):
@@ -646,19 +700,19 @@ are part of the function will be omitted. For example:
 
 \begin{itemize}
   \item You can omit the expression after the return and just use a statement of
-    this form:
+    this form to return the special value \pythoninline{None} is returned from the
+    function:
+
 
     \begin{python3code}
 return
     \end{python3code}
 
-    In this case, the special value \pythoninline{None} is returned from the
-    function.
-
   \item If Python executes your function body and never encounters a
     \pythoninline{return} statement, the effect is the same as a
     \pythoninline{return} with no value at the end of the function body: the
     special value \pythoninline{None} is returned.
+    The \pythoninline{grocer} function returns \pythoninline{None}.
 \end{itemize}
 
 A function may also call other functions. If we keep using the wage example and
@@ -675,7 +729,7 @@ def wage(hours, base_rate):
     return pay
 
 def wage_after_tax(hours, base_rate, tax_rate):
-    """Calculate and return weekly pay after taxes for a given amount of hours and a 
+    """Calculate and return weekly pay after taxes for a given amount of hours and a
     base rate with a flat tax rate."""
     pay = wage(hours, base_rate)
     return pay * (1 - tax_rate)
@@ -685,26 +739,25 @@ def wage_after_tax(hours, base_rate, tax_rate):
 \label{subsec:funcs.sum}
 
 \begin{itemize}
-  \item Function definition syntax:
+  \item Function definition syntax and function calling syntax:
 
+    \begin{multicols}{2}
     \begin{python3code}
 def function_name(arg0, arg1, ...):
     # block of code
     \end{python3code}
 
-    Function call syntax:
-
     \begin{python3code}
 function_name(param0, param1, ...)
     \end{python3code}
+    \end{multicols}
 
   \item A function may take zero or more arguments.
 
   \item A function returns one value. (If the programmer does not specify a
     value, the special value \pythoninline{None} is returned.)
 
-  \item A good resource: \\
-  \url{https://docs.python.org/3.4/tutorial/controlflow.html#defining-functions}
+  \item A good resource: \url{https://docs.python.org/3/tutorial/controlflow.html#defining-functions}
 \end{itemize}
 
 \pagebreak
