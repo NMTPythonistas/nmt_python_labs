@@ -6,12 +6,13 @@ from subprocess import Popen, PIPE, STDOUT
 
 class SumsTest(unittest.TestCase):
     timeout = 5  # seconds to run before sums.py is killed
-    inputs = [[], [1], [1000], [1, 200, 32], list(range(0, 300, 44))]
+    inputs = [[], [1], [1000], [1, 200, 32], list(range(0, 300, 44)), [0.01, 0.02, 0.03, 0.04], [1, 1.5, 2, 2.5, 3, 3.5, 4]]
 
     def test_sums(self):
         # check bad inputs are caught using an assertion
         for test_nums in SumsTest.inputs:
             with self.subTest(i=test_nums):
+                print("test_input:", test_nums)
                 test_sum = sum(test_nums)
                 process = Popen("python3 sums.py".split(),
                                 stdout=PIPE, stdin=PIPE)
@@ -26,7 +27,7 @@ class SumsTest(unittest.TestCase):
 
                 # is the last printed word an integer?
                 last_word = process_stdout.split()[-1]
-                process_sum = int(last_word)
+                process_sum = float(last_word)
 
                 # is it the sum of the input numbers?
                 self.assertEqual(process_sum, test_sum, msg='inputs {}: expected last word to be {}, received {}'.format(test_nums, test_sum, last_word))
