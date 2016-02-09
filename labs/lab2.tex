@@ -1084,6 +1084,74 @@ Please enter a direction: stop
 
 \end{ex}
 
+\newpage
+\section{Extra Credit Exercise}
+\vspace{-1.5em}
+Irrational numbers, like $\pi, \log 2$ or $e$ do not terminate and are not generally easy to compute (unlike $1/9 = 0.1111\dots$, for example.)
+In this exercise, you will write a Python script that can calculate the $n^\text{th}$ digit of $\pi$ without having to compute the first $n-1$ digits of $\pi$.
+
+Your program will find the $n^\text{th}$ digit of $\pi$ in hexadecimal base instead of the usual decimal base. For example, here are the first four digits after the decimal of $\pi$: $\pi = 3.14\dots_{10} = 3 \cdot 10^0 + 1 \cdot 10^{-1} + 4 \cdot 10^{-2}$.
+In hexadecimal notation, instead of powers of 10, there are powers of 16 and digits go from 0 to A (which represents 10) and on to F (which represents 15) instead of 0 to 9. Here are some examples:
+\begin{align*}
+1A.0C_{16} &= 1 \cdot {16^2} + 10 \cdot 16^1 + 0 \cdot 16^{-1} + 12 \cdot 16^{-2}
+&
+1A &= 1 \cdot {16^2} + 10 \cdot 16^1
+\end{align*}
+\vspace{-1.5em}
+$$\pi = 3.243F\dots_{16} = 3 \cdot 16^0 + 2 \cdot 16^{-1} + 4 \cdot 16^{-2} + 3 \cdot 16^{-3}
+      + 15 \cdot 16^{-4} + \cdots
+$$
+
+The first 30 digits of $\pi$ written in hexadecimal are equal to the first 36 digits of $\pi$ in decimal:
+\begin{align*}
+\pi &= 3.141592653589793238462643383279502884_{10}\dots
+\\
+\pi &= 3.243F6A8885A308D313198A2E037073_{16}\dots
+\end{align*}
+
+Also, sigma notation is used to represent summations.
+Here are some examples:
+
+\vspace{-1.5em}
+\begin{align*}
+\sum_{i=10}^13 i &= 10 + 11 + 12 + 13
+                   &
+\sum_{k=1}^4 \frac{16^k}{8k + j} &= \frac{16}{j} + \frac{16^2}{16 + j} + \frac{16^3}{24 + j} + \frac{16^4}{32 + j}
+\end{align*}
+
+\begin{extraex}[extra\_credit\_pi.py]
+Write a function \pythoninline{digits(n)} that finds the $n^\text{th}$ digit of $\pi$ in hexadecimal.
+A variation of the Bailey-Borwein-Plouffe can be used.
+The formula relies on a helper function $S$:
+\vspace{-1.1em}
+\begin{align*}
+S(j, n) &= \left(\sum_{k=0}^n \frac{\left(16^{d-k}\right) \text{ mod } (8k + j)}{8k + j} \right) + \sum_{k=d+1}^{100} \frac{16^{d-k}}{8k+j}
+\\
+\text{$n^\text{th}$ of $\pi$} &= 4S(1, n) - 2S(2, n) - S(5, n) - S(6, n)
+\end{align*}
+
+The function $\pythoninline{digits(n)}$ must return a string representing the hexadecimal digits at the $n^\text{th}$ place of $\pi$.
+This string can be at most 10 characters in length
+(hint, use the function included in the template file: $\pythoninline{decimal_to_hex(s, 10)}$.)
+The code used to test this function relies on this name and behavior.
+It is highly recommended to use the included function
+\pythoninline{expm(b, p, ak)} for efficiently calculating
+\begin{center}
+$(b^p) \text{ mod } ak =$ \pythoninline{(b ** p) % ak}.
+\end{center}
+
+$\pi = 3.243F6A8885A30\dots$ in hexadecimal, so your program's output should be:
+\begin{pyconcode}
+>>> from extra_nth_pi import digits
+>>> digits(0)
+243F6A8885
+>>> digits(3)
+F6A8885A30
+>>> digits(1000000)
+6C65E52CB4
+\end{pyconcode}
+\end{extraex}
+
 \pagebreak
 \section{Submitting}
 
