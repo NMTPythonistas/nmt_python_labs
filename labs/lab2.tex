@@ -1,5 +1,4 @@
 % LAB 2: Basic Loops and Functions
-%
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
 %
@@ -809,6 +808,25 @@ OK
 \end{bashcode}
 \end{infobox}
 
+\begin{ex}[rps.py] Write a program that reads a character for playing the game of
+    rock-paper-scissors. If the character entered by the user is not one of
+    ``R'', ``P'', or ``S'', the program keeps on prompting the user to enter a
+    character. Once they enter a valid character, print out what they chose
+    and quit.
+
+    % http://cs.smith.edu/dftwiki/index.php/CSC111_While_Loop_Exercises
+
+    For example:
+
+\begin{verbatimcode}
+Enter R, P, or S >>> A
+Did not enter R, P, or S. Try again.
+Enter R, P, or S >>> R
+You chose rock. Exiting.
+\end{verbatimcode}
+\end{ex}
+
+
 \begin{ex}[sums.py] Write a program that keeps prompting the user for numbers to
   add to a sum until the user types in ``exit''. Then, display the sum of the
   numbers previously entered. Assume the user input is nothing other than
@@ -828,103 +846,85 @@ Sum of numbers: 41.75
 A testing script is available on Canvas as \texttt{test\_sums.py}.
 \end{infobox}
 
-\begin{ex}[factorial.py]
-Write a function \pythoninline{factorial} which takes one
-argument and returns the factorial of that argument.
-You must use a \pythoninline{while} loop.
-
-Use that function to accept input from the user and print the factorial of that input.
-If the input is not positive, print an error and exit.
-
-The factorial of a positive integer $n$ is the product of all integers from $1$ to $n$.
-The factorial of $n$ is denoted with an exclamation mark: $n!$.
-For example,
-\begin{align*}
-1! &= 1
-&
-2! &= 1 \cdot 2
-\\
-3! &= 1 \cdot 2 \cdot 3
-&
-4! &= 1 \cdot 2 \cdot 3 \cdot 4
-\\
-5! &= 1 \cdot 2 \cdot 3 \cdot 4 \cdot 5
-&
-n! &= 1 \cdot 2 \cdot \cdots \cdot (n - 1) \cdot n
-\end{align*}
-
-The following code computes the factorials of $2, 3, 4,$ and $5$:
-
-\begin{multicols}{4}
-\begin{python3code}
-fact = 1
-fact *= 2
-\end{python3code}
-\columnbreak
-\begin{python3code}
-fact = 1
-fact *= 2
-fact *= 3
-\end{python3code}
-\columnbreak
-\begin{python3code}
-fact = 1
-fact *= 2
-fact *= 3
-fact *= 4
-\end{python3code}
-\columnbreak
-\begin{python3code}
-fact = 1
-fact *= 2
-fact *= 3
-fact *= 4
-fact *= 5
-\end{python3code}
-\end{multicols}
-
-Your code should print the following:
-
-\begin{bashcode}
-$ python3 factorial.py
-Enter a number to compute its factorial: 1
-1
-$ python3 factorial.py
-Enter a number to compute its factorial: 10
-3628800
-$ python3 factorial.py
-Enter a number to compute its factorial: -1
-Not a positive integer!
-$ python3 factorial.py
-Enter a number to compute its factorial: 15
-1307674368000
-\end{bashcode}
-
-\end{ex}
-
-\begin{infobox}{Supplementary Files}
-A template file and a testing script are available on Canvas as \texttt{factorial.py} and
-\\ % overflow bug! monospace text does not break correctly
-\texttt{test\_factorial.py}.
-\end{infobox}
-
-% \begin{ex}[rps.py] Write a program that reads a character for playing the game of
-%     rock-paper-scissors. If the character entered by the user is not one of
-%     ``R'', ``P'', or ``S'', the program keeps on prompting the user to enter a
-%     character. Once they enter a valid character, print out what they chose
-%     and quit.
+% \begin{ex}[fib.py]
+% Write a function \pythoninline{factorial} which takes one
+% argument and returns the factorial of that argument.
+% You must use a \pythoninline{while} loop.
 %
-%     % http://cs.smith.edu/dftwiki/index.php/CSC111_While_Loop_Exercises
+% Use that function to accept input from the user and print the factorial of that input.
+% If the input is not positive, print an error and exit.
 %
-%     For example:
+% The factorial of a positive integer $n$ is the product of all integers from $1$ to $n$.
+% The factorial of $n$ is denoted with an exclamation mark: $n!$.
+% For example,
+% \begin{align*}
+% 1! &= 1
+% &
+% 2! &= 1 \cdot 2
+% \\
+% 3! &= 1 \cdot 2 \cdot 3
+% &
+% 4! &= 1 \cdot 2 \cdot 3 \cdot 4
+% \\
+% 5! &= 1 \cdot 2 \cdot 3 \cdot 4 \cdot 5
+% &
+% n! &= 1 \cdot 2 \cdot \cdots \cdot (n - 1) \cdot n
+% \end{align*}
 %
-% \begin{verbatimcode}
-% Enter R, P, or S >>> A
-% Did not enter R, P, or S. Try again.
-% Enter R, P, or S >>> R
-% You chose rock. Exiting.
-% \end{verbatimcode}
+% The following code computes the factorials of $2, 3, 4,$ and $5$:
+%
+% \begin{multicols}{4}
+% \begin{python3code}
+% fact = 1
+% fact *= 2
+% \end{python3code}
+% \columnbreak
+% \begin{python3code}
+% fact = 1
+% fact *= 2
+% fact *= 3
+% \end{python3code}
+% \columnbreak
+% \begin{python3code}
+% fact = 1
+% fact *= 2
+% fact *= 3
+% fact *= 4
+% \end{python3code}
+% \columnbreak
+% \begin{python3code}
+% fact = 1
+% fact *= 2
+% fact *= 3
+% fact *= 4
+% fact *= 5
+% \end{python3code}
+% \end{multicols}
+%
+% Your code should print the following:
+%
+% \begin{bashcode}
+% $ python3 fib.py
+% Enter a number: 1
+% 1
+% $ python3 fib.py
+% Enter a number to: 5
+%
+% $ python3 fib.py
+% Enter a number: -1
+% Not a positive integer!
+% $ python3 fib.py
+% Enter a number to compute its factorial: 10
+%
+% \end{bashcode}
+%
 % \end{ex}
+%
+% \begin{infobox}{Supplementary Files}
+% A template file and a testing script are available on Canvas as \texttt{fib.py} and
+% \\ % overflow bug! monospace text does not break correctly
+% \texttt{test\_fib.py}.
+% \end{infobox}
 
 \begin{ex}[fizzbuzz.py] Have the user enter a positive integer number. Then,
   print the numbers from 1 to that number each on a line. When the printed
