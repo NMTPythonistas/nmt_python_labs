@@ -224,65 +224,6 @@ while it does not make sense to compare strings with numbers.
   %   functions.
 \end{itemize}
 
-\pagebreak
-\section{Signaling Errors with \protect\pythoninline{assert}}
-The built-in function \pythoninline{assert} can be used to ensure a
-condition is true.
-If the condition is false, the program is supposed to crash.
-To be precise, an \pythoninline{AssertionError} exception is raised
-(we will learn more about exceptions in later lessons.)
-Here's an example:
-\begin{pyconcode}
->>> assert(True)
->>> assert(False)
-Traceback (most recent call last):
-  File ``<stdin>'', line 1, in <module>
-AssertionError
->>> should_be_positive = 1
->>> assert(should_be_positive > 0)
->>> should_be_positive = -1
->>> assert(should_be_positive > 0)
-Traceback (most recent call last):
-  File ``<stdin>'', line 1, in <module>
-AssertionError
-\end{pyconcode}
-
-Consider using \pythoninline{assert} to
-\begin{itemize}
-\item check parameters are of the correct type
-\item check for ``can't happen'' situations
-\item verify invariants in your code
-\item make sure a called function's return value is reasonable.
-\end{itemize}
-
-\section{Making Calculations Shorter}
-\label{sec:calc}
-
-We showed you simple Python operators such as \pythoninline{+},
-\pythoninline{-}, \pythoninline{*}, \pythoninline{%},
-etc in lab 1. There is a small extension to these that you can use to update a
-variable:
-
-\begin{pyconcode}
->>> x = 5
->>> x += 3 # same as x = x + 3
->>> x
-8
-\end{pyconcode}
-
-The available assignment operators are:
-\begin{multicols}{2}
-\begin{itemize}
-  \item \pythoninline{+=} -- addition
-  \item \pythoninline{-=} -- subtraction
-  \item \pythoninline{*=} -- multiplication
-  \item \pythoninline{/=} -- division
-  \item \pythoninline{//=} -- integer division
-  \item \pythoninline{%=} -- remainder
-  \item \pythoninline{**=} -- exponentiation
-\end{itemize}
-\end{multicols}
-
 
 \pagebreak
 \section{Formatting Strings with \protect\pythoninline{.format()}}
@@ -761,6 +702,66 @@ function_name(param0, param1, ...)
 \end{itemize}
 
 \pagebreak
+\section{Signaling Errors with \protect\pythoninline{assert}}
+The built-in function \pythoninline{assert} can be used to ensure a
+condition is true.
+If the condition is false, the Python script is supposed to stop running
+immediately, otherwise nothing happens.
+To be precise, an \pythoninline{AssertionError} exception is raised
+(we will learn more about exceptions in later lessons.)
+Here's an example:
+\begin{pyconcode}
+>>> assert(True)
+>>> assert(False)
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+AssertionError
+>>> should_be_positive = 1
+>>> assert(should_be_positive > 0)
+>>> should_be_positive = -1
+>>> assert(should_be_positive > 0)
+Traceback (most recent call last):
+  File ``<stdin>'', line 1, in <module>
+AssertionError
+\end{pyconcode}
+
+Consider using \pythoninline{assert} to
+\begin{itemize}
+\item check parameters are of the correct type
+\item check for ``can't happen'' situations
+\item verify invariants in your code
+\item make sure a called function's return value is reasonable.
+\end{itemize}
+
+\section{Making Calculations Shorter}
+\label{sec:calc}
+
+We showed you simple Python operators such as \pythoninline{+},
+\pythoninline{-}, \pythoninline{*}, \pythoninline{%},
+etc in lab 1. There is a small extension to these that you can use to update a
+variable:
+
+\begin{pyconcode}
+>>> x = 5
+>>> x += 3 # same as x = x + 3
+>>> x
+8
+\end{pyconcode}
+
+The available assignment operators are:
+\begin{multicols}{2}
+\begin{itemize}
+  \item \pythoninline{+=} -- addition
+  \item \pythoninline{-=} -- subtraction
+  \item \pythoninline{*=} -- multiplication
+  \item \pythoninline{/=} -- division
+  \item \pythoninline{//=} -- integer division
+  \item \pythoninline{%=} -- remainder
+  \item \pythoninline{**=} -- exponentiation
+\end{itemize}
+\end{multicols}
+\pagebreak
+
 \section{Exercises}
 \label{subsec:whileex}
 
