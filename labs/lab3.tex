@@ -241,13 +241,13 @@ values inside square brackets.
 [1, 2, 3, 4, 5]
 \end{pyconcode}
 
-\subsection{Indices}
+\subsection{Accessing Values with Indices}
 Once we put a value in a list, we can treat the list as a single entity or
-access individual values. In order to access an individual element, we need to
-use the index of the value we want to access. The index is the position of the
-element in the list if we start numbering the elements from 0. When we are
-accessing list elements by index we can use them in any way we might use a
-normal variable.
+access individual values stored withing the list. In order to access an
+individual element, we need to use the index of the value we want to access.
+The index is the position of the element in the list if we start numbering the
+elements from 0. When we are accessing list elements by index we can use them
+in any way we might use a normal variable.
 
 \begin{pyconcode}
 >>> values = [23, 7, 18, 0.23, 91]
@@ -277,6 +277,20 @@ last element, and so on.
 6
 >>> print(values[-2])
 -3
+\end{pyconcode}
+
+If the index is too large, an error will be raised:
+
+\begin{pyconcode}
+>>> values = [32, 1, 54, 0.23, 91]
+>>> values[-10]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  IndexError: list index out of range
+  >>> values[10]
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    IndexError: list index out of range
 \end{pyconcode}
 
 \subsection{Values in Lists}
