@@ -583,7 +583,7 @@ Two lists can be ``added'' together in order to combine them into one list.
 
 Tuples work a lot like lists, except they cannot be modified; they are
 \emph{immutable}. Instead of brackets \pythoninline{[]} we use parentheses
-\pythoninline{()} around the elements.
+\pythoninline{()} around the elements. Tuples support slicing.
 
 \begin{pyconcode}
 >>> food = ('eggs', 'bananas', 'lemonheads')
@@ -600,14 +600,6 @@ TypeError: 'tuple' object does not support item assignment
 Lists and tuples turn out to be \texttt{sequence} data types -- this means they
 support indexing and slicing. We will see below that strings are also a sequence
 type.
-
-We can also define a tuple by simply separating values by commas:
-
-\begin{pyconcode}
->>> food = 'trail mix', 'nothing'
->>> food[0]
-'trail mix'
-\end{pyconcode}
 
 And of course, we can nest tuples and lists interchangably:
 
@@ -626,21 +618,21 @@ length of a tuple:
 0
 \end{pyconcode}
 
-We can also \emph{unpack} tuples, which means assigning each element of a tuple
-to a variable. For example:
+We can also define a tuple by simply separating values by commas:
+Conversely, we can \emph{unpack} tuples, which means assigning each element of
+a tuple to a variable. For example:
 
 \begin{pyconcode}
 >>> food = 'trail mix', 'nothing'
 >>> tylerfood, chrisfood = food
->>> # equivalent to, but shorter than:
-... tylerfood = food[0]
-... chrisfood = food[1]
+>>> # equivalent to, but shorter than: tylerfood = food[0]; chrisfood = food[1]
 >>> tylerfood
 'trail mix'
 >>> chrisfood
 'nothing'
 \end{pyconcode}
 
+\vspace{-2.5em} % try to squeeze into one page
 \subsection{Summary}
 
 \begin{itemize}
