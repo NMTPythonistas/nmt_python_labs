@@ -885,6 +885,10 @@ You can find a summary of the functions and what they do in Table~\ref{tab:str}.
     otherwise\\
     \pythoninline!r = s.replace(x, y)! & replace any occurence of \pythoninline!x! in
     \pythoninline!s! with \pythoninline!y! and put result in \pythoninline!r! \\
+    \pythoninline!r = s.join([a, b, c])! &
+    convert each element in the list to a string and join them with \pythoninline!s!
+    (Section~\ref{subsec:strjoin}.)
+    \\
     \bottomrule
   \end{tabular}
   \caption{String methods and functions, where \texttt{s} is a string}
@@ -894,13 +898,8 @@ You can find a summary of the functions and what they do in Table~\ref{tab:str}.
 \subsection{Summary}
 
 \begin{itemize}
-  \item Syntax:
-
+  \item Syntax: \pythoninline{s = 'String'} or \pythoninline{s = "String"} or
     \begin{python3code}
-s = 'String'
-# or
-s = "String"
-# or
 s = """Multiline
 String"""
     \end{python3code}
@@ -924,7 +923,6 @@ String"""
   \item See string functions in Table~\ref{tab:str}.
 \end{itemize}
 
-\pagebreak
 \section{Converting between Sequence Types}
 
 Just like we were able to convert between integers and floating-point types, we
@@ -945,6 +943,30 @@ example:
 ('T', 'h', 'e', ' ', 'c', 'a', 't', ' ', 'i', 'n', ' ', 't', 'h', 'e')
 \end{pyconcode}
 
+\subsection{Converting Sequences to Strings With \protect\pythoninline{str.join()}}
+  \label{subsec:strjoin}
+Note \pythoninline{str()} cannot undo the action of \pythoninline{list()} on
+a string. That is, \pythoninline{str(list("ABC"))} is not equal to
+\pythoninline{"ABC"}. Use \pythoninline{"".join(list("ABC"))} for that.
+
+To add spaces between the elements of a list, change the string at the beginning.
+\begin{pyconcode}
+>>> "".join(['c', 'a', 't'])
+'cat'
+>>> " ".join(['c', 'a', 't'])
+'c a t'
+\end{pyconcode}
+
+The elements of the sequence can be of any type.
+
+\begin{pyconcode}
+>>> ' '.join(("dinosaurs", "roamed the", "earth"))
+'dinosaurs roamed the earth'
+>>> print('\n> '.join(("dinosaurs", "roamed the", "earth")))
+dinosaurs
+> roamed the
+> earth
+\end{pyconcode}
 
 
 \pagebreak
@@ -954,8 +976,9 @@ example:
 
 \subsection{Lists}
 \pythoninline{for} loops in Python are designed to primarily work with lists and
-other sequence types. A \pythoninline{for} loop iterates through each element in
-a list in order, performing the same operation for each element. The following
+other sequence types. This is contrary to \texttt{for} loops in other
+languages. A \pythoninline{for} loop iterates through each element in a list in
+order, performing the same operation for each element. The following
 program is a simple \pythoninline{for} loop that prints out every element of a
 list.
 
@@ -1086,32 +1109,31 @@ Hello.
 Strings are sequence types just like lists and tuples:
 
 \begin{python3code}
-for char in 'aHdHefg':
+for char in 'aHdHe':
     if char == 'H':
         print('5')
     else:
         print('1')
 \end{python3code}
 
-This will print:
-
-\begin{verbatimcode}
-1
-5
-1
-5
-1
-1
-1
-\end{verbatimcode}
-
+What will this print?
+%This will print:
+%
+%\begin{verbatimcode}
+%1
+%5
+%1
+%5
+%1
+%\end{verbatimcode}
+%
 \subsection{\protect\pythoninline{enumerate()}}
 
 Given any sequence type, \pythoninline{enumerate()} will return a list of tuples
 containing a count and an element of the list. (Actually,
-\pythoninline{enumerate()} is what we call a generator. You need not know what
-that is, just remember that to get an actual list you have to cast the return
-value to a list.) For example:
+\pythoninline{enumerate()} and \pythoninline{range()} are what we call a
+generator. You need not know what that is, just remember that to get an actual
+list you have to cast the return value to a list.) For example:
 
 \begin{pyconcode}
 >>> food = ['eggs', 'hamburgers', 'steak and potatos']
