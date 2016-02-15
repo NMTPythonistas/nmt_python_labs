@@ -182,19 +182,48 @@ used as a module. This will be required for every lab from now on.
   Wrong:
 
   \begin{python3code}
-print("Hello World!")
+def greeting_for(recipient):
+    """Returns a string with a greeting meant for the given recipient."""
+    return "Hello {}".format(recipient)
+
+name = input("What is your name? ")
+print(greeting_for(name))
   \end{python3code}
 
   Right:
 
   \begin{python3code}
+def greeting_for(recipient):
+    """Returns a string with a greeting meant for the given recipient."""
+    return "Hello {}".format(recipient)
+
 def main():
-    print("Hello World!")
+    name = input("What is your name? ")
+    print(greeting_for(name))
 
 if __name__ == "__main__":
     main()
   \end{python3code}
 \end{infobox}
+
+\subsection{Import Your Own Modules}
+Why is this required? Look at the example code given above (also assume it's
+in a file called \texttt{greetings.py}.) Suppose you wanted to use
+the \pythoninline{greeting_for} function in another program or in the Python
+console. Copying and pasting a function is generally not recommended. The
+solution is to import your code:
+
+\begin{pyconcode}
+>>> import greetings
+>>> greeting = greetings.greeting_for("Pythonista")
+"Hello Pythonista"
+\end{pyconcode}
+
+If you did not have the required boilerplate code in the \texttt{greetings.py}
+file, the console would have stopped and asked the user for input
+\emph{even though the file was only loaded to use the
+\pythoninline{greeting_for} function.}
+We wish to write modular code.
 
 
 \pagebreak
