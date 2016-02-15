@@ -39,7 +39,7 @@
   --- Richard von Weizs\"{a}cker
 %\\\textit{Speech to commemorate end of WW II, May 8 1985}
 % English: http://www.hariguchi.org/yoichi/weizsaecker.html
-% Famous speech by RvW, President of Fed Rep of Germ, for the 
+% Famous speech by RvW, President of Fed Rep of Germ, for the
 % commemoration of the 40th anniversary of the end of WWII in
 % Germany on May 8, 1985
 % German: http://www.hdg.de/lemo/html/dokumente/NeueHerausforderungen_redeVollstaendigRichardVonWeizsaecker8Mai1985/index.html
@@ -138,14 +138,16 @@ def midpoint(a, b):
     return (a+b)/2
     \end{python3code}
 
-  \item For larger functions or for a longer explanation, follow this style:
+  \item For larger functions or for a longer explanation, you must write a
+      short summary followed by as much text as needed:
 
     \begin{python3code}
 def calculate_weekly_pay(pay_rate, hours, tax_rate):
-    """
-    Calculate the net pay after taxes given the number of hours worked 
-    in a week, a pay rate, and a flat tax rate.
-    Takes into consideration overtime pay at 1.5 the pay rate.
+    """Find net weekly pay after taxes with overtime set to 1.5 the pay rate.
+
+    The net pay after taxes is calculated given the number of hours worked in a
+    week, a pay rate, and a flat tax rate. Takes into consideration overtime pay
+    at 1.5 the pay rate.
 
     Arguments:
     pay_rate -- rate of pay
@@ -360,7 +362,7 @@ indices -- whole numbers.
 4
 \end{pyconcode}
 
-Note that \pythoninline!L[1:3]! did \emph{not} include \pythoninline!L[3]!. 
+Note that \pythoninline!L[1:3]! did \emph{not} include \pythoninline!L[3]!.
 
 You may omit the starting position to slice elements from the beginning of the
 list up to the specified position. You may similarly omit the ending position to
@@ -507,7 +509,7 @@ Two lists can be added together in order to combine them into one list.
 
 \begin{itemize}
   \item A list is created from a series of comma-separated values inside square
-    brackets.  
+    brackets.
   \item An element in an array can be referenced and manipulated
     using its index. The first element has an index of 0. Negative indices can
     be used to reference elements from the end of the list, with the last
@@ -759,15 +761,15 @@ quotes:
 \begin{listing}[H]
   \vspace{-0.5em}
 \begin{python3code}
-weizsaecker = """We in the older generation owe to young people not the 
-fulfillment of dreams but honesty. We must help younger people to 
-understand why it is vital to keep memories alive. We want to help them 
-to accept historical truth soberly, not one-sidedly, without taking 
+weizsaecker = """We in the older generation owe to young people not the
+fulfillment of dreams but honesty. We must help younger people to
+understand why it is vital to keep memories alive. We want to help them
+to accept historical truth soberly, not one-sidedly, without taking
 refuge in utopian doctrines, but also without moral arrogance. From our
 own history we learn what man is capable of. For that reason we must not
 imagine that we are quite different and have become better. There is no
 ultimately achievable moral perfection. We have learned as human beings,
-and as human beings we remain in danger. But we have the strength to 
+and as human beings we remain in danger. But we have the strength to
 overcome such danger again and again."""
 \end{python3code}
   \vspace{-1em}
@@ -833,7 +835,7 @@ You can find a summary of the functions and what they do in Table~\ref{tab:str}.
     otherwise\\
     \pythoninline!r = s.replace(x, y)! & replace any occurence of \pythoninline!x! in
     \pythoninline!s! with \pythoninline!y! and put result in \pythoninline!r! \\
-    \bottomrule 
+    \bottomrule
   \end{tabular}
   \caption{String methods and functions, where \texttt{s} is a string}
   \label{tab:str}
@@ -944,7 +946,7 @@ lower bound rather than zero.
 \begin{pyconcode}
 >>> for i in range(5):
 ...   print(i)
-... 
+...
 0
 1
 2
@@ -1148,10 +1150,10 @@ dig donner
   \item[\pythoninline{splitit()}]
 Consider dividing a string into two halves. If the length
   is even, the front and back halves are the same length. If the length is odd,
-  we'll say that the extra character goes in the front. 
+  we'll say that the extra character goes in the front.
 
   For example, in \pythoninline!'abcde'!, the front half is \pythoninline!'abc'!
-  and the back half is \pythoninline!'de'!. 
+  and the back half is \pythoninline!'de'!.
 
   Write a function that takes in two strings \pythoninline!a! and
   \pythoninline!b!  and prints a-front + b-front + a-back + b-back.
@@ -1176,7 +1178,7 @@ this diwhat am nner isi doing1
 \end{ex}
 
 \begin{ex}[fractions.py] Any fraction can be written as the division of two
-  integers. You could express this in Python as a tuple -- 
+  integers. You could express this in Python as a tuple --
   (numerator, denominator).
 
   Write functions for each of the following. They must use the tuple
@@ -1265,6 +1267,7 @@ Sum of odd numbers: 48
   functions.
 
   You cannot use \pythoninline!.sort()! for this exercise.
+  % !!! or sorted
 
   Sample:
 
