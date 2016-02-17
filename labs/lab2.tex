@@ -993,7 +993,7 @@ Enter a number: 16
       \item For a less than \$25 charge, you get \$3 of extra phone time.
       \item For a less than \$50 charge, you get \$8 of extra phone time.
       \item For a less than \$100 charge, you get \$20 of extra phone time.
-      \item For a more than \$100 charge, you get \$25 of extra phone time.
+      \item For a charge greater than or equal to \$100, you get \$25 of extra phone time.
     \end{enumerate}
 
     Write a function that takes the value the user wants to charge and returns
@@ -1124,9 +1124,6 @@ How many sides? 3
 
 \newpage
 \section{Extra Credit Exercise}
-\begin{center}
-\textit{(This exercise is not required.)}
-\end{center}
 
 Irrational numbers, like $\pi, \log 2$ or $e$ do not terminate and are not generally easy to compute (unlike $1/9 = 0.1111\dots$, for example.)
 In this exercise, you will write a Python script that can calculate the $n^\text{th}$ digit of $\pi$ without having to compute the first $n-1$ digits of $\pi$.
@@ -1160,8 +1157,8 @@ Here are some examples:
 
 \vspace{-1.5em}
 \begin{align*}
-    \sum_{i=10}^{15} 2i &= 20 + 22 + 24 + 26 + 28 + 30
-                   &
+\sum_{i=10}^{15} 2i &= 20 + 22 + 24 + 26 + 28 + 30
+&
 \sum_{k=1}^4 \frac{16^k}{8k + j} &= \frac{16}{j} + \frac{16^2}{16 + j} + \frac{16^3}{24 + j} + \frac{16^4}{32 + j}
 \end{align*}
 \end{itemize}
@@ -1173,22 +1170,22 @@ The template \texttt{extra\_nth\_pi.py} is also provided.
 \end{infobox}
 
 \newpage
-\begin{extraex}[extra\_credit\_pi.py]
+\begin{extraex}[extra\_credit\_nth\_pi.py]
 Write a function \pythoninline{digits(n)} that finds the digits after the $n^\text{th}$ digit of $\pi$ in hexadecimal.
 A variation of the Bailey-Borwein-Plouffe can be used.
 First, we need a helper function $S$:
 \begin{align*}
-S(j, n) &= \left(\sum_{k=0}^n \text{frac }\left(\frac{\left(16^{n - k}\right) \text{ mod } (8k + j)}{8k + j} \right)\right) + \sum_{k=n+1}^{100} \text{frac }\left(\frac{16^{n-k}}{8k+j}\right)
+S(j, n) &= \left(\sum_{k=0}^n \text{frac }\left(\frac{\left(16^{n - k}\right) \text{ mod } (8k + j)}{8k + j} \right)\right) + \sum_{k=n+1}^\infty \text{frac }\left(\frac{16^{n-k}}{8k+j}\right)
 \intertext{The formula is:}
-\text{digits after $n^\text{th}$ digit of $\pi$} &= \text{frac }(4S(1, n) - 2S(2, n) - S(5, n) - S(6, n)) + 1
+\text{digits after $n^\text{th}$ digit of $\pi$} &= \text{frac }(4S(1, n) - 2S(4, n) - S(5, n) - S(6, n)) + 1
 \end{align*}
 
 The function $\pythoninline{digits(n)}$ must return a string representing the hexadecimal digits at the $n^\text{th}$ place of $\pi$.
 This string can be at most 10 characters in length
 (hint, use the function included in the template file: $\pythoninline{decimal_to_hex(s, 10)}$.)
 The code used to test this function relies on this name and behavior.
-It is highly recommended to use the included function
-\pythoninline{expm(b, p, a)} for efficiently calculating
+Python's built-in pow() (exponentiation) function [1] takes an optional third argument which is the number to modulo by.
+Use this functionality to efficiently calculate:
 \begin{center}
 $(b^p) \text{ mod } a =$ \pythoninline{(b ** p) % a}.
 \end{center}
