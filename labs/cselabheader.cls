@@ -18,6 +18,7 @@
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{
   <5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
 
+\usepackage[dvipsnames]{xcolor}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{mathpazo}
@@ -47,7 +48,6 @@
 
 % Color support
 \usepackage{color}
-\usepackage[dvipsnames]{xcolor}
 \definecolor{light-gray}{gray}{0.9}
 \definecolor{green}{RGB}{0,127,0}
 \definecolor{dred}{rgb}{0.6,0,0}
