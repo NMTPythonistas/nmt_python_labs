@@ -15,7 +15,7 @@ class FractionsTests(unittest.TestCase):
         for input_fractions, expected_output in FractionsTests.multiplications:
             with self.subTest(i=input_fractions):
                 output = multiply(input_fractions[0], input_fractions[1])
-                self.assertEqual(output, expected_output)
+                self.assertEqual(f2d(output), f2d(expected_output))
 
     def test_divide(self):
         from fractions import divide
@@ -23,16 +23,16 @@ class FractionsTests(unittest.TestCase):
         for input_fractions, expected_output in FractionsTests.divisions:
             with self.subTest(i=input_fractions):
                 output = divide(input_fractions[0], input_fractions[1])
-                self.assertEqual(output, expected_output)
+                self.assertEqual(f2d(output), f2d(expected_output))
 
-    def test_minimums(self):
-        from fractions import find_minimum
+    def test_smallest(self):
+        from fractions import smallest
 
         for input_fractions, expected_output in FractionsTests.minimums:
             with self.subTest(i=input_fractions):
-                output = find_minimum(input_fractions)
-                self.assertEqual(output, expected_output)
+                output = smallest(input_fractions)
+                self.assertEqual(f2d(output), f2d(expected_output))
 
-
+f2d = lambda x: functools.reduce(lambda a, b: a / b, x)
 if __name__ == '__main__':
     unittest.main()
