@@ -9,11 +9,11 @@ class PiTest(unittest.TestCase):
         import extra_nth_pi
 
         # check bad inputs are caught using an assertion
-        for in_, out_ in PiTest.inputs:
+        for in_, expected_output_ in PiTest.inputs:
             with self.subTest(i=in_):
-                test_out = extra_nth_pi.digits(in_)
+                actual_output = extra_nth_pi.digits(in_)
                 self.assertTrue(len(test_out) > 0, msg="Output of length 0")
-                self.assertTrue(out_.startswith(test_out.upper()), msg="input={}, expected output: '{}', received '{}'".format(in_, out_, test_out))
+                self.assertTrue(expected_output.startswith(test_out.upper()), msg="input={}, expected output: '{}', received '{}'".format(in_, out_, test_out))
 
 
 if __name__ == '__main__':
