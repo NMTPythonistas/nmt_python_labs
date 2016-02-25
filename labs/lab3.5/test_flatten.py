@@ -11,7 +11,7 @@ You should make no changes to this file.
 import unittest
 
 class TestFlatten(unittest.TestCase):
-    test_cases = [([], {}),
+    test_cases = [([], set([])),
                   ([1,2,3], {1,2,3}),
                   ([1,2,3,[4]], {1,2,3,4}),
                   ([1,[4],2,3], {1,2,3,4}),
