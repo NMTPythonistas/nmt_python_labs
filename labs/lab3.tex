@@ -1,4 +1,4 @@
-% LAB 3: Lists and Strings
+% LAB 3 Lists and Strings
 %
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -1255,12 +1255,13 @@ this diwhat am nner isi doing1
 
   Write functions for each of the following. They must use the tuple
   representation to return fractions.
-  \begin{enumerate}
-    \item Given two fractions as tuples, multiply them.
-    \item Given two fractions as tuples, divide them.
-    \item Given a list of fractions as a tuple, return the one that is
+
+  \begin{description}
+    \item[\pythoninline{multiply}] Given two fractions as tuples, multiply them.
+    \item[\pythoninline{divide}] Given two fractions as tuples, divide them.
+    \item[\pythoninline{smallest}] Given a list of fractions as tuples, return the one that is
       smallest in value.
-  \end{enumerate}
+  \end{description}
 
   Also write a small command-line interface such that the user running your
   script sees something like this:
@@ -1282,7 +1283,8 @@ Smallest fraction: 1/3
 \end{ex}
 
 \begin{infobox}{Supplementary Files}
-The testing script \texttt{test\_fractions.py} is available on Canvas.
+The testing script \texttt{test\_fractions.py} and template
+\texttt{fractions.py} are available on Canvas.
 
 Please see Lab 2 for instructions on running test scripts. Remember to also
 test your code manually.
@@ -1330,16 +1332,11 @@ Sum of odd numbers: 48
 \end{verbatimcode}
 \end{ex}
 
-\begin{infobox}{Supplementary Files}
-The testing script \texttt{test\_parity.py} is available on Canvas.
-\end{infobox}
-
-
 %%% TODO: merge with navigate.py
-\begin{ex}[navigate2.py] Modify \texttt{navigate.py} from lab 2 so that,
-  rather than performing each action as it is entered, it stores the inputs in a
-  list and runs them all at once after the ``stop'' command has been given.
-\end{ex}
+% \begin{ex}[navigate2.py] Modify \texttt{navigate.py} from lab 2 so that,
+%   rather than performing each action as it is entered, it stores the inputs in a
+%   list and runs them all at once after the ``stop'' command has been given.
+% \end{ex}
 
 \begin{ex}[sorted.py] Take in numbers as input until ``stop'' is entered. As you
   take in each number, insert it into a list so that the list is sorted in
@@ -1393,50 +1390,92 @@ The testing script \texttt{test\_sorted.py} is available on Canvas.
 \end{infobox}
 
 % TODO remove?
-\begin{ex}[sets.py]
-  Write the following functions:
+% \begin{ex}[sets.py]
+%   Write the following functions:
+%
+%   \begin{description}
+%     \item[\pythoninline{overlap()}] Given two lists, find a list of the elements
+%       common to both lists and return it.
+%     \item[\pythoninline{join()}] Given two lists, join them together to be one
+%       list without duplicate elements and return that list.
+%   \end{description}
+%
+%   Write a small command line interface that is not part of these functions that
+%   will look something like this:
+%
+%   \begin{verbatimcode}
+% List 1
+% Enter number >>> 1
+% Enter number >>> 2
+% Enter number >>> 4.5
+% List 1 is [1.0, 2.0, 4.5]
+%
+% List 2
+% Enter number >>> 2
+% Enter number >>> 4.5
+% Enter number >>> 5
+% List 2 is [2.0, 4.5, 5.0]
+%
+% Overlap is [2.0, 4.5]
+% Join is [1.0, 2.0, 4.5, 5.0]
+%   \end{verbatimcode}
+%
+% \end{ex}
 
-  \begin{description}
-    \item[\pythoninline{overlap()}] Given two lists, find a list of the elements
-      common to both lists and return it.
-    \item[\pythoninline{join()}] Given two lists, join them together to be one
-      list without duplicate elements and return that list.
-  \end{description}
+\begin{ex}[navigate.py] Write a program that takes directions from the command line
+    to draw a line. Let the user input ``left'', ``right'', ``forward'', or
+    ``stop''. Left and right turn the turtle left or right however many degrees
+    are entered, forward moves the turtle forward (however far you wish), and
+    stop ends the program. Please check the degrees for errors: they must be
+    between 0 and 360 degrees! (Yes, Turtle could handle negative degrees, but
+    we would like you to check.)
 
-  Write a small command line interface that is not part of these functions that
-  will look something like this:
+    Input:
 
   \begin{verbatimcode}
-List 1
-Enter number >>> 1
-Enter number >>> 2
-Enter number >>> 4.5
-List 1 is [1.0, 2.0, 4.5]
-
-List 2
-Enter number >>> 2
-Enter number >>> 4.5
-Enter number >>> 5
-List 2 is [2.0, 4.5, 5.0]
-
-Overlap is [2.0, 4.5]
-Join is [1.0, 2.0, 4.5, 5.0]
+Please enter a direction: forward
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: left
+How many degrees? -1
+Invalid number, not moving.
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: forward
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: left
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: right
+How many degrees? 45
+Please enter a direction: forward
+Please enter a direction: stop
   \end{verbatimcode}
+
+    Output:
+    \begin{center}
+%    \vspace{-5mm}
+    \includegraphics[width=1.0in]{img/navigate}
+%    \vspace{-10mm}
+  \end{center}
 
 \end{ex}
 
 \section{Extra Credit Exercise}
 
 Drawing a line on a computer is simple.
-Just specify the start and end points.
+Basically, all you need are start and end points.
 But what if you want to draw a curve?
-In that case we can use Bezier curves to draw many kinds of curves.
-The pen tool in Photoshop and the path tool in Gimp
-use Bezier curves to help an artist draw curves.
+In that case we can use B\'{e}zier curves to draw many kinds of curves.
+In fact, the pen tool in Photoshop and the path tool in Gimp use B\'{e}zier
+curves.
 
-We will focus on cubic Bezier curves.
-To draw a line, we need to indicate two points; but to draw
-a Bezier curve, we need to specify four points.
+We will focus on cubic B\'{e}zier curves.
+To draw a line we need to indicate two points; but to draw
+a cubic B\'{e}zier curve we need to specify four points.
 These are called control points.
 
 \begin{tabular}{cl}
@@ -1460,18 +1499,19 @@ Here are some example curves drawn with these control points:
 \includegraphics[width=0.32\textwidth]{img/bezier3.png}
 \end{multicols}
 
-The formula for a cubic Bezier curve with
+The formula for a cubic B\'{e}zier curve with
 control points $p_1, p_2, p_3$ and $p_4$ is as follows:
 $$B_3(t, p_1, p_2, p_3, p_4)
 = (1 - t)^3 p_1
 + 3 t (1 - t)^2 p_2
 + 3 t^2 (1 - t) p_3
 + t^3 p_4$$
+Remember $x^3$ in Python is calculated using \pythoninline{x ** 3}.
 The variable $t$ only goes from $0$ to $1$.
 It represents how far along the curved we've gone.
-For example, when $t=0.5$, 50\% of the curve has
+For example, when $t=0.5$, about half of the curve has
 been drawn. When $t=0$ or $t=1$ we are at the end points
-$p_1$ or $p_4$.
+$p_1$ or $p_4$, respectively.
 In case of 2-dimensional control points, such as
 \begin{align*}
 p_1 &= (p_1^x, p_1^y)
@@ -1483,12 +1523,12 @@ p_3 &= (p_3^x, p_3^y)
 p_4 &= (p_4^x, p_4^y)
 \end{align*}
 
-just apply the Bezier function to each element:
+just apply the B\'{e}zier function to each element:
 
 $$B_3(t, p_1, p_2, p_3, p_4) = (B_3(t, p_1^x, p_2^x, p_3^x, p_4^x), B_3(t, p_1^y, p_2^y, p_3^y, p_4^y))$$
 
 \begin{extraex}[bezier.py]
-In this exercise, you must generate and draw Bezier curves.
+In this exercise, you must generate and draw B\'{e}zier curves.
 Drawing will be done with Turtle. You must separate the code used to create the
 curves and draw them.
 The testing script expects a function
@@ -1496,7 +1536,7 @@ The testing script expects a function
 where the arguments are tuples representing coordinates of the four
 control points. This function must return a list of
 length \pythoninline{point_count} containing tuples.
-The middle element should be the cubic Bezier function evaluated at
+The middle element should be the cubic B\'{e}zier function evaluated at
 $t=0.5$, the first and last elements should be the function at $t=0$
 and $t = 1$.
 For example:
@@ -1508,18 +1548,23 @@ For example:
 >>> cubic_bezier(p1, p2, p3, p4, 3)
 [(0.0, 0.0), (-2.5, 0.625), (10.0, 5.0)]
 >>> cubic_bezier(p1, p2, p3, p4, 6)
-[(0.0, 0.0), (-0.88, 2.92), (-2.24, 1.76), (-2.16, -0.36), (1.28, -0.32), (10.0, 5.0)]
+[(0.0, 0.0), (-0.88, 2.92),
+ (-2.24, 1.76), (-2.16, -0.36),
+ (1.28, -0.32), (10.0, 5.0)]
 >>> len(cubic_bezier(p1, p2, p3, p4, 100))
 100
 \end{pyconcode}
 
 
-Your code must draw one or Bezier curves.
+Your code must draw one or B\'{e}zier curves.
 Drawings should look different if you change
 the \pythoninline{point_count}.
-Hint: use \pythoninline{turtle.goto(x, y)}.
 For coordinates
+
+\begin{center}
 \pythoninline{(0,0), (200,400), (200,0), (50, 200)}
+\end{center}
+
 and varying \pythoninline{point_count}, we get these
 curves:
 
@@ -1528,10 +1573,11 @@ curves:
 \end{center}
 \end{extraex}
 
+Hint: use \pythoninline{turtle.goto(x, y)}.
 See
 \begin{center}\url{http://pomax.github.io/bezierinfo/}\end{center}
-for more information on Bezier curves.
-To get an intuitive understanding of Bezier curves, try this
+for more information on B\'{e}zier curves.
+To get an intuitive understanding of B\'{e}zier curves, try this
 video game:
 \begin{center}\url{http://bezier.method.ac/}\end{center}
 
