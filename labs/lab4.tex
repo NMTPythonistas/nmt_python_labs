@@ -1,4 +1,4 @@
-% LAB 4: Dictionaries and Sets
+% LAB 5: Dictionaries and Sets
 % 
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
@@ -9,8 +9,8 @@
 \usepackage{IEEEtrantools}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 4: Dictionaries and Sets}
-\title{Lab 4: Dictionaries and Sets}
+\fancyhead[R]{Lab 5: Dictionaries and Sets}
+\title{Lab 5: Dictionaries and Sets}
 
 \begin{document}
 
@@ -172,7 +172,6 @@ jack
 {'donna', 'sarah jane', 'wilf', 'rose', 'martha', 'mickey', 'jack'}
 \end{pyconcode}
 
-\pagebreak
 \subsection{Summary}
 
 \begin{itemize}
@@ -505,13 +504,18 @@ idea of the list being a stack.
   Remember PEP 8, PEP 257, and the boilerplate code requirement.
 \end{warningbox}
 
-\begin{ex}[anagrams.py] Write a function that takes in two strings. If the strings
-  are anagrams of one another, return \lstinline{True}. If not, return
-  \lstinline{False}.
+\begin{ex}[anagrams.py] Write a function called \pythoninline{is_anagram} 
+  that takes in two strings. If the strings are anagrams of one another, 
+  return \lstinline{True}. If not, return \lstinline{False}.
 
   Two strings are \href{http://en.wikipedia.org/wiki/Anagram}{anagrams} of one
   another if the characters of one can be rearranged to make the other.
+  See the test file for examples.
 \end{ex}
+
+\begin{infobox}{Supplementary Files}
+The file \pythoninline{test_anagrams.py} is available on Canvas.
+\end{infobox}
 
 \begin{ex}[days.py] Write a function that takes four arguments -- day, month, and
     year as numbers, and weekday as MTWRFSU -- and converts this date to a
@@ -649,9 +653,15 @@ n 1
 t 4
 \end{verbatimcode}
 
-This should involve writing a function that takes in a string and returns a
-dictionary with these letters and counts.
+This should involve writing a function called \pythoninline{count_letters} that 
+takes in a string and returns a dictionary with these letters and counts.
 \end{ex}
+
+\begin{infobox}{Supplementary Files}
+The file \pythoninline{test_letter_count.py} is available on Canvas.
+Open it to see more examples.
+\end{infobox}
+
 \pagebreak
 \section{Submitting}
 
