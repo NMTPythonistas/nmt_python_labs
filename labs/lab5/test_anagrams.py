@@ -14,6 +14,7 @@ class TestAnagrams(unittest.TestCase):
                   ("madamcurie", "radiumcame", True),
                   ("MadamCurie", "radiuMCame", True),
                   ("ab", "bc", False),
+                  ("a", "aa", False),
                   ("An", "anagram is a type of word play", False),
                   ("William Shakespeare", "I am a weakish speller", False),
                   ("The creation of anagrams assumes an alphabet",
