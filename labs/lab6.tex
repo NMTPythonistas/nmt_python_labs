@@ -1,704 +1,573 @@
-% LAB 6: File I/O
+% LAB 5: Programming Competition
 % 
-% CSE/IT 107: Introduction to Programming
+% CSE/IT 107: Intro to Programming in Python
 % New Mexico Tech
 % 
-% Prepared by Russell White and Christopher Koch
-% Spring 2015
+% Prepared by Christopher Koch
+% Fall 2014
 \documentclass[11pt]{cselabheader}
+% formatting the problem
+\newcommand{\cop}[3]{\textbf{#1}~(#2 pts, filename: \texttt{#3})\quad}
+\usepackage{IEEEtrantools} 
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+% drawings in latex
+\usepackage{tikz}
 
-%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 6: File I/O}
-\title{Lab 6: File I/O}
+\fancyhead[R]{Lab 5: Programming Competition}
+\title{Lab 5: Programming Competition}
 
 \begin{document}
 
 \maketitle
 
-\pagenumbering{roman}
-\hrule
-\begin{quotation}
-``The danger that computers will become like humans is not as big as the danger
-that humans will become like computers.'' (``Die Gefahr, dass der Computer so
-wird wie der Mensch ist nicht so gro\ss, wie die Gefahr, dass der Mensch so wird
-wie der Computer.'')
-\end{quotation}
-\begin{flushright}
---- Konrad Zuse
-\end{flushright}
-
-\begin{quotation}
-``First, solve the problem. Then, write the code.''
-\end{quotation}
-\begin{flushright}
---- John Johnson
-\end{flushright}
-
-\begin{quotation}
-``I don’t need to waste my time with a computer just because I am a computer
-scientist.''
-\end{quotation}
-\begin{flushright}
---- Edsger W. Dijkstra
-\end{flushright}
-
 \hrule
 
-\section*{Introduction}
-\addcontentsline{toc}{section}{Introduction}
+\begin{quotation}
+  ``First, solve the problem. Then, write the code.''
+\end{quotation}
+\begin{flushright}
+  --- John Johnson
+\end{flushright}
 
-In previous labs, we taught you how to use functions, math, lists, strings, and
-the like. We will combine all that in this lab and teach you how to interact
-with files. This will lead us to do some exciting data analysis!
+\begin{quotation} ``Beware of bugs in the above code; I have only proved it
+  correct, not tried it.''
+\end{quotation}
+\begin{flushright}
+  --- Donald Knuth
+%\\\textit{Notes on the van Emde Boas construction of priority deques}
+%% From corresponde with Peter van Emde Boas about Priority Deques
+%% http://www-cs-faculty.stanford.edu/~uno/faq.html
+\end{flushright}
 
-\pagebreak
+\begin{quotation}
+  ``Openness always deserves recognition.'' (``Offenheit verdient immer
+  Anerkennung.'')
+\end{quotation}
+\begin{flushright}
+  --- Otto von Bismarck
+% \\\textit{Speeches in the second chamber of Prussian state diet
+% (parliament). November 24th, 1849.}
 
-\tableofcontents
+%% Reden in der preußischen Zweiten Kammer, 24. November 1849
+%% http://de.wikiquote.org/wiki/Otto_von_Bismarck
+%% Translation by Chris
+\end{flushright}
 
-\pagebreak
-\pagenumbering{arabic}
-\section{File I/O}
-Knowing how to work with files is important, since it lets us store and retrieve
-data beyond the scope of the single execution of a program. To open a file for
-reading or writing we will use the \pythoninline!open()! function. The following
-example opens a file and writes ``Hello World'' to it.
-
-\begin{python3code}
-output_file = open("hello.txt", "w")
-
-print("Hello World", file=output_file)
-output_file.close()
-\end{python3code}
-
-Files can also be written to by using \pythoninline!.write(contents)!. This
-method will write only the characters given to it, so a newline \lstinline{\\n}
-must be included for a newline.
-
-\begin{python3code}
-output_file = open("hello.txt", "w")
-
-output_file.write("Hello World\n")
-output_file.close()
-\end{python3code}
-
-The arguments to the \pythoninline!open()! function are, in order, the name of
-the file to open and the mode in which to open the file. ``w'' means that the
-file is to be opened in write mode. If the file does not exist, this will create
-the file. If it does exist, then the contents of the file will be cleared in
-preparation for the new ones.
-
-Other options include ``a'', which is similar to ``w'' but will not clear the
-contents of an existing file and will instead append the new data to the end,
-and ``r'' which will read the file instead. If ``r'' is used and the file does
-not exist, then an error will occur. The following code takes a filename as user
-input, then prints out the entire contents of that file.
-
-\begin{table}[!ht]
-  \centering
-  \begin{tabular}{ll}
-    Mode & What it does \\
-    \midrule
-    a & Create file if does not exist, open file, append contents to the end \\
-    w & Create file if does not exist, open file, write contents to the beginning
-    of file \\
-    r & Open file, permit reading only \\
-  \end{tabular}
-\end{table}
-
-\begin{python3code}
-filename = input("What file should be read? ")
-
-input_file = open(filename, "r")
-for line in input_file:
-    print(line, end="")
-
-input_file.close()
-\end{python3code}
-
-The additional concepts introduced in these examples are:
-
-\begin{itemize}
-\item The \pythoninline!print()! function can have an additional ``file'' parameter
-  passed to it to allow writing to a file. This causes it to send its output to
-  the file rather than the screen, though otherwise it performs identically.
-
-\item The \pythoninline!print()! function has an additional optional ``end''
-  parameter. This allows you to specify what should be printed after the main
-  string given to it. This is important because it defaults to \pythoninline!"\n"!,
-  which causes a newline after every print statement. By changing ``end'' to
-  \pythoninline!""! we prevent a newline from being added after every line of the
-  file is printed. This is because each line in the file already has a newline
-  at the end of it, so we don't need \pythoninline!print()! to add its own.
-
-\item \pythoninline!.close()! is used to properly tell Python that you are done
-  with a file and close your connection to it. This isn't \emph{strictly}
-  required, but without it you risk the file being corrupted or other programs
-  being unable to access that file.
-
-\item When reading from a file, Python can use a \pythoninline!for! loop to go
-  through each line in sequence. This works identically to if you think of the
-  file as a list with every line being a different element of the list. The
-  entirety of the file can also be read into a single string using the
-  \pythoninline!.read()! function.
-
-\begin{pyconcode}
->>> input_file = open("test.py", "r")
->>> contents = input_file.read()
->>> print(contents)
-filename = input("What file should be read? ")
-
-input_file = open(filename, "r")
-for line in input_file:
-    print(line, end="")
-
-input_file.close()
-\end{pyconcode}
-
-\item \pythoninline!.readlines()! can be used to read all of a file at once, though
-  it splits the file into a list. Each element of the list will be one line of
-  the file being read.
-\end{itemize}
-
-\subsection{Files Using \protect\pythoninline!with!}
-\label{sec:with}
-
-Since every file that you open should be closed after use, Python has an easy
-way to do this for you. Using the \pythoninline!with! command, your file will
-automatically be closed when the \pythoninline!with! block finished executing.
-
-\begin{python3code}
-filename = input("Enter filename: ")
-
-with open(filename, "r") as file:
-    for line in file:
-        print(line, end="")
-# file.close() is not necessary, because "with" closed it for us
-\end{python3code}
-
-\begin{warningbox}{Using \protect\pythoninline!with!}
-  Always use the \pythoninline!with! statement to deal with file I/O in Python.
-\end{warningbox}
+\hrule
 
 \pagebreak
-\section{Exceptions}
 
-An \emph{exception} is an error message in Python. When a certain operation
-encounters an error, it can \emph{raise} an exception that is then passed on to
-the user:
+\section{Introduction}
+This lab is solely a problem solving lab. There is nothing to turn in.
 
-\begin{pyconcode}
->>> 43 / 0
-Traceback (most recent call last):
-  File "<input>", line 1, in <module>
-ZeroDivisionError: division by zero
-\end{pyconcode}
+\section{Programming Competition}
+Please form groups of up to three with others in your lab. You will
+enter into the competition together and submit the same files.
 
-However, in a lot of cases you may want to handle an exception as a developer
-and not have it displayed to the user. This is where the \pythoninline!try! and
-\pythoninline!except! statements come in.
+%To submit your answers, find the scoreboard at 
+%\begin{center}
+%	\vspace{-5mm}
+%	\url{http://niedersfeld.cs.nmt.edu/scoreboard/}
+%	\vspace{-5mm}
+%\end{center}
+%Upon submission of your answer, someone will come and check the code to make
+%sure you actually found the answer using code and did not use the internet.
 
-When working with input and output it is important to check for exceptions.  
-\begin{itemize}
-  \item For example, when we try to open a file that does not exist we'd like to
-    exit the program safely or recover rather than observing the unexpected
-    results.
-  \item Exception handling in python consists of "try-except" blocks.  In a
-    "try-except" block we execute instructions in the \pythoninline!try! block
-    and catch errors in one or more following \pythoninline!except! blocks.  
-  \item The \pythoninline!except! block is only executed if an exception is
-    caught in the \pythoninline!try! block.
-  \item Additionally, when an error is
-    caught in the \pythoninline!try! block we stop executing commands in the
-    \pythoninline!try!  block and jump to the first \pythoninline!except! or
-    optional \pythoninline!finally! block.
-\end{itemize}
+To submit your answers, please notify a TA. The whiteboard will serve as the
+scoreboard for your lab. The TA will want to see the answer to the ``scoreboard
+submission.'' If the TAs are grading another team's submission,  move on to a
+new problem while waiting for them to be free.
 
-The following example throws a division by zero error and prints ``division by
-zero'':
+\textbf{Do not share the problem descriptions or the code with the other lab
+section.} Everyone needs to have an equally fair chance of doing well in this
+competition.
 
-\begin{python3code}
-prime = 7
+You may not use the internet to find answers to these problems. Think! If the
+concepts are unclear, please get help from a TA.
 
-try:
-    result = prime / 0
-    result = 7*42
-except ZeroDivisionError as err:
-    print(err)
-\end{python3code}
+\subsection{Extra Credit}
+This lab will not count for its own grade. Your standing in the competition 
+will count for extra credit on your lab final.
+The winners of your lab section will get 10\%, the second place will get
+9\%, and so on as extra credit on their final lab project. 
 
-Looking at the code above, since the error is thrown on line 5, line 6 is never
-executed.
+%You have to gain at least 20 points in the competition in order to qualify
+%for the extra credit.
 
-If you are experimenting with code and want to know the name of an exception
-that is thrown, take a look at the error message:
+\subsection{Requirements}
+Even though this lab ``only'' counts for extra credit, you have to stay the lab
+and try your best. \textbf{You will LOSE 10\% on your lab final if you do not
+stay and try your best.}
 
-\begin{pyconcode}
->>> float('obviously not convertable')
-Traceback (most recent call last):
-  File "<input>", line 1, in <module>
-ValueError: could not convert string to float: 'obviously not convertable'
-\end{pyconcode}
+You may choose to do any of the following problems. However, there is no credit
+for incomplete or incorrect submissions.
 
-The part highlighted in red here is the name of the error message,
-\pythoninline!ValueErrror!.
-
-Hence, if you are getting user input and want to check whether it is the correct
-type, use a try-except block around the conversion:
-
-\begin{python3code}
-try:
-    x = int(input('Enter an integer number: '))
-except ValueError:
-    print('You did not enter an integer!')
-else:
-    print('You entered {}'.format(x))
-\end{python3code}
-
-Notice that you can use an \pythoninline!else! block to be executed if no
-exception was thrown.
-
-Any \pythoninline!except!  block that does not list built-in
-exceptions will catch all exceptions not listed in previous
-\pythoninline!except! blocks.  For example, the following code will throw an
-error if the user enters anything but an integer:
-
-\begin{python3code}
-try:
-    x = int(input("Enter a number: "))
-except:
-    print("Unknown error.")
-    raise
-else:
-    print("You entered: " + str(x))
-\end{python3code}
-
-The \pythoninline!raise! keyword causes a stack trace and prints out additional
-information if an exception is encountered.  The \pythoninline!else! block is
-always optional and will always be executed if no exceptions are thrown in the
-\pythoninline!try! block.  There are many more built-in exceptions such as
-\pythoninline!IOError! that can be found here:
-
-\begin{center}
-\url{https://docs.python.org/3.2/library/exceptions.html}
-\end{center}
-
-If you try to open a file that does not exist for reading, Python will display
-an error message:
-
-\begin{pyconcode}
->>> open("not_a_file.txt", "r")
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-FileNotFoundError: [Errno 2] No such file or directory: 'not_a_file.txt'
-\end{pyconcode}
-
-In this case, the error is \pythoninline!FileNotFoundError!. Normally having an
-error occur will end your program, but we can use \pythoninline!try-except! in
-order to perform a special action in case of an error.
-
-\begin{itemize}
-  \item The \pythoninline!finally! block is where clean-up actions are performed
-    and is always executed after leaving the \pythoninline!try! block.
-\end{itemize}
-
-The following is a good example of using \pythoninline!with! and exception
-handling together.
-
-\begin{python3code}
-filename = input('Enter a filename >>> ')
-
-try:
-    with open(filename, 'r') as f:
-        sum = 0
-        for line in f:
-            sum += float(line)
-except FileNotFoundError:
-    print('Filename you entered is wrong')
-except ValueError:
-    print('The file you entered had a line containing a non-float element.')
-else:
-    print('Sum of all numbers in file is {}'.format(sum))
-finally:
-    print('Goodbye.')
-\end{python3code}
-
-%\section{Recursion}
-\pagebreak
-\section{Instantiating Turtles}
-Similarly to being able to open multiple files, we can also create multiple
-turtles to draw more complex designs. This is done using the
-\pythoninline!turtle.Turtle()! function. This function returns a turtle object,
-which we can call every other normal turtle function on.
-
-\begin{python3code}
-import turtle
-
-first = turtle.Turtle()
-second = turtle.Turtle()
-
-first.forward(50)
-second.forward(50)
-first.left(90)
-second.right(90)
-first.forward(50)
-second.forward(50)
-first.right(90)
-second.left(90)
-first.forward(50)
-second.forward(50)
-\end{python3code}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=1.0in]{img/turtle_prong}
-\end{figure}
-
-If we add a group of turtles to a list, we can easily apply the same commands to all of them, as in this example:
-
-\begin{python3code}
-import turtle
-
-turtles = []
-first = turtle.Turtle()
-first.speed(0)
-turtles.append(first)
-
-second = turtle.Turtle()
-second.speed(0)
-second.right(90)
-turtles.append(second)
-
-third = turtle.Turtle()
-third.speed(0)
-third.right(180)
-turtles.append(third)
-
-fourth = turtle.Turtle()
-fourth.speed(0)
-fourth.right(270)
-turtles.append(fourth)
-
-for i in range(200):
-    for turt in turtles:
-        turt.forward(i/5)
-        turt.left(10)
-\end{python3code}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.6\textwidth]{img/fancy_spiral}
-\end{figure}
+%You may use Google to help find solutions to the problems. However,
+%there are two conditions to this: (1) you \textbf{must}
+%cite the sources you use in your comments (URLs, etc) and (2) you \textbf{must}
+%understand the content you use from these sources. \textbf{Your grader will ask
+%you questions to make sure you understand.}
 
 \pagebreak
-\section{Matplotlib}
-Matplotlib is a Python library that provides MATLAB-like plotting functions.
-Simple plots such as bar graphs and line graphs are very easy to create using
-matplotlib.
+\subsection{Problems}
 
-Using the \pythoninline!.plot()! and \pythoninline!.bar()! methods of
-\pythoninline!matplotlib.pyplot!, we can quickly show line and bar graphs.
-\pythoninline!.plot()! and \pythoninline!.bar()! take a dataset for x and a
-dataset for y, with many more optional parameters such as \pythoninline!align!.
-These examples use data from
-\begin{center}
-  \url{http://nmt.edu/~olegm/382labs/2cities.csv}
-\end{center}
+% steal from 113 competition: make change in quarters, .... 
 
-\begin{itemize}
-  \item Data set is three columns: a data point number, the temperature in
-    Tucson, and the temperature in Eugene in degrees Celsius.
-\end{itemize}
+\begin{enumerate}[\text{Problem} {[}1{]}~]
+  \item \cop{Multiples of 3 and 5}{5}{multiples.py}
+    % project euler 1
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\textwidth]{img/line1.png}
-  \caption{Line plot example: temperature data from Tucson, AZ.}
-  \label{fig:line1}
-\end{figure}
+    If we list all the integers (natural numbers) below 10 that are
+    multiples of 3 or 5, we get 3, 5, 6, and 9. The sum of these multiples
+    is 23.
 
-The following code will show a line plot of the dataset. You can see the graph
-it produces in Figure~\ref{fig:line1}.
+    Write a program to find the sum of all the multiples of 3 or 5 below
+    1000.
 
-\begin{python3code}
-import matplotlib.pyplot as plt
+    \textit{Scoreboard submission:} The sum of all multiples of 3 or 5
+    below 1000.
 
-with open("2cities.csv", "r") as f:
-    lines = f.readlines()
+  \item \cop{Special Pythagorean Triplet}{10}{pythagoras.py}
+    % project euler 9
 
-temps = []
-for line in lines:
-    cols = line.split()
-    try:
-        if len(cols) > 1:
-            temps.append(float(cols[1]))
-    except ValueError:
-        pass # could not convert to float, must be first row with headers
+    A Pythagorean triplet is a set of three integers (natural numbers), $a
+    < b < c$ such that $a^2 + b^2 = c^2$.
 
-plt.plot(list(range(len(temps))), temps)
-plt.xlabel("Data point")
-plt.ylabel("Temperature in degrees Celsius")
-plt.title("Temperature in Tucson, AZ over 120 days")
-plt.show()
-\end{python3code}
+    For example, $a = 3, b = 4, c = 5$ fits: $3^2 + 4^2 = 9 + 16 = 25 =
+    5^2$.
 
-Next, we are trying to create a histogram of the data.
+    There exists exactly one Pythagorean triplet for which $a + b + c =
+    1000$.
 
-\begin{itemize}
-  \item A histogram is a bar graph where a bar represents
-    a temperature \emph{range}. We call one of these ranges a bin or a bucket.
-  \item 
-    For example, the temperatures in Tucson in the data set
-    range from 18$^\circ$ Celsius to 37$^\circ$ Celsius. We would create a
-    histogram spanning temperatures from $15^\circ$ to $40^\circ$ Celsius with
-    bins of size $5^\circ$ Celsius. That means a bin for $15$ to $20$ degrees
-    Celsius, a bin for $20$ to $25$ degrees Celsius, etc.
-\end{itemize}
+    \textit{Scoreboard submission:} Find the product $abc$ of that special
+    Pythagorean triplet.
 
-\begin{python3code}
-import matplotlib.pyplot as plt
+  \item \cop{Reducing Fractions}{10}{fractions.py}
+    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
 
-with open("2cities.csv", "r") as f:
-    lines = f.readlines()
+    Write a program that reads both the numerator and denominator of
+    a fraction and displays the reduced fraction. For simplicity, you
+    may assume that the numbers entered are less than 10,000. 
 
-temps = []
-for line in lines:
-    # columns in 2cities.csv are [data point number, tucson temp, eugene temp]
-    cols = line.split()
-    try:
-        if len(cols) > 1:
-            temps.append(float(cols[1]))
-    except ValueError:
-        pass # could not convert to float, must be first row with headers
+    For example:
 
-numbuckets = 5
-binnumbers = range(0, numbuckets)
-counts = []
-for bucketno in binnumbers:
-    bucket = []
-    for temp in temps:
-        if 15 + bucketno * 5 < temp < 15 + (bucketno + 1) * 5:
-            bucket.append(temp)
-    # Count how many temperatures are in this bucket.
-    # This count will be the height of the bar in the graph.
-    counts.append(len(bucket))
-
-xlabels = []
-for bucket in binnumbers:
-    xlabels.append("{} to {}C".format(15 + bucket * 5, 15 + (bucket + 1) * 5))
-
-plt.bar(binnumbers, counts, align="center")
-plt.xticks(binnumbers, xlabels)
-plt.xlabel("Temperature in Celsius")
-plt.ylabel("Number of times occured")
-plt.title("Histogram of Temperatures in Tucson, AZ")
-plt.show()
-\end{python3code}
-
-This code will produce this output of the input data sorted into 10 bins of size
-5 (not showing empty bins) as seen Figure~\ref{fig:bar1}.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\textwidth]{img/lab6_histo_tucson.png}
-  \caption{Input data sorted into 5 bins of size 5$^\circ$ Celsius.}
-  \label{fig:bar1}
-\end{figure}
-
-\subsection{More Documentation}
-
-\begin{itemize}
-  \item \pythoninline!.plot()! function documentation:
-    \begin{center}
-      \url{http://matplotlib.org/api/pyplot\_api.html#matplotlib.pyplot.plot}
-    \end{center}
-  \item \pythoninline!.bar()! function documentation:
-    \begin{center}
-      \url{http://matplotlib.org/api/pyplot\_api.html#matplotlib.pyplot.bar}
-    \end{center}
-  \item Documentation overview for \pythoninline{matplotlib.pyplot}:
-    \begin{center}
-      \url{http://matplotlib.org/api/pyplot\_summary.html}
-    \end{center}
-\end{itemize}
-
-\pagebreak
-\section{Exercises}
-\label{sec:ex}
-
-\begin{warningbox}{Using \protect\pythoninline!with!}
-  Always use the \pythoninline!with! statement to deal with file I/O in Python.
-  See Section~\ref{sec:with}.
-\end{warningbox}
-
-\begin{ex}[save.py] Write a program that takes in a filename, then takes in
-  a series of lines of input until a blank line is entered, writing each line to
-  the file with the given name. After the blank line is entered, properly close
-  the file before ending the program.
-\end{ex}
-
-\begin{ex}[word\_count.py] Write a program that
-  takes in a filename and string as input. Then print how many times that string
-  appears inside the chosen file. If the file does not exist, continue asking
-  for a filename until one is given that exists. Use your source code file as
-  test input.
-\end{ex}
-
-\begin{ex}[diff.py]
-  Write a ``diff'' program that prints out the differences, line by line, of
-  two files.  Your program should ask the user for the names of two files,
-  then print the differences between them.  Follow the format output as shown
-  below. Make sure to use proper error handling techniques for file I/O.
-
-  Example:
-
-  \begin{listing}[H]
-    \vspace{-0.5em}
     \begin{verbatimcode}
-John goes to work.
-Keith and Kyle went to the Ensiferum concert.
-Alice ate an apple pie.
-Joe cut down a tree.
-The dog jumped over the wall.
+Enter numerator: 4
+Enter denominator: 30
+Result: 2/15
     \end{verbatimcode}
-    \vspace{-0.5em}
-    \caption{file1.txt}
-    \vspace{-0.5em}
-  \end{listing}
 
-  \begin{listing}[H]
-    \vspace{-0.5em}
     \begin{verbatimcode}
-John goes to work.
-Coral went to a Kesha concert.
-Alice ate an apple pie.
-Joe planted a tree.
-The dog jumped over the wall.
+Enter numerator: 25
+Enter denominator: 5
+Result: 5/1
     \end{verbatimcode}
-    \vspace{-0.5em}
-    \caption{file2.txt}
-    \vspace{-0.5em}
-  \end{listing}
+
+    \textit{Hints}: See Appendix~\ref{sec:gcd} to find out what a GCD is 
+    and what Euclid's algorithm is. 
+
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+
+    % problem 2
+  \item \cop{Distances Between Points}{15}{distances.py}
+    The distance between a pair of points $(x_0, y_0)$ and $(x_1, y_1)$ is
+    equal to $$\sqrt{(x_0 - x_1)^2 + (y_0 - y_1)^2}$$
+    
+    Write a program that takes in a series of points, terminated by a blank
+    line, then prints out all but the first point, sorted by the distance from
+    the first point.
+    
+    For example:
+    
+    \begin{verbatimcode}
+Enter a point: 0,0
+Enter a point: 1,1
+Enter a point: 5,5
+Enter a point: 3,3
+Enter a point: 100,100
+Enter a point:
+Result: (1, 1) (3, 3) (5, 5) (100, 100)
+    \end{verbatimcode}
+    
+    \begin{verbatimcode}
+Enter a point: 3,5
+Enter a point: 2,0
+Enter a point: 7,-2
+Enter a point: 3,0
+Enter a point: 12,-2
+Enter a point: 
+Result: (3, 0) (2, 0) (7, -2) (12, -2)
+    \end{verbatimcode}
+    
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+
+  \item \cop{Crossing Hands}{20}{hands.py}
+    % source: http://programmingpraxis.com/2014/02/25/crossing-hands/
+
+    The hands of an analog clock occassionally cross as they revolve around
+    the dial. Write a program that determines the times at which times the 
+    hour and minute hands cross. Assume that
+    the hands move continuously (that is, the hands do not jump between
+    numbers -- the times at which they cross may not necessarily be
+    integer values).
+
+    \textit{Scoreboard submission} Add up the hours, minutes, and seconds
+    of all of the times that the hour and minute hands cross in one
+    twelve-hour cycle and submit it in the format \texttt{H-M-S}, 
+    for example \texttt{30-167-421}.
+
+
+  \item \cop{Anagram Distance}{20}{anadist.py}
+    
+    The anagram distance between two words is how many letters must be added
+    or removed from one of the words in order to make it an anagram of the
+    other. For example, ``dog'' and ``godot'' have an anagram distance of $2$
+    while ``sandwich'' and ``witch'' have an anagram distance of $5$.
+
+    You can assume that input will be purely lowercase letters and will be
+    no longer than 20 characters.
+
+    \begin{verbatimcode}
+Enter first word: sandwich
+Enter second word: witch
+Result: 5
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Enter first word: interwebs
+Enter second word: spiderman
+Result: 8
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission} Contact a TA for test cases.
+
+
+  \item \cop{Contiguous Regions}{25}{regions.py}
+    
+    Write a program that takes in a square region and determines whether two
+    points are connected. The region will consist of three characters: \texttt{.},
+    \texttt{x}, and \texttt{s}. There will be exactly two \texttt{s}'s while there
+    can be any number of \texttt{.}'s and \texttt{x}'s. Your program will output
+    either \texttt{connected} or \texttt{not connected}, depending on if the two
+    \texttt{s} can be travelled between by only moving across \texttt{.}'s and only
+    moving in cardinal directions.
+
+    Your program should know when to stop accepting output without requiring a specific
+    ``stop'' command.
+
+    \begin{verbatimcode}
+..s.
+.xxx
+.x..
+...s
+connected
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+....x
+.s.x.
+..x..
+.x.s.
+x....
+not connected
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission} Contact a TA for test cases.
+
+    
+
+  \item \cop{Finding a Path}{25}{path.py}
+    %Source: ENMU Codecomp, Spring 2014 (Tyler Cecil)
+    
+    Write a program that finds the shortest valid path between two nodes in a graph.
+    Each of the lines of input will be the name of a node (a single, upper-case
+    character), followed by a list of the nodes connected to that node. The final
+    line of input will a single upper-case letter, designating the destination node.
+    You must output a sequence of letters that represents the shortest path to the
+    destination. Assume you start at the first given node. You can assume a path will
+    always exist. There will be less than 10 nodes given. If multiple valid paths
+    exist, any will be accepted.
+    
+    For example:\\
+    \begin{minipage}{.33\linewidth}
+      \begin{minipage}{.8\linewidth}
+        \begin{lstlisting}[style=bash]
+A B D
+B C D
+C
+
+A B C
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+    \begin{minipage}{.33\linewidth}
+      \begin{minipage}{.8\linewidth}
+        \begin{lstlisting}[style=bash]
+A B C D
+B F
+D B C
+F E
+E
+
+A B F E
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+    \begin{minipage}{.33\linewidth}
+      \begin{minipage}{.8\linewidth}
+        \begin{lstlisting}[style=bash]
+A B C D E
+B C D E F
+C D E F
+D E F
+E F
+F
+
+A B F
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+
+  \item \cop{Block Areas}{35}{blocks.py}
+    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
+    % sample solution: http://www.mathopenref.com/coordpolygonarea2.html
+
+    Write a program to take in a series of coordinate points and finds the 
+    enclosed area. The points will all be non-negative integers not 
+    exceeding 100. All angles in the shape will be 90 degrees. You can 
+    assume that no shape will be defined by more than 20 points. 
+
+    For example:
+    \begin{figure}[!ht]
+      \centering
+      \begin{tikzpicture}[scale=0.7]
+        \node at (2,1) {};% {(2,1)};
+        \node at (4,1) {};% {(4,1)};
+        \node at (4,3) {};% {(4,3)};
+        \node at (3,3) {};% {(3,3)};
+        \node at (3,5) {};% {(3,5)};
+        \node at (1,5) {};% {(1,5)};
+        \node at (1,4) {};% {(1,4)};
+        \node at (2,4) {};% {(2,4)};
+
+        \draw (1,5) -- (3,5);
+        \draw (1,5) -- (1,4);
+        \draw (1,4) -- (2,4);
+        \draw (2,4) -- (2,1);
+        \draw (2,1) -- (4,1);
+        \draw (4,1) -- (4,3);
+        \draw (4,3) -- (3,3);
+        \draw (3,3) -- (3,5);
+      \end{tikzpicture}
+      \caption{Example shape}
+    \end{figure}
+
+    \emph{Hint:} The order that the points are input shouldn't matter
+    for your algorithm.
+
+    \begin{verbatimcode}
+Enter number of points: 8
+Enter point: 2 1
+Enter point: 4 1
+Enter point: 4 3
+Enter point: 3 3
+Enter point: 3 5
+Enter point: 1 5
+Enter point: 1 4
+Enter point: 2 4
+
+Area: 7
+    \end{verbatimcode}
+
+    \textit{Scoreboard submission:} Find the area of the polygon described
+    by the following 14 coordinates.
+    \[
+      (0, 0)~(6, 0)~(6, 1)~(2, 1)~(2, 2)~(7, 2)~(7, 1)
+    \]
+    \[
+      (9, 1)~(9, 4)~(2, 4)~(2, 3)~(1, 3)~(1, 2)~(0, 2)
+    \]
+
+    \begin{figure}[!ht]
+      \centering
+      \begin{tikzpicture}[scale=0.7]
+        \node at (0,0) {};% {(2,1)};
+        \node at (6,0) {};% {(4,1)};
+        \node at (6,1) {};% {(4,3)};
+        \node at (2,1) {};% {(3,3)};
+        \node at (2,2) {};% {(3,5)};
+        \node at (7,2) {};% {(1,5)};
+        \node at (7,1) {};% {(1,4)};
+        \node at (9,1) {};% {(2,4)};
+        \node at (9,4) {};
+        \node at (2,4) {};
+        \node at (2,3) {};
+        \node at (1,3) {};
+        \node at (1,2) {};
+        \node at (0,2) {};
+
+        \draw (0,0) -- (6,0);
+        \draw (6,0) -- (6,1);
+        \draw (6,1) -- (2,1);
+        \draw (2,1) -- (2,2);
+        \draw (2,2) -- (7,2);
+        \draw (7,2) -- (7,1);
+        \draw (7,1) -- (9,1);
+        \draw (9,1) -- (9,4);
+        \draw (9,4) -- (2,4);
+        \draw (2,4) -- (2,3);
+        \draw (2,3) -- (1,3);
+        \draw (1,3) -- (1,2);
+        \draw (1,2) -- (0,2);
+        \draw (0,2) -- (0,0);
+      \end{tikzpicture}
+      \caption{Scoreboard submission shape}
+    \end{figure}
+
+  \item \cop{Nontransitive Dice}{50}{dice.py}
+    %Source: ACM Freshman Coding Competition, Fall 2013 (Rob Kelly)
+
+    A set of dice is called nontransitive if it contains three dice,
+    A, B, and C, with the property that A rolls higher than B more
+    than half the time, and B rolls higher than C more than half
+    the time, but it's not true that A rolls higher than C more than
+    half the time. Intuitively, the existence of such a set might not
+    seem possible - If $A > B > C$, how could it be true that $C > A$?
+    But consider the following set of dice:
+
+    \begin{itemize}
+      \item Die A has sides 3, 3, 3, 3, 3, and 6
+      \item Die B has sides 2, 2, 2, 5, 5, and 5
+      \item Die C has sides 1, 4, 4, 4, 4, and 4
+    \end{itemize}
+    By checking all possible die-rolls, we can see that A will roll
+    higher than B 21 out of 36 times, and likewise B will roll higher
+    than C 21 out of 36 times, but C will roll higher than A 25 out
+    of 36 times. Neat, right?
+
+    Write a program that reads an arbitrary number of six-sided dice
+    configurations followed by a single 0, and displays
+    ``Nontransitive'' if there exists a subset of at least three
+    nontransitive dice in the set, or ``Transitive'' if no such
+    nontransitive subset exists. One die will be input per line,
+    with the numbers of each side seperated by spaces. All side
+    numbers will be between 0 and 999. The order of the input dice
+    does not matter.
+
+    \begin{minipage}{.5\linewidth}
+      \begin{minipage}{.9\linewidth}
+        \begin{lstlisting}[style=bash]
+5 5 5 1 1 1
+3 3 3 3 3 3
+4 4 4 4 0 0
+6 6 2 2 2 2
+8 6 7 5 3 0
+0
+
+Nontransitive
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+    \begin{minipage}{.5\linewidth}
+      \begin{minipage}{.9\linewidth}
+        \begin{lstlisting}[style=bash]
+1 2 3 4 5 6
+7 8 9 10 11 12
+10 20 30 40 50 60
+100 200 300 400 500 600
+0
+
+Transitive
+        \end{lstlisting}
+      \end{minipage}
+    \end{minipage}
+
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+\end{enumerate}
+\pagebreak
+
+\begin{appendices}
+  \section{Reducing Fractions -- GCD and Euler's Algorithm}
+  \label{sec:gcd}
+
+  Reducing a fraction involves dividing the numerator and denominator by
+  the same integers until there is nothing that divides both numerator and
+  denominator anymore.
+
+  For example, $\frac{60}{6} = \frac{30}{3} = \frac{10}{1} = 10$. First, I
+  divided both numerator and denominator by $2$, and then by $3$. 
+
+  This is where the concept of a GCD comes in. GCD stands for ``greatest
+  common divisor'' -- given two numbers such as $60$ and $6$, the GCD is the
+  greatest whole number that both numbers are divisible by. Since both $60$ 
+  and $6$ are divisible by $6$ and since there is no greater integer than $6$
+  that one can divide them both by, the $\gcd(60, 6) = 6$. For another
+  example, $\gcd(40, 6) = 2$.
+
+  If you think about it more, it becomes clear that one can reduce a fraction
+  by dividing both the numerator and denominator by the GCD of both. In
+  essence, given a fraction $\frac{a}{b}$, the reduced fraction would be:
+  \[
+    \frac{a}{b} = \frac{~\frac{a}{\gcd(a, b)}~}{~\frac{b}{\gcd(a, b)}}
+  \]
+
+  How do we find the GCD though? Here, a neat algorithm called Euclid's
+  algorithm comes in. Euclid's algorithm takes advantage of the fact that
+  when an integer $a$ is divided by another integer $b$, we get a quotient
+  $q$ and a remainder $r$. This is called the Division Algorithm (see
+  Theorem~\ref{thm:div}). 
+
+  \begin{thm}[Division Algorithm] \label{thm:div}
+    Given integers $a$ and $b$, where $b > 0$, there exist unique integers
+    $q$ (the quotient) and $r$ (the remainder) such that 
+    \[ a = bq + r\text{, where }0 \leq r < b. \]
+  \end{thm}
+
+  For example, when $5$ is divided by $2$, we get a quotient of $2$ and a
+  remainder of $1$, since $5 = 2 \times 2 + 1$. You have already taken 
+  advantage of this algorithm when you validated credit card numbers. 
+
+  In Python, we can find the quotient by doing integer division and the remainder
+  using the modulus operator \%.
+
+  \subsection{Euclid's Algorithm}
+
+  Euclid's algorithm finds the GCD by repeatedly using the division
+  algorithm. Given integers $a$ and $b$, where $a > b$, that we want to find 
+  the GCD of, we
+  find the quotient $q$ and $r$. If the remainder is $0$, $b$ is the GCD. If
+  the remainder is not $0$, we repeat the same steps, but we let $a = b$ and
+  $b = r$.
+
+  In essence, it goes:
+  \begin{IEEEeqnarray*}{RCLCL}
+    a &=& bq + r &\text{ where }&0 \leq r < b \\
+    b &=& rq_2 + r_2 &\text{ where }&0 \leq r_2 < r \\
+    r &=& r_2q_3 + r_3 &\text{ where }&0 \leq r_3 < r_2
+  \end{IEEEeqnarray*}
+  So we are saying that $\gcd(a, b) = \gcd(b, r) = \gcd(r, r_2) = \cdots =
+  \gcd(r_n, 0) = r_n$. Notice that the quotient is not used at all, only the
+  given integers $a, b$ and the remainder $r$ matter.
+
+  Notice that $r_n < \cdots < r_3 < r_2 < r < b$.
+
+  It seems natural to write this with recursion. In pseudocode, with recursion:
 
   \begin{verbatimcode}
-Enter file name 1 >>> file1.txt
-Enter file name 2 >>> file2.txt
+euclids(a, b) 
+  if(a < b) 
+    return euclids(b, a)
 
-2c2
-< Keith and Kyle went to the Ensiferum concert.
----
-> Coral went to a Kesha concert.
-4c4
-< Joe cut down a tree.
----
-> Joe planted a tree.
+  r = a modulus b
+  if(r == 0)
+    return b
+  else
+    return euclids(b, r)
   \end{verbatimcode}
-\end{ex}
+  % TODO use algorithmicx pseudocode typesetting
 
-
-\begin{ex}[navigate3.py] Modify navigate.py so that, rather than take
-  instructions from the command line, it reads from a file (specified by user
-  input) to determine what the turtle will do. Additionally, you will be adding
-  the ``split'' command. This command will use instantiation of new turtles in
-  order to draw multiple lines at once. Every new command will apply to every
-  turtle that currently exists. The file will have on instruction per line. The
-  possible instructions are:
-
-  \begin{description}
-    \item[forward X] Move all turtles forward X.
-    \item[left X] Turn all turtles X degrees to the left.
-    \item[right X] Turn all turtles X degrees to the right.
-    \item[split X] Split all turtles into new turtles. Each new turtle will be turned X degrees to the right.
-  \end{description}
-
-  In order to properly implement split, you will probably need to look up the
-turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
-  \pythoninline!.setheading()!, \pythoninline!.heading()!, \pythoninline!.penup()!, and
-  \pythoninline!.pendown()!. Turtle documentation is available at
-  \begin{center}
-    \url{https://docs.python.org/3/library/turtle.html}
-  \end{center}
-
-  You will also likely use the \pythoninline!.split()! command when getting
-  input, which splits a single string into an array around the string's
-  spaces.
-  \begin{pyconcode}
->>> print("this is a phrase".split())
-['this', 'is', 'a', 'phrase']
->>> print("hi,hi,hi".split(",")
-['hi', 'hi', 'hi']
-  \end{pyconcode}
-
-  \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
-
-  Sample Input File:
-
-  \begin{verbatimcode}
-forward 50
-left 20
-split 40
-forward 50
-left 20
-split 40
-forward 50
-left 20
-split 40
-forward 50
-left 20
-split 40
-forward 50
-left 20
-  \end{verbatimcode}
-
-  Sample Output
-  \begin{center}
-    \includegraphics[width=0.4\textwidth]{img/nav3_example}
-  \end{center}
-\end{ex}
-\begin{ex}[testscores.py]
-  Download the file \texttt{actsat.txt} provided on Canvas. It contains the
-  following data by column:
-
-  \begin{enumerate}[\text{Column} 1~]
-    \item 2-letter state/territory code (includes DC)
-    \item \% of graduates in that state taking the ACT
-    \item Average composite ACT score
-    \item \% of graduates in that state taking the SAT
-    \item Average SAT Math score
-    \item Average SAT Reading score
-    \item Average SAT Writing score
-  \end{enumerate}
-
-  Each SAT section is out of 800 points, while the ACT is out of 36 points.
-
-  Write a program that generates the following charts:
-  \begin{enumerate}
-    \item A histogram of average ACT scores with bins of size $1$ between a
-      score of $18$ and $24$.
-    \item A double bar chart that compares the composite ACT score with the
-      total score of all 3 SAT tests for all 51 states/territories.
-    \item Produce the same chart as in part 2, but only for states in which
-      less than 50\% take the ACT and more than 50\% take the SAT. (There
-      should be 21 states/territories like this.)
-  \end{enumerate}
-
-  You may have to do some research on the matplotlib website on how to create
-  a double bar graph. Take a look at the example code on their website.
-  Remember to label your axes and title your graph.
-\end{ex}
-
-\section{Submitting}
-
-You should submit your code as a tarball. It should contain all files
-used in the exercises for this lab. The submitted file should be named
-\begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab6.tar.gz}
-\end{center}
-
-\begin{center}
-  \textbf{Upload your tarball to Canvas.}
-\end{center}
-
-\listoftheorems
-
-
+\end{appendices}
 \end{document}
