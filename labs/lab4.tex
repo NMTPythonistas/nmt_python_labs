@@ -1,0 +1,344 @@
+% LAB 4 Review of Previous Labs
+%
+% CSE/IT 107: Introduction to Programming
+% New Mexico Tech
+%
+\documentclass[11pt]{cselabheader}
+
+%%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[R]{Lab 4: Sequences Review}
+\title{Lab 4: Sequences Review}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{roman}
+\hrule
+
+\begin{quotation}
+When we describe a language, we should pay particular attention to the means that the language provides for combining simple ideas to form more complex ideas. Every powerful language has three mechanisms for accomplishing this:
+\begin{description}
+\item[primitive expressions,] which represent the simplest entities the language is concerned with,
+\item[means of combination,] by which compound elements are built from simpler ones, and
+\item[means of abstraction,] by which compound elements can be named and manipulated as units.
+\end{description}
+\end{quotation}
+\begin{flushright}
+--- Structure and Interpretation of Computer Programs
+\end{flushright}
+\hrule
+
+\tableofcontents
+
+\pagebreak
+\pagenumbering{arabic}
+\section{Review}
+This is a short summary of the content covered in class or in the lab PDFs.
+
+\subsection{Style and Documentation}
+Remember to adhere to PEP 8 and PEP 257. See lab 3 for more details.
+Code) found at
+\begin{center}
+  \url{https://www.python.org/dev/peps/pep-0008/}
+
+  \url{https://www.python.org/dev/peps/pep-0257/}
+\end{center}
+
+\subsection{Boilerplate}
+\label{subsec:boiler}
+
+As you recall, the following boilerplate code is required for every lab
+exercise from now on. Read lab 3 for more details and to learn why this is
+needed.
+
+\begin{infobox}{Boilerplate Requirement}
+  Wrong:
+
+  \begin{python3code}
+def greeting_for(recipient):
+    """Returns a string with a greeting meant for the given recipient."""
+    return "Hello {}".format(recipient)
+
+user_name = input("What is your name? ")
+print(greeting_for(user_name))
+  \end{python3code}
+
+  Right:
+
+  \begin{python3code}
+def greeting_for(recipient):
+    """Returns a string with a greeting meant for the given recipient."""
+    return "Hello {}".format(recipient)
+
+def main():
+    user_name = input("What is your name? ")
+    print(greeting_for(user_name))
+
+if __name__ == "__main__":
+    main()
+  \end{python3code}
+\end{infobox}
+
+
+\pagebreak
+\subsection{Lists}
+Here are some of the methods you can use to manipulate lists.
+Again, read lab 3 if any of them are unfamiliar.
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Function/method & What it does \\
+    \midrule
+    \pythoninline!lst.append(x)! & appends \pythoninline!x! to \pythoninline!lst! \\
+    \pythoninline!lst.insert(i, x)! & inserts \pythoninline!x! at index \pythoninline!i!
+    in \pythoninline!lst! (moves other elements) \\
+    \pythoninline!x = lst.pop()! & removes last element of \pythoninline!lst! and
+    places it in \pythoninline!x! \\
+    \pythoninline!lst.reverse()! & reverses the order of elements in list
+    \pythoninline!lst! in place\\
+    \pythoninline!lst.sort()! & sort \pythoninline!lst! in place \\
+    \pythoninline!len(lst)! & number of elements in \pythoninline!lst! \\
+    \pythoninline!sum(lst)! & sum the elements of \pythoninline!lst! (only works when
+    \pythoninline!+! works between the elements)\\
+    \bottomrule
+  \end{tabular}
+  \caption{List methods and functions, where \texttt{lst} is a variable that
+  holds a list. You may also type \pythoninline{help(list)} in the console to
+  get more information.}
+  \label{tab:lists}
+\end{table}
+
+\subsection{Strings}
+Here's a summary of the string methods and what they do:
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    String method/function & What it does \\
+    \midrule
+    \pythoninline!len(s)! & Length of \pythoninline!s! \\
+    \pythoninline!r = s.upper()! & replaces all lowercase characters with uppercase
+    and puts that in \pythoninline!r! \\
+    \pythoninline!r = s.lower()! & replaces all uppercase characters with lowercase
+    and puts that in \pythoninline!r! \\
+    \pythoninline!r = s.capitalize()! & lower case of \pythoninline!s! with capital
+    first letter and puts that in \pythoninline!r! \\
+    \pythoninline!r = s.isnumeric()! & \pythoninline!r! is \pythoninline!True! if
+    \pythoninline!s! contains only numbers and \pythoninline!False! otherwise\\
+    \pythoninline!r = s.isalpha()! & \pythoninline!r! is \pythoninline!True! if
+    \pythoninline!s! contains only alphabet characters and \pythoninline!False!
+    otherwise\\
+    \pythoninline!r = s.islower()! & \pythoninline!r! is \pythoninline!True! if
+    \pythoninline!s! contains only lower case characters and \pythoninline!False!
+    otherwise\\
+    \pythoninline!r = s.isupper()! & \pythoninline!r! is \pythoninline!True! if
+    \pythoninline!s! contains only upper case characters and \pythoninline!False!
+    otherwise\\
+    \pythoninline!r = s.replace(x, y)! & replace any occurence of \pythoninline!x! in
+    \pythoninline!s! with \pythoninline!y! and put result in \pythoninline!r! \\
+    \pythoninline!r = s.join([a, b, c])! &
+    convert each element in the list to a string and join them with \pythoninline!s!
+    \\
+    \bottomrule
+  \end{tabular}
+  \caption{String methods and functions, where \texttt{s} is a string}
+  \label{tab:str}
+\end{table}
+
+\pagebreak
+\section{Exercises}
+\label{sec:ex}
+
+%\begin{warningbox}{Requirements}
+%  Remember to adhere to PEP 8, PEP 257, and the boilerplate code requirement.
+%\end{warningbox}
+
+\begin{warningbox}{Requirements}
+  Please be aware of the coding requirements: PEP 8, PEP 257
+  and the boilerplate code.
+\end{warningbox}
+
+\begin{ex}[all\_different.py]
+For this exercise you will write a function called  \texttt{check} that takes
+a list as an argument. It returns \pythoninline{True} if no element is
+repeated or if the list is empty. It should return \pythoninline{False}
+otherwise; this means there are two or more elements in the list that are equal.
+
+To test this file you can import it while in the Python console or you can
+create a main function.
+
+\begin{pyconcode}
+>>> import all_different
+>>> all_different.check([])
+True
+>>> all_different.check([1,2,3])
+True
+>>> all_different.check([7,5,1,2,4])
+True
+>>> all_different.check([1,1])
+False
+>>> all_different.check([1,2,3,4,5,1])
+False
+\end{pyconcode}
+\end{ex}
+
+\begin{ex}[four\_bulls.py]
+This exercise depends on the previous exercise \texttt{all\_different.py}. The \texttt{check} function will be used. Please see the template files \texttt{all\_different.py} and \texttt{four\_bulls.py}.
+
+For this exercise you must write a Python script implementing the game
+called Bulls and Cows. Here's how it works.
+The computer should generate a 4-digit secret number, but for this lab we will
+always set the secret number to 4271. Note all the digits in the secret
+number  must be different. Then the user tries to guess the computer's number
+by typing four digit numbers. The computer should print a warning if the four
+digits are not all different or if something other than four digits is typed.
+You should use import and use the function you wrote for the previous exercise.
+
+If the user's input is valid, the computer should print the number of digits
+that were guessed correctly. If the matching digits are in their right
+positions, they are called ``bulls'', if they are in the secret key but in
+different positions, they are ``cows''. Example:
+
+\begin{description}
+\item[Secret number:] 4271
+\item[Guess:] 1234
+\item[Answer:] 1 bull and 2 cows. The bull is ``2'', the cows are ``4'' and ``1''.
+\end{description}
+
+Output should resemble the following.
+
+\begin{verbatimcode}
+Try to guess the secret number.
+Please type four unique digits: 1234
+1 bulls and 2 cows
+Please type four unique digits: 4234
+Repeated digits detected, please try again.
+Please type four unique digits: 12
+Four digits must be entered, please try again.
+Please type four unique digits: no?
+Four digits must be entered, please try again.
+Please type four unique digits: 123456789
+Four digits must be entered, please try again.
+Please type four unique digits: 4231
+3 bulls and 0 cows
+Please type four unique digits: 4237
+2 bulls and 1 cows
+Please type four unique digits: 4271
+4 bulls, you win!
+\end{verbatimcode}
+
+Hint: represent the secret key as a list instead of a single number.
+\end{ex}
+
+\begin{infobox}{Supplementary Files}
+Download the template files \texttt{all\_different.py} and \texttt{four\_bulls.py}
+from Canvas.
+\end{infobox}
+
+\begin{ex}[luhns.py] Luhn's algorithm
+ (\url{http://en.wikipedia.org/wiki/Luhn_algorithm}) provides a quick way to
+ check if a credit card is valid or not. The algorithm consists of four
+ steps.
+
+ \begin{enumerate}
+
+\item We will use the Diners Club card number 38520000023237 as an example.
+
+ \begin{center}
+ \begin{tabular}{llllllllllllll}
+3 & 8 & 5 & 2 & 0 & 0 & 0 & 0 & 0 & 2 & 3 & 2 & 3 & 7\\
+ \end{tabular}
+ \end{center}
+
+\item Starting with the second to last digit (ten's column digit),
+     multiply every other digit by two.
+ \begin{center}
+ \begin{tabular}{llllllllllllll}
+6 & 8 & 10 & 2 & 0 & 0 & 0 & 0 & 0 & 2 & 6 & 2 & 6 & 7
+ \end{tabular}
+ \end{center}
+
+\item Sum all the digits of the resulting number.
+ Note that for 10, you also sum its digits: $(1 + 0)$; for an 18, you would do $1 + 8$.
+ \[ 6 + 8 + (1 + 0) + 2 + 0 + 0 + 0 + 0 + 0 + 2 + 6 + 2 + 6 + 7 = 40 \]
+
+ \item If the total sum modulo by 10 is zero, then the card is valid;
+     otherwise it is invalid.
+ For this example, the last step is to check if $40$ modulus 10 is equal to 0, which is true.
+ So the card is valid.
+ \end{enumerate}
+
+ Write a program that implements Luhn's Algorithm for validating credit
+ cards. It should ask the user to enter a credit card number and tell the
+ user whether it is valid or not.
+
+ \emph{There must be a separate function called \texttt{validate}
+that takes in a card number and
+ validates it.}
+\end{ex}
+
+\begin{infobox}{Supplementary Files}
+You will find the testing script \texttt{test\_luhns.py} (available on Canvas)
+very useful for this next exercise. Read the Exercises section in lab 2 if you
+don't remember how to run testing scripts.
+\end{infobox}
+
+\begin{ex}[navigate2.py] Modify \texttt{navigate.py} from lab 3 so that,
+  instead of performing each action as it is entered, it stores the inputs in a
+  list and runs them all at once after the ``stop'' command has been given.
+\end{ex}
+
+\section{Extra Credit Exercise}
+
+\begin{extraex}[flatten.py]
+Write a function \texttt{flatten} that takes a list containing either
+lists or integers, strings or booleans and returns a list containing
+nothing but the integers, strings and booleans that were inside every
+sublist. There is no limit to how deeply lists will be nested.
+For example:
+
+\begin{pyconcode}
+>>> import flatten
+>>> flatten.flatten([])
+[]
+>>> flatten.flatten([1,2,3])
+[1,2,3]
+>>> flatten.flatten([1,2,3,[4]])
+[1,2,3,4]
+>>> flatten.flatten([[1,2],[3,[[[[[[[4]]]]]]]], 5])
+[1,2,3,4,5]
+\end{pyconcode}
+
+The list does not have to return the elements in the same order.
+You may assume there are no repeated elements.
+For example:
+\begin{pyconcode}
+>>> flatten.flatten([[[[]]],[["string", True], 5], 7])
+[True, 7, 5, "string"]
+\end{pyconcode}
+\end{extraex}
+
+\begin{infobox}{Supplementary Files}
+The testing script \texttt{test\_flatten.py} is available on Canvas.
+\end{infobox}
+
+\pagebreak
+\section{Submitting}
+
+You should submit your code as a tarball. It should contain all files
+used in the exercises for this lab. The submitted file should be named
+\begin{center}
+  \texttt{cse107\_firstname\_lastname\_lab4.tar.gz}
+\end{center}
+
+\begin{center}
+  \textbf{Upload your tarball to Canvas.}
+\end{center}
+
+\listexercises
+\listextraexercises
+
+\end{document}
