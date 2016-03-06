@@ -1,4 +1,4 @@
-% LAB 5: Programming Competition
+% LAB 6: Programming Competition
 % 
 % CSE/IT 107: Intro to Programming in Python
 % New Mexico Tech
@@ -14,8 +14,8 @@
 % drawings in latex
 \usepackage{tikz}
 
-\fancyhead[R]{Lab 5: Programming Competition}
-\title{Lab 5: Programming Competition}
+\fancyhead[R]{Lab 6: Programming Competition}
+\title{Lab 6: Programming Competition}
 
 \begin{document}
 
@@ -55,6 +55,8 @@
 \end{flushright}
 
 \hrule
+
+\tableofcontents
 
 \pagebreak
 
@@ -110,13 +112,11 @@ for incomplete or incorrect submissions.
 %you questions to make sure you understand.}
 
 \pagebreak
-\subsection{Problems}
+\section{Problems}
+Please contact a TA when you have finished solving a problem.
 
-% steal from 113 competition: make change in quarters, .... 
-
-\begin{enumerate}[\text{Problem} {[}1{]}~]
-  \item \cop{Multiples of 3 and 5}{5}{multiples.py}
-    % project euler 1
+\begin{prob}[multiples.py]
+    \textbf{Multiples of 3 and 5} (5 points)
 
     If we list all the integers (natural numbers) below 10 that are
     multiples of 3 or 5, we get 3, 5, 6, and 9. The sum of these multiples
@@ -554,7 +554,7 @@ Transitive
 
   Notice that $r_n < \cdots < r_3 < r_2 < r < b$.
 
-  It seems natural to write this with recursion. In pseudocode, with recursion:
+  It seems natural to write this recursively. In pseudocode:
 
   \begin{verbatimcode}
 euclids(a, b) 
