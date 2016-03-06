@@ -127,50 +127,46 @@ Please contact a TA when you have finished solving a problem.
 
     \textit{Scoreboard submission:} The sum of all multiples of 3 or 5
     below 1000.
+\end{prob}
 
-  \item \cop{Special Pythagorean Triplet}{10}{pythagoras.py}
-    % project euler 9
 
-    A Pythagorean triplet is a set of three integers (natural numbers), $a
-    < b < c$ such that $a^2 + b^2 = c^2$.
+\begin{prob}[change.py]
+\textbf{Coin Change} (5 points)
 
-    For example, $a = 3, b = 4, c = 5$ fits: $3^2 + 4^2 = 9 + 16 = 25 =
-    5^2$.
+Write a program that determines the minimum amount of (dollar) coins and 
+bills to be used to change a certain amount of money. That is, find the largest
+number of 100s, then 50s, then 20s, then 10s, etc for the change. Assume that
+you are changing less than \$500.  Assume that you are using the following
+denominations:
 
-    There exists exactly one Pythagorean triplet for which $a + b + c =
-    1000$.
+Bills: 100, 50, 20, 10, 5, 2, 1 dollars
 
-    \textit{Scoreboard submission:} Find the product $abc$ of that special
-    Pythagorean triplet.
+Coins: 25, 10, 5, 1 cents
 
-  \item \cop{Reducing Fractions}{10}{fractions.py}
-    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
+For example: the optimal change for 27.91 would be
+\begin{multicols}{6}
+\begin{description}
+\item[\$100:] 0
+\item[\$50:] 0
+\item[\$20:] 2
+\item[\$10:] 0
+\item[\$5:] 1
+\item[\$2:] 1
+\item[\$1:] 0
+\item[\$0.25:] 3
+\item[\$0.10:] 1
+\item[\$0.05:] 1
+\item[\$0.01:] 3
+\end{description}
+\end{multicols}
 
-    Write a program that reads both the numerator and denominator of
-    a fraction and displays the reduced fraction. For simplicity, you
-    may assume that the numbers entered are less than 10,000. 
+\textsl{Scoreboard submission:} contact a TA for test cases. 
+\end{prob}
 
-    For example:
 
-    \begin{verbatimcode}
-Enter numerator: 4
-Enter denominator: 30
-Result: 2/15
-    \end{verbatimcode}
+\begin{prob}[distances.py]
+    \textbf{Distances between Points} (15 points)
 
-    \begin{verbatimcode}
-Enter numerator: 25
-Enter denominator: 5
-Result: 5/1
-    \end{verbatimcode}
-
-    \textit{Hints}: See Appendix~\ref{sec:gcd} to find out what a GCD is 
-    and what Euclid's algorithm is. 
-
-    \textit{Scoreboard submission:} Contact a TA for test cases.
-
-    % problem 2
-  \item \cop{Distances Between Points}{15}{distances.py}
     The distance between a pair of points $(x_0, y_0)$ and $(x_1, y_1)$ is
     equal to $$\sqrt{(x_0 - x_1)^2 + (y_0 - y_1)^2}$$
     
@@ -200,9 +196,13 @@ Enter a point:
 Result: (3, 0) (2, 0) (7, -2) (12, -2)
     \end{verbatimcode}
     
-    \textit{Scoreboard submission:} Contact a TA for test cases.
+    \textit{Scoreboard submission:} contact a TA for test cases.
+\end{prob}
 
-  \item \cop{Crossing Hands}{20}{hands.py}
+
+\begin{prob}[hands.py]
+    \textbf{Crossing Hands} (20 points)
+
     % source: http://programmingpraxis.com/2014/02/25/crossing-hands/
 
     The hands of an analog clock occassionally cross as they revolve around
@@ -216,10 +216,58 @@ Result: (3, 0) (2, 0) (7, -2) (12, -2)
     of all of the times that the hour and minute hands cross in one
     twelve-hour cycle and submit it in the format \texttt{H-M-S}, 
     for example \texttt{30-167-421}.
+\end{prob}
 
 
-  \item \cop{Anagram Distance}{20}{anadist.py}
-    
+\begin{prob}[pythagoras.py]
+    \textbf{Special Pythagorean Triple} (10 points)
+
+    A Pythagorean triplet is a set of three integers (natural numbers), $a
+    < b < c$ such that $a^2 + b^2 = c^2$.
+
+    For example, $a = 3, b = 4, c = 5$ fits: $3^2 + 4^2 = 9 + 16 = 25 =
+    5^2$.
+
+    There exists exactly one Pythagorean triplet for which $a + b + c =
+    1000$.
+
+    \textit{Scoreboard submission:} Find the product $abc$ of that special
+    Pythagorean triplet.
+\end{prob}
+
+\begin{prob}[fractions.py]
+    \textbf{Reducing Fractions} (10 points)
+
+    % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
+
+    Write a program that reads both the numerator and denominator of
+    a fraction and displays the reduced fraction. For simplicity, you
+    may assume that the numbers entered are less than 10,000. 
+
+    For example:
+
+    \begin{verbatimcode}
+Enter numerator: 4
+Enter denominator: 30
+Result: 2/15
+    \end{verbatimcode}
+
+    \begin{verbatimcode}
+Enter numerator: 25
+Enter denominator: 5
+Result: 5/1
+    \end{verbatimcode}
+
+    \textit{Hints}: See Appendix~\ref{sec:gcd} to find out what a GCD is 
+    and what Euclid's algorithm is. 
+
+    \textit{Scoreboard submission:} Contact a TA for test cases.
+\end{prob}
+
+
+\begin{prob}[anadist.py]
+    \textbf{Anagram Distance} (20 points)
+
     The anagram distance between two words is how many letters must be added
     or removed from one of the words in order to make it an anagram of the
     other. For example, ``dog'' and ``godot'' have an anagram distance of $2$
@@ -241,10 +289,12 @@ Result: 8
     \end{verbatimcode}
 
     \textit{Scoreboard submission} Contact a TA for test cases.
+\end{prob}
 
 
-  \item \cop{Contiguous Regions}{25}{regions.py}
-    
+\begin{prob}[regions.py]
+    \textbf{Contiguous Regions} (25 points)
+
     Write a program that takes in a square region and determines whether two
     points are connected. The region will consist of three characters: \texttt{.},
     \texttt{x}, and \texttt{s}. There will be exactly two \texttt{s}'s while there
@@ -274,10 +324,12 @@ not connected
     \end{verbatimcode}
 
     \textit{Scoreboard submission} Contact a TA for test cases.
-
+\end{prob}
     
 
-  \item \cop{Finding a Path}{25}{path.py}
+\begin{prob}[path.py]
+    \textbf{Finding a Path} (25 points)
+
     %Source: ENMU Codecomp, Spring 2014 (Tyler Cecil)
     
     Write a program that finds the shortest valid path between two nodes in a graph.
@@ -330,8 +382,12 @@ A B F
     \end{minipage}
 
     \textit{Scoreboard submission:} Contact a TA for test cases.
+\end{prob}
 
-  \item \cop{Block Areas}{35}{blocks.py}
+
+\begin{prob}[blocks.py]
+    \textbf{Block areas} (35 points)
+
     % Source: ACM Freshman Coding Competition, Fall 2013 (Russell White)
     % sample solution: http://www.mathopenref.com/coordpolygonarea2.html
 
@@ -341,8 +397,7 @@ A B F
     assume that no shape will be defined by more than 20 points. 
 
     For example:
-    \begin{figure}[!ht]
-      \centering
+    \begin{center}
       \begin{tikzpicture}[scale=0.7]
         \node at (2,1) {};% {(2,1)};
         \node at (4,1) {};% {(4,1)};
@@ -362,8 +417,9 @@ A B F
         \draw (4,3) -- (3,3);
         \draw (3,3) -- (3,5);
       \end{tikzpicture}
-      \caption{Example shape}
-    \end{figure}
+
+      Example shape.
+    \end{center}
 
     \emph{Hint:} The order that the points are input shouldn't matter
     for your algorithm.
@@ -391,8 +447,7 @@ Area: 7
       (9, 1)~(9, 4)~(2, 4)~(2, 3)~(1, 3)~(1, 2)~(0, 2)
     \]
 
-    \begin{figure}[!ht]
-      \centering
+    \begin{center}
       \begin{tikzpicture}[scale=0.7]
         \node at (0,0) {};% {(2,1)};
         \node at (6,0) {};% {(4,1)};
@@ -424,10 +479,15 @@ Area: 7
         \draw (1,2) -- (0,2);
         \draw (0,2) -- (0,0);
       \end{tikzpicture}
-      \caption{Scoreboard submission shape}
-    \end{figure}
 
-  \item \cop{Nontransitive Dice}{50}{dice.py}
+      Scoreboard submission shape.
+    \end{center}
+\end{prob}
+
+
+\begin{prob}[dice.py]
+    \textbf{Nontransitive dice} (50 points)
+
     %Source: ACM Freshman Coding Competition, Fall 2013 (Rob Kelly)
 
     A set of dice is called nontransitive if it contains three dice,
@@ -486,7 +546,7 @@ Transitive
     \end{minipage}
 
     \textit{Scoreboard submission:} Contact a TA for test cases.
-\end{enumerate}
+\end{prob}
 \pagebreak
 
 \begin{appendices}
