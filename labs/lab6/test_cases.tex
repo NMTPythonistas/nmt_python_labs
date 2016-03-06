@@ -1,56 +1,61 @@
-\documentclass[twocolumn,9pt]{extarticle}
-\usepackage[top=1.0in, left=1.0in, right=1.0in, bottom=1.0in]{geometry}
-%\usepackage{mathtools}
+\documentclass[9pt]{extarticle}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true]{microtype}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{booktabs}
 \usepackage{amssymb}
 \usepackage{upgreek}
 \usepackage{tabulary}
 \usepackage{gensymb}
 \usepackage{titlesec}
 \usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{mdframed}
 
+\setlength\columnsep{5em}
 
+\setlength{\parindent}{0}
+
+\newcommand\testcase[2]{%
+\begin{mdframed}
+\begin{tabular}{ll}
+\textbf{Input} & \textbf{Output} 
+\\
+% #1 and #2 may contain newlines
+\begin{tabular}[t]{@{}l@{}}#1\end{tabular}
+&
+\begin{tabular}[t]{@{}l@{}}#2\end{tabular}
+\end{tabular}
+\end{mdframed}
+}
 \begin{document}
 
+\begin{multicols}{2} 
+\tableofcontents
+\end{multicols}
+
+\midrule
+
+\begin{multicols}{2}
 \section{Multiples of 3 and 5}
-\subsubsection*{Output}
+\textbf{Output:}
 \texttt{233168}
 
 \section{Special Pythagorean Triplet}
-\subsubsection*{Output}
-\texttt{31875000}
+\testcase{---}{31875000}
 %a = 200, b = 375, c = 425
 
 \section{Reducing Fractions}
 \subsection*{Test 1:}
-\subsubsection*{Input}
-\texttt{21\\42}
-
-\subsubsection*{Output}
-\texttt{1/2}
+\testcase{21\\42}{1/2}
 
 \subsection*{Test 2:}
-\subsubsection*{Input}
-\texttt{1\\1}
+\testcase{1\\1}{1/1}
 
-\subsubsection*{Output}
-\texttt{1/1}
+\subsection*{Test 3:}
+\testcase{8908\\3524}{2227/881}
 
-\subsection*{Text 3:}
-\subsubsection*{Input}
-\texttt{8908\\3524}
-
-\subsubsection*{Output}
-\texttt{2227/881}
-
-\subsection*{Text 4:}
-\subsubsection*{Input}
-\texttt{2091\\5457}
-%91909*2**8*5**2*75*93
-%91909*2**8*5**2*96*32
-
-\subsubsection*{Output}
-\texttt{41/107}
-
+\subsection*{Test 4}
+\testcase{2091\\5457}{41/107}
 
 %\subsection*{Text 5:}
 %\subsubsection*{Input}
@@ -60,6 +65,61 @@
 
 %\subsubsection*{Output}
 %\texttt{2325/1024}
+
+\section{Coin Change}
+\subsection*{Test 1:}
+\subsubsection*{Input}
+\texttt{\$99.99}
+\subsubsection*{Output}
+\texttt{%
+\$ 100: 0\\
+\$  50: 1\\
+\$  20: 2\\
+\$  10: 0\\
+\$   5: 1\\
+\$   2: 2\\
+\$   1: 0\\
+\$0.25: 3\\
+\$ 0.1: 2\\
+\$0.05: 0\\
+\$0.01: 3
+}
+
+\subsection*{Test 2:}
+
+\subsubsection*{Input}
+\texttt{\$123.89}
+\subsubsection*{Output}
+\texttt{%
+\$ 100: 1\\
+\$  50: 0\\
+\$  20: 1\\
+\$  10: 0\\
+\$   5: 0\\
+\$   2: 1\\
+\$   1: 1\\
+\$0.25: 3\\
+\$ 0.1: 1\\
+\$0.05: 0\\
+\$0.01: 4}
+
+\subsection*{Test 3:}
+
+\subsubsection*{Input}
+\texttt{\$289.84}
+\subsubsection*{Output}
+\texttt{%
+\$ 100: 2\\
+\$  50: 1\\
+\$  20: 1\\
+\$  10: 1\\
+\$   5: 1\\
+\$   2: 2\\
+\$   1: 0\\
+\$0.25: 3\\
+\$ 0.1: 0\\
+\$0.05: 1\\
+\$0.01: 3}
 
 \section{Distances Between Points}
 \subsection*{Test 1:}
@@ -244,16 +304,12 @@ A B C D E F
 \texttt{Nontransitive}
  
 \subsection*{Test 2:}
-\subsubsection*{Input}
-\texttt{125 512 513 514 515 516\\
+\testcase{125 512 513 514 515 516\\
 729 730 731 216 217 218\\
 597 859 785 978 597 859\\
 343 344 345 999 346 347\\
 867 530 986 753 98 675\\
-0}
- 
-\subsubsection*{Output}
-\texttt{Nontransitive}
+0}{Nontransitive}
  
 \subsection*{Test 3:}
 \subsubsection*{Input}
@@ -282,16 +338,14 @@ A B C D E F
 \texttt{Transitive}
  
 \subsection*{Test 5:}
-\subsubsection*{Input}
-\texttt{141 421 356 237 309 504\\
+\testcase{141 421 356 237 309 504\\
 880 168 872 420 969 807\\
 85 69 67 18 75 37\\
 69 48 07 31 76 67\\
 9 7 3 7 9 9\\
 0 7 3 2 4 7\\
-0}
- 
-\subsubsection*{Output}
-\texttt{Transitive}
+0}{Transitive}
 
+
+\end{multicols}
 \end{document}
