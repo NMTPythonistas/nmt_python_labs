@@ -58,7 +58,6 @@
 % Outline support
 %\usepackage{outlines}
 % URL formatting
-%%% What is \usepackage{} ?
 \usepackage{}\usepackage{url}
 % Image/graphic support
 \usepackage{graphicx}
@@ -232,10 +231,10 @@ numberwithin=section]{extraex}
 
 % this replaces \listoftheorems
 \renewcommand{\listtheoremname}{List of Files to Submit}%
-\newcommand{\listexercises}{%
+\newcommand{\listofexercises}{%
 \listoftheorems[ignoreall, show={ex}]}
 
-\newcommand{\listextraexercises}{%
+\newcommand{\listofextraexercises}{%
 \renewcommand{\listtheoremname}{List of Files to Submit for Extra Credit}%
 \listoftheorems[ignoreall, show={extraex}]%
 \renewcommand{\listtheoremname}{List of Files to Submit}}
