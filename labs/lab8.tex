@@ -1,16 +1,16 @@
-% LAB 7: Advanced Functions
-% 
+% LAB 8: Review and Markov
+%
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
-% 
+%
 % Prepared by Russell White and Christopher Koch
 % Fall 2014
 \documentclass[11pt]{cselabheader}
-\usepackage{IEEEtrantools}
+\usepackage{caption}
 
 %%%%%%%%%%%%%%%%%% SET TITLES %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[R]{Lab 7: Advanced Functions}
-\title{Lab 7: Advanced Functions}
+\fancyhead[R]{Lab 8: Review and Markov}
+\title{Lab 8: Review and Markov}
 
 \begin{document}
 
@@ -18,655 +18,315 @@
 
 \hrule
 \begin{quotation}
-``I think there is a world market for maybe five computers.''
+``Holy shit, you geeks are badass.''
 \end{quotation}
 \begin{flushright}
---- Thomas J. Watson (Founder and Chairman, IBM)
+  --- Pam (\emph{Archer})
+\end{flushright}
+
+
+\begin{quotation}
+``Simplicity is prerequisite for reliability.''
+\end{quotation}
+\begin{flushright}
+--- Edsger W. Dijkstra
+\end{flushright}
+
+
+\begin{quotation}
+``The truth is a trap: you can not get it without it getting you; you cannot get
+the truth by capturing it, only by its capturing you.''
+\end{quotation}
+\begin{flushright}
+--- S{\o}ren Kierkegaard
 \end{flushright}
 
 \begin{quotation}
-``Judge a man by his questions, rather than his answers.''
+  ``A police radar’s effective range is 1.0 km, and your roommate plot to drop water balloons on students entering your dorm. Your window is 20 m above the ground. (a) If an ammeter with 0.10-V resistance is 1000 V. When measured with a 100-Hz frequency shift, what’s the speed with which cesium atoms must be ``tossed'' in the positive x-direction with speed v0 but undergoing acceleration of a proton is a hydrogen atom?''
 \end{quotation}
 \begin{flushright}
---- Voltaire
-\end{flushright}
-
-\begin{quotation}
-``The limits of your language are the limits of your world.''
-\end{quotation}
-\begin{flushright}
---- Ludwig Wittgenstein
+  --- \href{http://infohost.nmt.edu/~rkelly/physbot.html}{Professor Markov's Physics Revue}
 \end{flushright}
 
 \hrule
 
+\pagebreak
 \section{Introduction}
-\emph{Congratulations!} In your last few weeks of lab, you have reached the
-basic knowledge required to work with Python in a useful way. You have learned
-all the tools required to write basic programs in Python and you have applied
-them successfully in the programming competition.
 
-This week, we will teach you a bit more about functions and give you a small
-window to a different kind of programming: functional programming. Here, the
-word ``functional'' is not to mean ``practical'' (although it is very
-practical!), but that it has to do with a lot of functions.
+%%% not just; also random numbers and maybe file input
+Today's lab will be a small project. We will only be covering random number
+generation, but this is primarily an application of what you already know.
+
+You will be writing a program that generates
+\href{http://en.wikipedia.org/wiki/Markov_chain}{Markov chains} from an input
+file. Markov chains are the simplest way for to generate sentences that
+imitate the style of the chain's input text. They are based on figuring out the
+%%% clarify
+likelihood of a word following another word by looking at existing bodies of
+text (for example, Wikipedia). They then generate statements by choosing a
+starting word and then repeatedly choosing words from the words that follow
+the previous word chosen, based on the input text.
+
+As an example, this was a markov chain generated based on conversations between
+Russell and Chris about Python lab (given the starting word ``CS''):
+\begin{quotation}
+``CS grad student claiming to stare again for you? Cool! Where?''
+\end{quotation}
+
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\linewidth]{img/garkov}
+  \caption*{\href{http://joshmillard.com/garkov/}{Garkov}:
+    A Garfield comic generated using Markov chains.}
+  \label{garkov}
+\end{figure}
+
+\tableofcontents
 
 \pagebreak
-\section{Advanced Functions}
-\label{sec:advfun}
 
-\subsection{Keyword Arguments}
-\label{subsec:adv.args}
+\section{Markov Chains}
+\label{sec:markov}
 
-Many of the built-in functions we have been using, such as \pythoninline{input}
-and \pythoninline{print}, accept a variable number of arguments. We can do the
-same thing with our own functions by specifying default values for our
-arguments:
+%%% input file?
+A Markov chain is a method of randomly generating a sequence based on a set of
+input data. In this lab, we will be using Markov chains to generate sentences
+based on an input text file. In order to do this, we must understand how Markov
+chains work.
 
-\begin{pyconcode}
->>> def celebrate(times=1):
-...     i = 1
-...     while i <= times:
-...         print("Yay!")
-...         i += 1
-...
->>> celebrate()
-Yay!
->>> celebrate(5)
-Yay!
-Yay!
-Yay!
-Yay!
-Yay!
-\end{pyconcode}
+%%% more detail
+The basic steps of creating Markov chains are:
+\begin{enumerate}
+  \item Select a random starting word to start our new sentence.
+  \item From all the words that ever follow that word in the input sequence,
+    choose one. Add that word to the end of our new sentence.
+  \item Continue selecting randomly from the words that can possibly follow the
+    current last word of our sentence until either there are no possible
+    choices or we have made a sentence as long as desired.
+\end{enumerate}
 
-Here, we have a function called \pythoninline!celebrate! which takes the
-parameter variable \pythoninline!times!. If that parameter is left unspecified
-in a function call, it will take the \emph{default value} of 1.
+For a simple example, let's generate Markov phrases using inputs of ``Hello,
+how are you?'' and ``Where are my keys?''. If we convert these sentences into a
+graph showing the possible results, we would get Figure \ref{mark_ex}.
 
-Note what happens for each call of this function. The first time it only prints
-\pythoninline{"Yay!"} once, since the default argument is \pythoninline{1},
-while the second call overwrites the default value and prints it five times.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.2\linewidth]{img/markov_example.png}
+  \caption{A graphical representation of the Markov possibilities for ``Hello,
+    how are you?'' and ``Where are my keys?''}
+  \label{mark_ex}
+\end{figure}
 
-While you are allowed to have a function that has some arguments with default
-values and some without, you must always put those with default values after
-those without any, so that Python will know which arguments go into which values
-if you do not include all of them when calling the function. This is because
-arguments from a function call are usually matched in order by their position.
-
-\begin{pyconcode}
->>> def test(a, b=5, c, d=6):
-...     print(a, b, c, d)
-  File "<stdin>", line 1
-SyntaxError: non-default argument follows default argument
->>> def test(a, c, b=5, d=6):
-...     print(a, b, c, d)
-...
->>> test(2, 3)
-2 5 3 6
->>> test(2, 3, 10)
-2 10 3 6
->>> test(2, 3, 10, 100)
-2 10 3 100
-\end{pyconcode}
-
-We call the arguments that are non-default arguments \emph{positional
-arguments}, while the default arguments are called \emph{keyword arguments}.
-
-Sometimes we might want to include some default arguments while excluding
-others. We do this by specifying which of the arguments we wish to pass a value
-to:
-
-\begin{pyconcode}
->>> def test(a=0, b=0, c=0, d=0):
-...     print(a, b, c, d)
-...
->>> test(c=10)
-0 0 10 0
->>> test(d=5, c=6)
-0 0 6 5
-\end{pyconcode}
+In this graph, each arrow represents a choice we can take based on the last
+word we added to our sentence, continuing until there are no valid paths to
+%%% any word can be a starting word
+take. Looking at the graph, it's pretty easy to see there are four possible
+outputs if we start our chain with either ``Hello,'' or ``Where'':
 
 \begin{itemize}
-  \item If a function's caller supplies both positional and keyword arguments,
-    all positional parameters must precede all keyword parameters.
-  \item Keyword parameters may occur in any order.
-  \item The function call must supply at least as many parameters as the
-    function has positional arguments.
-  \item If the caller supplies more positional parameters than the function has
-    positional arguments, parameters are matched with keyword arguments
-    according to their position.
+  \item Hello, how are you?
+  \item Hello, how are my keys?
+  \item Where are you?
+  \item Where are my keys?
 \end{itemize}
 
-\subsection{Recursion}
-\label{subsec:recur}
-Recursion is the idea of a function calling itself. This can be useful in a wide
-variety of situations, but it can also be easy to misuse. Let us first look at a
-good example:
+For a more complex example, let's use the input phrase ``There is a fifth
+dimension, beyond that which is known to man. It is a dimension as vast as space
+and as timeless as infinity.''. If we were to convert this sentence into a graph
+representing the possible choices to make at each step, it would look something
+like Figure \ref{twilight}.
 
-\begin{python3code}
-def factorial(n):
-  if n <= 1:
-    return 1
-  else
-    return n * factorial(n-1)
-\end{python3code}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\linewidth]{img/twilight_zone.png}
+  \caption{A graphical representation of the Markov possibilities for \emph{The
+    Twilight Zone}'s introduction.}
+  \label{twilight}
+\end{figure}
 
-Notice that this is just another way to repeat a statement, similar to a loop.
-In a loop, we have to specify when to stop repeating something, and we have to
-do the same thing with recursion; otherwise, it would run forever.
+Here's how that graph can be constructed with starting word ``There''.
+\begin{itemize}
+  \item The initial word is ``There'', so our only option for a next word is
+  ``is''.
+  \item ``is'' is followed by ``a'' twice and ``known'' once because it has two
+  arrows to ``a'' and one to ``known''. This means that, when we randomly
+  choose the next word, we have a $\frac{2}{3}$ chance to choose ``a'' and a
+  $\frac{1}{3}$ chance to choose ``known''.
+  \item If we choose to continue to ``a'', there are two next words: ``fifth''
+  and ``dimension''. Either can be chosen with a probablity of $\frac{1}{2}$.
+\end{itemize}
 
-As an example, see this simple \emph{bad} case of recursion:
+So, a few possible new sentences we could generate by starting with ``There'' are:
+\begin{itemize}
+  \item There is a dimension as infinity.
+  \item There is a fifth dimension, beyond that which is a fifth dimension,
+    beyond that which is a dimension as vast as vast as space and as infinity.
+  \item There is known to man. It is known to man. It is a dimension as space
+    and as infinity.
+\end{itemize}
 
-\begin{python3code}
-def test():
-    test()
-\end{python3code}
+As you can see, Markov chains have a tendency to make sentences which almost
+make sense. This is because every individual pairing of two words will make
+sense, but the combinations of the pairings might not. For example, ``as vast''
+and ``vast as'' can both make sense given the right context, but ``vast as vast
+as vast as vast'' is nonsense. We can help alleviate this problem by taking into
+account the last 2 (or 3, or 4...) words when choosing the next word instead of
+just the last one, but this requires a far larger input or it will result in the
+output being the same as the input.
 
-If this function is called, it will continue to call itself infinitely until
-Python prints out an error message and quits. This is because the function calls
-itself every time it is called -- there is no case where the function ends
-without calling itself again. The case in which the recursion ends is called a
-\emph{base case} and it is important to include one in every recursive function.
-Here is a modified version of the above code that allows the initial call to
-specify a value limiting how many times the recursive call should be made:
+\section{Random Numbers}
+\label{sec:random}
+You may find the module \pythoninline{random} to be especially useful when
+creating Markov chains. Below is a brief example of some common functions
+inside \pythoninline{random}.
 
-\begin{python3code}
-def test(x):
-    if x > 0:
-        test(x - 1)
-\end{python3code}
-
-As an example of a more complex way of using recursion to solve a problem, here
-is an example of a recursive function that will sum a list where each element is
-either an integer or another list containing integers and lists:
-
-\begin{python3code}
-def sum_lists(x):
-    total = 0
-    for i in x:
-        if type(i) == int:
-            total += i
-        else:
-            total += sum_lists(i)
-    return total
-
-data = [1, 2, [3, 4, [5, 6], 7], 8, 9]
-print(sum_lists(data))
-\end{python3code}
-
-This program outputs \pythoninline{45}, which is the sum of all the elements of the
-list, including all of the lists inside it. Notice that the base case in this
-function is if every element of the list passed to \pythoninline{sum_lists} is an
-\pythoninline{int}.
-
-\subsection{Summary}
-
-\begin{description}
-\item[Default arguments] Function arguments may have a default value, for
-    example:
-    \begin{python3code}
-import time
-def print_error(message, now = time.time()):
-  print("Error: {} at time {}!".format(message, now))
-
-print_error('All wrong')
-print_error('All more wrong', now = 1.5)
-    \end{python3code}
-
-    Default arguments must be specified after arguments that do not have
-    defaults.
-
-  \item[Recursion] Recursion occurs when a function calls itself. There must be
-    a base case to stop the recursion!
-\end{description}
-
-\pagebreak
-\section{First-class Functions}
-\label{subsec:first}
-In Python, functions are so-called ``first-class citizens''. This means
-essentially that they can be used in the same way as variables: they can be
-assigned to variables, passed to, and returned from functions, as well as stored
-in collections. As an example, here is a short program that stores functions
-inside of a list, then calls each one of those functions with the same argument.
-
-\begin{python3code}
-def print_backwards(string):
-    print(string[::-1])
-
-def print_half(string):
-    print(string[:len(string)//2])
-
-def print_question(string):
-    print("Why do you want me to print '{}'?".format(string))
-
-# Just use the name of the function!
-print_functions = [print, print_backwards, print_half, print_question]
-
-for func in print_functions:
-    func("Hello, World!")
-\end{python3code}
-
-\begin{verbatimcode}
-Hello, World!
-!dlroW ,olleH
-Hello,
-Why do you want me to print 'Hello, World!'?
-\end{verbatimcode}
-
-This can lead to cool pieces of code where a function takes another function as
-an argument and uses it in some way. For example, we can use it to write a
-function that composes two other functions and calls them with a given $x$. In
-math, this would be like taking a function $f(x)$ and a function $g(x)$ and
-composing them to be $h(x) = f(g(x))$. The function below takes $f$ and $g$ and
-finds the value of $h$ at a $x$.
-
-\begin{python3code}
-def h(f, g, x):
-  return f(g(x))
-\end{python3code}
-
-\subsection{Map}
-\label{subsec:map}
-A common operation in Python is to call the same function for every element in a
-collection, such as a list or a tuple and then create a new list with the
-results. Previously, we would have accomplished this with a \pythoninline{for}
-loop:
-
-\begin{python3code}
-def double(x):
-    return x * 2
-
-data = [5, 23, 76]
-new_data = []
-
-for i in data:
-    new_data.append(double(i))
-
-print(new_data)
-\end{python3code}
-
-\begin{verbatimcode}
-[10, 46, 152]
-\end{verbatimcode}
-
-If we use the \pythoninline{map} function, we can make this code much more simple:
-
-\begin{python3code}
-def double(x):
-    return x * 2
-
-data = [5, 23, 76]
-data = list(map(double, data))
-print(data)
-\end{python3code}
-
-\begin{verbatimcode}
-[10, 46, 152]
-\end{verbatimcode}
-
-The \pythoninline{map} function takes in a function and any iterable data type
-(such as a list, tuple, set, etc.) as arguments. It calls that function for
-every element of the other value passed, then returns a new data type containing
-all of those results. This new data type is a special map object, but in most
-cases we are fine with instantly converting it back to our initial data type (in
-the above example, a list).
-
-%List comprehensions?
-
-%Reduce has been removed as of Python 3: https://docs.python.org/3.0/whatsnew/3.0.html#builtins
-\subsection{Reduce}
-\label{subsec:reduce}
-\pythoninline{reduce} is a similar function to \pythoninline{map}, but rather than
-create a new list with the modified values, \pythoninline{reduce} should be used to
-simplify a list into a single value. Similarly to \pythoninline{map},
-\pythoninline{reduce} takes in a function and an iterable data type. The difference
-is that rather than taking and returning a single value, the function passed to
-\pythoninline{reduce} takes in two arguments and returns their combination. As an
-example, here is an example of using \pythoninline{reduce} to join a list of
-strings into a single larger string.
-
-\begin{python3code}
-import functools
-
-def combine(glob, new):
-    print("Adding {} to {}.".format(new, glob))
-    return glob + new
-
-data = ['this', 'is', 'a', 'test']
-data = functools.reduce(combine, data)
-print("Final value: {}".format(data))
-\end{python3code}
-
-\begin{python3code}
-Adding this to is
-Adding thisis to a
-Adding thisisa to test
-Final value: thisisatest
-\end{python3code}
-
-Note that we need to run \pythoninline{import functools} in order to have access to
-\pythoninline{reduce}.
-
-Let's take a simpler example:
-\begin{python3code}
-import functools
-
-def add(x, y):
-  return x + y
-
-numbers = [1, 3, 4, 6, 7]
-s = functools.reduce(add, numbers)
-\end{python3code}
-
-\pythoninline!s! is the sum of the values in the list \pythoninline!numbers!. The way
-\pythoninline!reduce! works is that it takes the first two values, calls the
-\pythoninline!add! function on them, returns the result, and then takes that result
-and the next number. In essence, the example above expands to this:
-\begin{python3code}
-s = add(add(add(add(1, 3), 4), 6), 7)
-\end{python3code}
-
-This shows that at each step, you get to see an intermediate value: The first
-call to \pythoninline!add! gets the first two values, $1$ and $3$, while the second
-call gets the addition of those, $4$ and the next value in the list, $4$. The
-third call to \pythoninline!add! gets the result of that, $8$, and the next number,
-$6$. This will go on until the list is exhausted.
-
-\subsection{Filter}
-\label{subsec:filter}
-\pythoninline{filter} is a function that allows easy removal of some elements from
-a list. It works similarly to \pythoninline{map}, but the function used needs to
-return either \pythoninline{True} or \pythoninline{False}. If it returns
-\pythoninline{True} then the given element is included in the final list. If
-\pythoninline{False} is returned, then it is not. As an example, here is a short
-program that removes all odd elements from a list:
-
-\begin{python3code}
-def is_even(x):
-    return x % 2 == 0
-
-data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
-data = list(filter(is_even, data))
-print(data)
-\end{python3code}
-
-\begin{verbatimcode}
-[34, 36, 38, 0, 0, 2]
-\end{verbatimcode}
-
-\subsection{Lambda Functions}
-\label{subsec:lambda}
-Lambda functions are anonymous functions that are created while the program is
-running and are not assigned to a name like normal functions. They can be used
-very similarly to normal functions if assigned to a variable:
-
+\begin{multicols}{2}
 \begin{pyconcode}
->>> def f(x):
-...   return x + 1
-... 
->>> g = lambda x: x + 1
->>> f(5)
-6
->>> g(5)
-6
+>>> import random
+>>> print(random.random())
+0.7682548548225483
+>>> print(random.random())
+0.4165356512641182
+>>> print(random.uniform(1, 100))
+36.30623079969581
+>>> print(random.uniform(1, 100))
+97.48359345305
 \end{pyconcode}
-
-In the above case, \pythoninline{f} and \pythoninline{g} are functionally equivalent;
-we have just used a different syntax to describe them. 
-Both are functions that take in a single value and return that value increased
-by one. The primary difference is in syntax: note that the lambda function does
-not have a return statement: it will simply return the value computed after the
-colon.
-
-Lambda functions are commonly used in conjunction with \pythoninline{map},
-\pythoninline{reduce}, and \pythoninline{filter} as shown below:
-
-\begin{python3code}
-data = [5, 3, 34, 36, 38, 1, 0, 0, 2]
-data = list(filter(lambda x: x % 2 == 0, data))
-print(data)
-\end{python3code}
-
-\begin{verbatimcode}
-[34, 36, 38, 0, 0, 2]
-\end{verbatimcode}
-
-This program works just like the example shown in the section on
-\pythoninline{filter}, but it does not require us to declare the separate
-\pythoninline{is_even} function. Instead, we simply define a lambda inside the call
-to \pythoninline{filter}, accomplishing the same thing.
-
-We can similarly use lambda functions to shorten our initial example of
-first-class functions:
-
-\begin{python3code}
-print_functions = [print,
-    lambda string: print(string[::-1]),
-    lambda string: print(string[:len(string)//2]),
-    lambda string: print("Why do you want me to print '{}'?".format(string))]
-
-for func in print_functions:
-    func("Hello, World!")
-\end{python3code}
-
-Lambda functions can take more than one argument as well:
-\begin{python3code}
-multiply = lambda x, y: x * y
-print(multiply(3, 5)) # 15
-\end{python3code}
-
-One extra use for lambda functions is to modify default sorting behavior. For
-example, if we have a list of tuples and try to sort them, Python will sort them
-based on their first element, then second if the first elements are the same,
-and so on:
-
 \begin{pyconcode}
->>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
->>> sorted(data)
-[(3, 3, 3), (4, 4, 4), (5, 2, 4), (5, 3, 10), (6, 3, 2)]
+>>> print(random.choice(['joe', 'moe',
+... 'larry', 'shemp', 'curly']))
+larry
+>>> print(random.choice(['joe', 'moe',
+... 'larry', 'shemp', 'curly']))
+shemp
+>>> print(random.randint(1, 100))
+79
+>>> print(random.randint(1, 100))
+12
 \end{pyconcode}
+\end{multicols}
 
-However, what if we want to sort these tuples based on their last element? To do
-this, we define a special \pythoninline{key} value for \pythoninline{sorted}. Each
-value of the tuple will be passed to this function, and then the return values
-will be used when sorting in place of the actual value of the tuple:
+Here's a summary of these functions.
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{p{3.0cm} p{2cm} p{10cm}}
+    \toprule
+    \bfseries Function & \bfseries Arguments & \bfseries Purpose \\
+    \midrule
+    \pythoninline{random.random()} & & Returns a random number between 0.0 and 1.0,
+    including 0.0 but not 1.0.\\
+    \pythoninline{random.uniform()} & \pythoninline{a}, \pythoninline{b} & Returns a
+    random number between \pythoninline{a} and \pythoninline{b} inclusive. Each real number between
+    \pythoninline!a! and \pythoninline!b! has an equal probability of occurring.\\
+    \pythoninline{random.randint()} & \pythoninline{a}, \pythoninline{b} & Returns a
+    random integer between \pythoninline{a} and \pythoninline{b} inclusive. Each integer between
+    \pythoninline!a! and \pythoninline!b! has an equal probability of occuring.\\
+    \pythoninline{random.choice()} & \pythoninline{list} & Returns a random value from \pythoninline{list}.\\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary of \pythoninline{random} functions.}
+  \label{tab:rand}
+\end{table}
 
-\begin{pyconcode}
->>> data = [(5, 2, 4), (6, 3, 2), (4, 4, 4), (3, 3, 3), (5, 3, 10)]
->>> sorted(data, key=lambda x: x[-1])
-[(6, 3, 2), (3, 3, 3), (5, 2, 4), (4, 4, 4), (5, 3, 10)]
-\end{pyconcode}
+Take a look at the documentation for \pythoninline!random! if you would like a
+random number not based on a uniform distribution:
+\begin{center}
+  \url{https://docs.python.org/3.4/library/random.html}
+\end{center}
 
-Notice that \pythoninline!key! is just a default argument to the function 
-\pythoninline!sorted!. The default value would be a function that sorts based on
-the first element.
-
-Lambda functions also allow us to create functions on the fly. In the
-first-class functions section, we composed two functions $f$ and $g$ and found
-the value at a point $x$. However, sometimes we do not want the value at $x$, we
-want a function that takes in a parameter $x$ and returns the composition. Let's
-say, for example, that we want a function $h(x) = sqrt(factorial(x))$. Take
-a look at the following code:
-\begin{python3code}
-import math
-
-def compose(f, g):
-  # Creates another function that is the composition of f and g and returns it
-  return lambda x: f(g(x))
-
-# Using math.sqrt and math.factorial as first-class citizens
-h = compose(math.sqrt, math.factorial)
-
-# compose returns a function, so we can use h like a function!
-print(h(6))
-print(h(10))
-
-m = compose(math.sin, math.cos)
-print(m(3))
-print(m(4))
-\end{python3code}
-
-\begin{verbatimcode}
-26.832815729997478
-1904.9409439665053
--0.8360218615377305
--0.6080830096407656
-\end{verbatimcode}
-
-If you check the answers, you will find that $\sqrt{ 6! } = \sqrt{ 720 } =
-26.832\cdots$ and similarly for the others.
-
-Continuing the code, we could now compose $h$ and \pythoninline!math.log10!
-(Logarithm with base 10):
-\begin{python3code}
-logh = compose(math.log10, h)
-print(logh(6)) # 1.4286662482156343
-\end{python3code}
-
-We can also plug in a lambda function of our choice to the composition function.
-For example, if we wanted a function $p(x) = \sqrt{ x^3 }$:
-\begin{python3code}
-p = compose(math.sqrt, lambda x: x**3)
-print(p(100)) # 1000.0
-print(p(10)) # 31.622776601683793
-\end{python3code}
-
-\pagebreak
-
+\clearpage
 \section{Exercises}
 \label{sec:ex}
 
-\begin{warningbox}{Boilerplate}
-  Remember that this lab \emph{must} use the
-  boilerplate syntax introduced in Lab~3.
-\end{warningbox}
+\begin{ex}[markov.py]
+  Write a program that takes in a filename, reads each line of the file,
+  converts the lines into a format convenient for making Markov chains, and
+  then prints out a new sentence randomly generated from the data, based on
+  the Markov algorithm. When loading the file, treat the lines as separate
+  sentences. That is, if ``Hello, how are you?'' and ``Where are my keys?''
+  are lines in a file, then ``you?'' should not be followed by ``Where'' when
+  generating a chain. However, ``are'' should be allowed to be followed by
+  either ``you?'' or ``my'', as seen in Figure \ref{mark_ex}.
 
-\begin{ex}[palindrome.py] Write a recursive function that determines whether a
-    string is a palindrome. A palindrome is a word that is the same forwards and
-    backwards, for example ``abba''.
+  When creating a new chain, the first element should always be a randomly
+  selected first word of a line in the file. The chain should end when either:
+  \begin{itemize}
+  \item There are no valid choices to continue the sentence with.
+  \item The sentence has reached a length of 100 words.
+  \end{itemize}
 
-    The function should take in only one argument (the string to check) and
-    return either \lstinline{True} or \lstinline{False}.
-    
-    It is required that your function must be recursive and take only one argument.
-    This is not the easiest way to check if a string is a palindrome, but the goal
-    is to solve a problem recursively, not to check if a value is a palindrome.
+  Remember that you need to account for different frequencies of possible
+  follow words. That is, a situation like in Figure \ref{twilight} where
+  the word ``a'' is followed by two ``is'' and one ``known''. You need to
+  account for whatever word frequencies might come up within your input file.
+
+  You may use any file you wish for test input, though \pythoninline{alice.txt}
+  and \pythoninline{cthulhu.txt} are provided on Canvas.
+  \pythoninline{alice.txt} is a slightly edited version of the complete text of
+  Lewis Carroll's \emph{Alice's Adventures in Wonderland}, taken from
+  \url{https://www.gutenberg.org/files/11/11-h/11-h.htm}.
+  \pythoninline{cthulhu.txt} is a slightly edited version of the complete text of
+  H.P. Lovecrafts's \emph{The Call of Cthulhu}, taken from
+  \url{http://www.hplovecraft.com/writings/texts/fiction/cc.aspx}.
+  When parsing the input file, you should ignore any blank lines.
+
+  \emph{Hint}: You may find dictionaries to be useful in implementing
+  Markov chains.
 \end{ex}
 
-\begin{ex}[fractions2.py] Using the same tuple representation of fractions as in
-    Lab~3, do the following:
+\begin{ex}[piglatin.py] Write a program that translates a file from English to
+  pig latin.
 
-    \begin{enumerate}
-      \item Write a function \pythoninline!prompt_fractions()! that implements the
-        following interface that prompts the user for as many fractions as
-        he/she wants to enter:
+  The rules for pig latin are as follows:
 
-        \begin{verbatimcode}
-Enter fraction: 10/2
-Enter fraction: 5/7
-Enter fraction: 3/8
-Enter fraction: stop
-        \end{verbatimcode}
+  For a word that begins with consonants, the initial consonant or
+  consonant cluster is moved to the end of the word and ``ay'' is added as a
+  suffix:
+  \begin{multicols}{2}
+  \begin{itemize}
+    \item ``happy'' $\to$ ``appyhay''
+    \item ``glove'' $\to$ ``oveglay''
+  \end{itemize}
+  \end{multicols}
 
-        Use \pythoninline!map! to convert each string, such as ``10/2'' to a
-        tuple of integers.
+  For words that begin with vowels, you add ``way'' to the end of the word:
+  \begin{multicols}{2}
+  \begin{itemize}
+    \item ``egg'' $\to$ ``eggway''
+    \item ``inbox'' $\to$ ``inboxway''
+  \end{itemize}
+  \end{multicols}
 
-        The function should return a list of tuples. In the example, it would
-        return:
-        \begin{python3code}
-[(10, 2), (5, 7), (3, 8)]
-        \end{python3code}
+  For your program, you \emph{must} write a function that takes in one
+  individual word and returns the translation to pig latin. Write another
+  function that takes a string, which may be sentences (may contain the
+  characters ``a-zA-Z,.-;!?()'' and space), and returns the translation of the
+  sentence to pig latin. Strip out any punctuation. For example, ``Hello, how
+  are you?'' would translate into ``elloHay owhay areway ouyay''.
 
-      \item Write a function \pythoninline{min_frac} such that calling
-        \pythoninline{functools.reduce(min_frac, list_of_fractions)} will return
-        the smallest value fraction in the list.
-      \item Write a function \pythoninline{sum_frac} such that calling
-        \pythoninline{functools.reduce(sum_frac, list_of_fractions)} will return
-        a fraction that is the sum of all the fractions in the list.
-      \item Write a function \pythoninline{reduce_frac} that takes in a fraction
-        and returns that fraction reduced to its lowest terms. Use this function
-        with \pythoninline{map} to reduce a list of fractions.
-      \item Write a function \pythoninline{reduced} such that calling
-        \pythoninline{filter(reduced, list_of_fractions)} will return a list consisting
-        of only fractions that are reduced to their lowest terms.
-      \item Write a function \pythoninline!sort_frac! that takes in a list of
-        fractions and uses \pythoninline{sorted}
-        and a lambda \pythoninline{key} function to sort a list of fractions from
-        smallest to largest.
-    \end{enumerate}
+  The user must be able to specify the filename for the file to be translated
+  and the filename that the program should write to. For example:
 
-    Do not use any built-in fraction functions or libraries.
-
-    You should use the following boilerplate code for \texttt{fractions2.py}:
-    \begin{python3code}
-import functools
-
-# ADD YOUR FUNCTIONS HERE
-
-def main():
-  list_fractions = prompt_fractions()
-
-  format_frac = lambda frac : "{}/{}".format(frac[0], frac[1])
-
-  smallest = functools.reduce(min_frac, list_fractions)
-  print("Smallest fraction:", format_frac(smallest))
-
-  sumfrac = functools.reduce(sum_frac, list_fractions)
-  print("Sum of fractions:", format_frac(sumfrac))
-
-  # reducedfrac = map() ??? You fill in!
-  # print("Reduced fractions:", reducedfrac)
-
-  fracsorted = sort_frac(list_fraction)
-  print("Sorted fractions:", fracsorted)
-
-if __name__ == '__main__':
-  main()
-    \end{python3code}
-  \end{ex}
-
-  \begin{ex}[rpn.py] Take \texttt{rpn\_calculator.py} from Lab~4 and rewrite
-    it to use a dictionary of lambda functions to do the actual operation.
-    Operations you should support are $+ - * /$. Also, add a $\sin$ and $\cos$
-    operation. For example: \texttt{0 sin} should give $0$, while
-    \texttt{1 2 + sin} should give $0.1411200080598672$ (this is $\sin(3)$).
-  \end{ex}
-
-%  \item[wrapper.py] Write a function \pythoninline!wrapper! that takes two
-%    functions, prints their names, calls the first function, prints its result,
-%    calls the second function with the first function's result as an argument,
-%    prints its result, and then says ``Done.'' Given a function \pythoninline!f!,
-%    you can get its name using \pythoninline!f.__name__!. For example:
-%
-%    \begin{python3code}
-%import math
-%print(math.sqrt.__name__) # sqrt
-%
-%def five():
-%  return 5
-%
-%def square(x):
-%  return x**2
-%
-%wrapper(five, square)
-%    \end{python3code}
-%
-%    \begin{verbatimcode}
-%Calling function 'five'
-%5
-%Calling function 'square'
-%25
-%Done.
-%    \end{verbatimcode}
+  \begin{bashcode}
+$ cat test.txt
+Hello, how are you?
+$ python3 piglatin.py
+Enter English filename >>> test.txt
+Enter filename to write to >>> test_piglatin.txt
+Done.
+$ cat test_piglatin.txt
+elloHay owhay areway ouyay
+  \end{bashcode}
+  %$
+\end{ex}
 
 \pagebreak
 \section{Submitting}
-
 You should submit your code as a tarball. It should contain all files
 used in the exercises for this lab. The submitted file should be named
 \begin{center}
-  \texttt{cse107\_firstname\_lastname\_lab7.tar.gz}
+  \texttt{cse107\_firstname\_lastname\_lab8.tar.gz}
 \end{center}
 
 \begin{center}
@@ -676,3 +336,5 @@ used in the exercises for this lab. The submitted file should be named
 \listoftheorems
 
 \end{document}
+
+
