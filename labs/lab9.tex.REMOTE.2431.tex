@@ -352,15 +352,15 @@ array of values is given. Documentation available at
 \end{center}
 
 This plots data with ordered x-values between 0 and 10, randomly generated
-y-values between 0 and 10, and sizes between 1200 and 30 with some variation.
+y-values between 0 and 10, and sizes between 1200 and 10 with some variation.
 The color scheme are automatically picked according to size.
 
 \begin{pyconcode}
->>> import random
+>>> import numpy as np
 >>> import matplotlib.pyplot as plt
->>> x = [x + 1 for x in range(0,10)]
->>> y = [(elem + random.random()*10) \% 10 for elem in x]
->>> sizes = [x + random.random()*5 for x in range(30,1200,50)]
+>>> x = np.linspace(0, 10, num=20)
+>>> y = np.random.random(20) * 10
+>>> sizes = np.linspace(1200, 30, num=20) + np.random.random() * 100
 >>> plt.scatter(x, y, s=sizes, c=sizes, alpha=0.8)
 >>> plt.show()
 \end{pyconcode}
@@ -386,18 +386,10 @@ The rectangles have randomly generated heights and the same width and space
 between them.
 
 \begin{pyconcode}
->>> import random
+>>> import numpy as np
 >>> import matplotlib.pyplot as plt
->>> lefts = [x for x in range(0,100,5)]
->>> print(lefts)
-[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
->>> heights = [x + random.random()*50 + 10 for x in range(0,20)]
->>> print(heights)
-[49.714391342616054, 19.172956449982053, 26.30296873725814, 35.617456459379966,
- 41.00284816312063, 36.42499187921262, 20.105984017686016, 34.56418052389644,
- 24.48833113475763, 54.51007088879054, 51.26910728592864, 27.689576280094144,
- 67.57824233176122, 41.335596453966545, 47.96576291980089, 45.292422625538435,
- 34.460458928440374, 31.992222247836935, 65.24156104706233, 66.47014183737392]
+>>> lefts = np.arange(0, 100, 5)
+>>> heights = np.random.random(20) * 50 + 10
 >>> plt.bar(left=lefts, height=heights, width=4.5, bottom=0,
 ...         color='lightblue', edgecolor='blue')
 >>> plt.show()
@@ -424,22 +416,19 @@ Here we draw 4 plots, three \pythoninline{plt.plot}s and one
 \pythoninline{plt.hist} at the bottom corner.
 
 \begin{python3code}
-import random
+import numpy as np
 import matplotlib.pyplot as plt
-
-x = [elem for elem in range(0,10)]
-y = [random.random() for elem in x]
+x = np.linspace(0, 10, num=20)
+y = np.random.random(20)
 
 plt.subplot(2, 2, 1)
 plt.plot(x, y)
 
 plt.subplot(2, 2, 2)
-#plt.plot(x, 0.5 * x ** 2)
-plt.plot(x, [elem ** 2 * 0.5 for elem in x])
+plt.plot(x, 0.5 * x ** 2)
 
 plt.subplot(2, 2, 3)
-#plt.plot(x, y * x ** 2)
-plt.plot(x, [y * x ** 2 for x,y in enumerate(y)])
+plt.plot(x, y * x ** 2)
 
 plt.subplot(2, 2, 4)
 plt.hist(y)
@@ -581,7 +570,7 @@ plt.show()
 
 \section{Exploring APIs}
 An important part of this lab is reading module documentation. You
-have already seen one third party module (Matplotlib), and
+have already seen two third party modules (Matplotlib and Numpy), and
 built-in modules such as \pythoninline{math}. Almost every good Python
 module has good documentation and if you want expertise in a module,
 you should start reading its documentation.  For example, Matplotlib

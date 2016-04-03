@@ -1,10 +1,10 @@
+% TODO: remove numpy
+% TODO: winnow; move CSV to EC section; add xticks; make country_data.py friendlier
 % LAB 9: Matplotlib
 %
 % CSE/IT 107: Introduction to Programming
 % New Mexico Tech
 %
-% Prepared by Stephanie Gott and Hugo Rivera
-% Spring 2016
 \documentclass[11pt]{cselabheader}
 \usepackage{float}
 
@@ -39,15 +39,15 @@ never expected to see.''
 
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
-In this lab you will learn about generating 2D graphics using
+In this lab we will learn about generating 2D graphics using
 Matplotlib.  This is a powerful Python library that can be used to
-create detailed visualizations such as scatter plots and
-histograms. You will learn to about Python's list comprehensions,
-which help when modifying lists of data.  There's also an extra credit
-where you use the CSV module to read CSV files.  The key lesson of
-this lab is learning to read Python library documentation. With this
-skill you can learn to use many of Python's free and open-source
-libraries.
+generate many kinds of visualizations such as scatter plots and
+histograms. We will learn to about Python's list comprehensions and
+how to create and manipulate Numpy arrays, which store numeric data.
+There's also an overview of the CSV module, which makes it easy for
+you to read and write CSV data files.  The key lesson of this lab is
+learning to read Python library documentation. With this skill you can
+learn to use many of Python's free and open-source libraries.
 
 \pagebreak
 \pagenumbering{arabic}
@@ -77,7 +77,7 @@ TypeError: f() missing 1 required positional argument: 'fst'
 An important feature is that keyword arguments may be labeled
 and listed in any order when calling the function. For example,
 the following function takes two keyword arguments. There are five
-valid ways to call this function.
+possible ways you can call this function.
 
 \begin{pyconcode}
 >>> def p(greeting="Hello", subject="world"):
@@ -153,11 +153,10 @@ valid ways to call this function.
 
 \section{List Comprehensions}
 \subsection{Modifying Collections}
-
-List comprehensions can be used to modify lists by doing something to
-each element.  For example, if we want to make every string in a list
-of strings lowercase we can use a for-loop call \pythoninline{.lower()}
-on each string.
+List comprehensions can be used to create lists where each element is the
+result of some operations applied to each member of another sequence. For
+example, if we want to make every string in a list of strings lowercase we can
+use a for-loop:
 
 \begin{pyconcode}
 >>> strings = ["Python", "N.M."]
@@ -168,7 +167,7 @@ on each string.
 ["python", "n.m."]
 \end{pyconcode}
 
-List comprehensions are a more concise way of doing this.
+List comprehensions are a more concise way of doing this:
 
 \begin{pyconcode}
 >>> result = [string.lower() for string in strings]
@@ -178,19 +177,21 @@ List comprehensions are a more concise way of doing this.
 
 We can process more complicated elements with list comprehensions.
 If we have a list of dictionaries containing lists, we can find the maximum
-element in each sublist by using this list comprehension:
-
+element in the list contained in each dictionary with this code:
 \begin{pyconcode}
->>> data = [{'d': [1,2,3]},
-...         {'d': [0,0,1]}]
+>>> data = [{'d': [1,2,3], 'label': "increasing"},
+...         {'d': [0,0,1], 'label': "non-decreasing"}]
 >>> [max(dictionary['d']) for dictionary in data]
 [3, 1]
 \end{pyconcode}
 
-\subsection{Filtering Elements}
+Dictionary comprehensions do exist and can be used to edit the keys and
+values of a dictionary.
 
-What if we want to exclude elements? In this code, we take a list of words
-and keep all words of length less than 2.
+\subsection{Filtering Elements}
+What if we want to exclude elements?
+In this code, we take a list of words and keep all words of length greater
+than 4:
 
 \begin{pyconcode}
 >>> strings = ['a', 'ab', 'abb', 'aab']
@@ -202,7 +203,7 @@ and keep all words of length less than 2.
 ['a', 'ab']
 \end{pyconcode}
 
-This can be written more concisely by using an \pythoninline{if}
+This code can be written more concisely by using an \pythoninline{if}
 statement within a list comprehension.
 
 \begin{pyconcode}
@@ -212,37 +213,34 @@ statement within a list comprehension.
 \end{pyconcode}
 
 \subsection{Nested Comprehensions}
-
 We can also write multiple \pythoninline{for} statements and
 \pythoninline{if} statements in a list comprehension.
-This example creates a list of floating point numbers by dividing
-two integers
+This example creates a list
 
 \begin{pyconcode}
->>> result = [y / x for x in range(10) if x != 0 for y in range(10)]
->>> print(result)
-[0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 0.0, 0.5, 1.0, 1.5,
-2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 0.0, 0.3333333333333333, 0.6666666666666666, ...
+>>> result = [y / x for x in range(10) if x != 0 for y in range(10) if x != y]
 \end{pyconcode}
 
 These statements should be read from right to left. So the previous list
-comprehension is the same as these nested statements:
+comprehension is the same as these nested for loops:
 
 \begin{python3code}
 result = []
 for x in range(10):
     if x != 0:
         for y in range(10):
-            result.append(y / x)
+            if x != y:
+                result.append(y / x)
 \end{python3code}
 
 \section{Matplotlib}
+Matplotlib is a Python 2D plotting library which produces publication quality
+figures in a variety of hardcopy formats and interactive environments.
+There is a Matlab-like interface for generating most plots and an advanced
+object oriented interface for generating many more graphics.
 
-Matplotlib is a Python 2D plotting library which produces publication
-quality figures in a variety of formats and interactive environments.
-We will be using the \pythoninline{matplotlib.pyplot} library. It is
-commonly renamed to \pythoninline{plt} using this code:
-
+The \pythoninline{matplotlib.pyplot} library is commonly renamed
+\pythoninline{plt} for the sake of brevity.
 \begin{pyconcode}
 >>> import matplotlib.pyplot as plt
 \end{pyconcode}
@@ -256,10 +254,9 @@ examples. All of the following matplotlib functions are documented online at:
 \subsection{Plotting Points with the \protect{\pythoninline{plot}} Function}
 
 \pythoninline{plt.plot} is a versatile function that is used to plot
-pairs of numeric values. Matplotlib does not take a list of tuples
-representing points, instead it takes two lists. The list of values on
-the x-axis are the first argument and the list of y-axis values form
-the second argument. One of the lists must be in increasing order.
+pairs of numeric values. The values on the x-axis are the first argument and
+the y-axis values form the second argument. One of the lists must be in
+increasing order.
 
 \begin{pyconcode}
 >>> import matplotlib.pyplot as plt
@@ -267,20 +264,10 @@ the second argument. One of the lists must be in increasing order.
 >>> plt.show()
 \end{pyconcode}
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_plot1.png}
-\end{center}
-
 Note the \pythoninline{plt.show()} function shows everything drawn by
-previously called plotting functions.
-
-Matplotlib plots can be modified in many ways. The documentation has a
-table of keyword arguments for this function. The columns are Property
-and Description.  Let's try some of those. The \pythoninline{color},
-\pythoninline{linestyle}, and \pythoninline{marker} keyword arguments
-can be used to draw a differently styled line.  As of March, 2016 the
-Matplotlib documentation for these functions, colors, and line styles
-are located at
+previously called plotting functions.  As of March, 2016 the
+Matplotlib documentation for this function, colors, and line styles are
+located at
 
 \begin{center}
 \url{http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot}
@@ -290,56 +277,70 @@ are located at
 \url{http://matplotlib.org/api/lines_api.html#matplotlib.lines.Line2D.set_linestyle}
 \end{center}
 
-Here's the same plot with a red, dashed line and o's on every data point.
+Matplotlib plots can be modified in many ways. The documentation has a
+table of keyword arguments for this function. The columns are Property
+and Description.  Let's try some of those. The \pythoninline{color},
+\pythoninline{linestyle}, and \pythoninline{marker} keyword arguments
+can be used to draw a differently styled line. See the documentation
+for links to all possible colors, line styles and point markers.
 
 \begin{pyconcode}
 >>> import matplotlib.pyplot as plt
->>> plt.plot([1, 2, 3, 4, 5], [10, -10, 40, 50, 60],
+>>> plt.plot([1, 2, 3, 4], [10, -10, 40, 50],
 ...          color='red', linestyle='dashed', marker='o')
 >>> plt.show()
 \end{pyconcode}
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_plot2.png}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.49\textwidth]{img/matplotlib_plot1.png}
+  \includegraphics[width=0.49\textwidth]{img/matplotlib_plot2.png}
+  \caption{Two separate plots of the same four points 1, 10; 2, -10;
+3, 40; and 4, 50. In the right plot it is drawn with a red dashed line using
+x's for markers.}
+\end{figure}
 
-\subsection{Histograms using the \protect{\pythoninline{hist}}
-Function}
+\subsection{Histograms using the \protect{\pythoninline{hist}} Function}
 
-Matplotlib's \pythoninline{plt.hist()} can draw the histogram of a
-list, which shows how often a value occurs.
+Much of the features of the \pythoninline{matplilib.pyplot} functions are
+enabled by passing keyword arguments. For example, the
+%%% histogram
+
+%%% copy docs
+%%% READ DOCS
+
+The histogram of an array, which shows how often a value occurs, can
+be drawn using Matplotlib's \pythoninline{plt.hist()} function.  The
+first argument is the array. Here is a demonstration of two possible
+calls to draw the same data. The \pythoninline{bins} is used to draw
+fewer bins of data. The histogram is rotated by setting
+\pythoninline{orientation='horizontal'}.
 
 \begin{pyconcode}
 >>> import matplotlib.pyplot as plt
 >>> plt.hist([1, 1, 1, 1.2, 1.3, 1.9, 1.9, 2, 2.1, 2.5])
 >>> plt.show()
+>>> plt.clf()
+>>> plt.hist([1, 1, 1, 1.2, 1.3, 1.9, 1.9, 2, 2.1, 2.5]),
+...          bins=4, orientation='horizontal', color='red')
 \end{pyconcode}
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_hist1.png}
-\end{center}
-
-The \pythoninline{bins} argument is used to draw fewer bins of
-data. The histogram is rotated by setting
-\pythoninline{orientation='horizontal'}. See the documentation at:
+The \pythoninline{plt.clf()} function is used to clear the current figure.
+See the documentation for more keyword arguments to modify the histograms.
 
 \begin{center}
 \url{http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.hist}
 \end{center}
 
-\begin{pyconcode}
->>> import matplotlib.pyplot as plt
->>> plt.hist([1, 1, 1, 1.2, 1.3, 1.9, 1.9, 2, 2.1, 2.5]),
-...          bins=4, orientation='horizontal', color='red')
->>> plt.show()
-\end{pyconcode}
-
-\begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_hist2.png}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.49\textwidth]{img/matplotlib_hist1.png}
+  \includegraphics[width=0.49\textwidth]{img/matplotlib_hist2.png}
+  \caption{Histograms of the same data. The right plot is rotated and has less
+bins.}
+\end{figure}
 
 \subsection{Scatter plots with \protect{\pythoninline{scatter}} Function}
-
 Scatter plots may be generated using the \pythoninline{plt.scatter} function.
 These plots should be given three arguments \pythoninline{x, y, s}; these are
 arrays indicating the x and y values of the data and the size of each data point.
@@ -365,9 +366,12 @@ The color scheme are automatically picked according to size.
 >>> plt.show()
 \end{pyconcode}
 
-\begin{center}
-\includegraphics[width=0.8\textwidth]{img/matplotlib_scatter.png}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/matplotlib_scatter.png}
+  \caption{A scatter plot with transparency and automatically selected color
+scheme based on size.}
+\end{figure}
 
 \subsection{Bar Plots with the \protect{\pythoninline{bar}} Function}
 
@@ -403,9 +407,11 @@ between them.
 >>> plt.show()
 \end{pyconcode}
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_bar.png}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/matplotlib_bar.png}
+  \caption{A bar plot where rectangles have the same width and separation.}
+\end{figure}
 
 \subsection{Drawing Many Plots with the \protect{\pythoninline{subplot}}
 Function}
@@ -447,9 +453,11 @@ plt.hist(y)
 plt.show()
 \end{python3code}
 
-\begin{center}
+\begin{figure}[H]
+  \centering
   \includegraphics[width=\textwidth]{img/matplotlib_subplot.png}
-\end{center}
+  \caption{Four subplots.}
+\end{figure}
 
 \subsection{Describing your Plots}
 See these links for documentation:
@@ -482,20 +490,17 @@ plt.title('Data plot.')
 plt.show()
 \end{python3code}
 
-\begin{center}
-  \includegraphics[width=0.6\textwidth]{img/matplotlib_labeled1.png}
-\end{center}
-
 What if you want to call attention to an individual data point? Then
 you should consider the \pythoninline{plt.annotate} function to add
 annotations to plots.  In this example we indicate the maximum y-value
 in a randomly generated set of data: This code produces a labeled,
 annotated plot.
 
-Annotation text is set with the \pythoninline{s} argument. The arrow
-is styled using the \pythoninline{arrowprops} argument.  The
-\pythoninline{xy} and \pythoninline{xytext} keyword arguments are used
-to place the arrow and text.
+
+Annotation text is set with \pythoninline{s}. The arrow is styled
+using the \pythoninline{arrowprops} argument.  The \pythoninline{xy}
+and \pythoninline{xytext} keyword arguments are used to place the
+arrow and text.
 
 \begin{python3code}
 import numpy as np
@@ -521,9 +526,13 @@ plt.annotate(s='Maximum value is {:.3}'.format(y[maximum_index]),
 plt.show()
 \end{python3code}
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_labeled2.png}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.49\textwidth]{img/matplotlib_labeled1.png}
+  \includegraphics[width=0.49\textwidth]{img/matplotlib_labeled2.png}
+  \caption{Labeled and titled plots. One of them using Matplotlib
+annotations to show the median point...}
+\end{figure}
 
 \subsection{Subplots and Annotations}
 
@@ -551,9 +560,11 @@ plt.title('Dataset 2')
 plt.show()
 \end{python3code}
 
-\begin{center}
-\includegraphics[width=\textwidth]{img/matplotlib_labeledsubplot.png}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/matplotlib_labeledsubplot.png}
+  \caption{Annotated subplots.}
+\end{figure}
 
 \subsection{Overlaying Plots}
 Plots may be overlayed by calling plot functions multiple times.
@@ -575,9 +586,11 @@ plt.title('Datasets 1 and 2')
 plt.show()
 \end{python3code}
 
-\begin{center}
-\includegraphics[width=\textwidth]{img/matplotlib_overlayed.png}
-\end{center}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/matplotlib_overlayed.png}
+  \caption{Annotated subplots.}
+\end{figure}
 
 \section{Exploring APIs}
 An important part of this lab is reading module documentation. You
@@ -634,19 +647,19 @@ y = [10,20,15,5,-10]
   \begin{enumerate}
     \item A histogram of average ACT scores with bins of size $1$ between a
       score of $18$ and $24$.
-    \item A bar chart where each state/territory is represented by two
-      bars, one for the composite ACT score and the other for the total
-      score of all 3 SAT tests.
-
-      Each SAT section is out of 800 points, while the ACT is out of
-      36 points.  Use these numbers to modify the data so that both bar
-      charts have the same maximum heights.
+    \item Two bar charts that compare the composite ACT score with the
+      total score of all 3 SAT tests for all 51 states/territories.
+      Normalize the data so that both bar charts have the same maximum points.
+      Do this by dividing by the maximum possible SAT and ACT points.
+      Each SAT section is out of 800 points, while the ACT is out of 36 points.
     \item Produce the same chart as in part 2, but only for states in which
       less than 50\% take the ACT and more than 50\% take the SAT. (There
       should be 21 states/territories like this.)
   \end{enumerate}
 
-  Remember to label your axes and title your graph.
+  A double bar graph may be created by calling the \pythoninline{plt.bar}
+  plotting function multiple times with different data, you may also use
+  \pythoninline{plt.subplot}s. Remember to label your axes and title your graph.
 \end{ex}
 
 \begin{infobox}{Supplementary Files}
@@ -658,26 +671,33 @@ Use matplotlib to draw scatter plots relating worldwide life expectancy,
 income per person, and population for the years 2010 and 1960.
 
 You may access the data by completing the extra credit or by importing
-\texttt{country\_data.py}. The data is stored in the \pythoninline{data1960}
-and \pythoninline{2010} values and looks like:
+\texttt{country\_data.py}. The data looks something like:
 
 \begin{python3code}
-data1960 = [{'country': 'Andorra',
-    'expectancy': None,
-    'gdp': 15234.0,
-    'population': 13414.0},
-   {'country': 'Eritrea',
-    'expectancy': 41.8278,
-    'gdp': 885.0,
-    'population': 1407631.0}, ...
+data = {
+ 'Afghanistan': {1960: {'expectancy': 35.6846,
+                        'gdp': 1206.0,
+                        'population': 8994793.0},
+                 2010: {'expectancy': 54.8,
+                        'gdp': 1637.0,
+                        'population': 27962207.0}},
+ 'Akrotiri and Dhekelia': {1960: {'expectancy': None, ...
 \end{python3code}
 
 Notice the special value \pythoninline{None} is present.
 To check if a variable \pythoninline{x} is \pythoninline{None},
 type \pythoninline{x == None} or \pythoninline{x is None}.
-
-
 You are required to:
+
+%%% TODO easier data format?
+To convert a dictionary into a list, you may use the use the
+\pythoninline{.items()} function. It returns a list of item and value tuples.
+
+\begin{pyconcode}
+>>> expectancy = [{'country': country, 'expectancy: cdata[1960]['expectancy']}
+...                   for country, cdata in data]
+[{'country': 'Afghanistan', 'expectancy': 35.6846}, ...
+\end{pyconcode}
 
 \begin{enumerate}
 \item Draw a scatter plot with x and y coordinates set to income and life
@@ -687,9 +707,8 @@ minimum income or the minimum life expectancy.
 \item The area of each data point should be related to the population of every
 country. You can choose how to scale the data, but to make it look like the
 example, you may use:
-
 \begin{python3code}
-scaled_pop = [800 * p / max(pop) for p in pop]
+scaled_pop = 800 * pop / max(pop)
 \end{python3code}
 
 \item The scatter plots must be labeled and titled. X label: ``Income'', y
@@ -697,18 +716,16 @@ label: ``Life expectancy'', title: ``Year (year of data)''.
 
 \item Annotate China, Russia, United States, and Afghanistan as shown.
 Annotations should have different coordinates and text coordinates.
-You can get an arrow like in the example with this keyword argument:
-
+You can get an arrow like in the example with this property:
 \begin{python3code}
 arrowprops={'arrowstyle': 'wedge,tail_width=0.25', 'color': 'black'}
 \end{python3code}
 
-\item Draw dashed red lines at the mean and at the max life expectancy.
-Python's max function is useful for this.
+\item Draw dashed red lines at the mean and at the max life expetancy.
+The np.mean and Python's max functions are useful for this.
 \end{enumerate}
 
 Here is the plot for the 2010 data:
-
 \begin{center}
 \includegraphics[width=\textwidth]{img/scatter_2010.png}
 \end{center}
@@ -769,9 +786,7 @@ interested in this.  Parse these three CSV files using the CSV module.
 \end{itemize}
 
 Your data should be the same as the \pythoninline{data} variable in
-the \texttt{country\_data.py} file. You may need to pass a keyword
-argument in order to open the CSV files: \pythoninline{open(fname,
-encoding='utf-8')}.
+the \texttt{country\_data.py} file.
 \end{extraex}
 
 \begin{infobox}{Supplementary Files}
