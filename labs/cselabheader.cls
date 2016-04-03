@@ -66,6 +66,8 @@
 % List compression
 \usepackage{mdwlist}
 \usepackage{enumerate}
+% Inline lists
+\usepackage{paralist}
 % Support long tables across pages
 \usepackage{longtable}
 \setlength{\LTcapwidth}{6in}
