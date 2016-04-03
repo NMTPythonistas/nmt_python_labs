@@ -568,43 +568,6 @@ plt.show()
 \includegraphics[width=\textwidth]{img/matplotlib_overlayed.png}
 \end{center}
 
-\section{The CSV Module}
-CSV files are used to store tabular data. They have comma separated values on
-each line. Most spreadhseet programs support CSV output and input. Python comes
-with the CSV module for reading and writing such files. It supports any
-delimiter so you can also manage space-separated and tab-separated data. To
-use the module, create a CSV reader using the filename of the data file. For
-example, suppose we have the file \texttt{short.csv}. It has column labels
-on the first row and columns are separated by commas.
-
-\begin{verbatimcode}
-Entity,x         ,y,  z
-Fruit tree,1,2,3
-Bats, 1, 3, 10
-\end{verbatimcode}
-
-We can use the \pythoninline{csv.DictReader} function to parse this data.
-It takes an open file as the first argument and returns something that you
-can use a for-loop to traverse. It essentially returns a list of dictionaries.
-For example,
-
-\begin{pyconcode}
->>> import csv
->>> with open('short.csv') as f:
-...     l = [e for e in csv.DictReader(f)]
->>> print(l)
-[{'Entity': 'Fruit tree', 'x': '1', 'y': '2', 'z': '3'},
- {'Entity': 'Bats', 'x': ' 1', 'y': ' 3', 'z': ' 10'}]
-\end{pyconcode}
-
-Read the documentation to learn about writing CSV files and the
-\pythoninline{csv.Sniffer}, which can be used to deduce the format of
-a CSV file.
-
-\begin{center}
-\url{https://docs.python.org/3/library/csv.html}
-\end{center}
-
 \section{Exploring APIs}
 An important part of this lab is reading module documentation. You
 have already seen two third party modules (Matplotlib and Numpy), and
@@ -744,7 +707,43 @@ Here is the plot for the 2010 data:
 The \texttt{country\_data.py} file is available on canvas.
 \end{infobox}
 
-\newpage
+\section{The CSV Module}
+CSV files are used to store tabular data. They have comma separated values on
+each line. Most spreadhseet programs support CSV output and input. Python comes
+with the CSV module for reading and writing such files. It supports any
+delimiter so you can also manage space-separated and tab-separated data. To
+use the module, create a CSV reader using the filename of the data file. For
+example, suppose we have the file \texttt{short.csv}. It has column labels
+on the first row and columns are separated by commas.
+
+\begin{verbatimcode}
+Entity,x         ,y,  z
+Fruit tree,1,2,3
+Bats, 1, 3, 10
+\end{verbatimcode}
+
+We can use the \pythoninline{csv.DictReader} function to parse this data.
+It takes an open file as the first argument and returns something that you
+can use a for-loop to traverse. It essentially returns a list of dictionaries.
+For example,
+
+\begin{pyconcode}
+>>> import csv
+>>> with open('short.csv') as f:
+...     l = [e for e in csv.DictReader(f)]
+>>> print(l)
+[{'Entity': 'Fruit tree', 'x': '1', 'y': '2', 'z': '3'},
+ {'Entity': 'Bats', 'x': ' 1', 'y': ' 3', 'z': ' 10'}]
+\end{pyconcode}
+
+Read the documentation to learn about writing CSV files and the
+\pythoninline{csv.Sniffer}, which can be used to deduce the format of
+a CSV file.
+
+\begin{center}
+\url{https://docs.python.org/3/library/csv.html}
+\end{center}
+
 \section{Extra Credit Exercise}
 \begin{extraex}[parsecsv.py]
 The data in the \texttt{plotcountries.py} exercise is from
