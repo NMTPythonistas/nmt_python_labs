@@ -181,7 +181,6 @@ You may find the module \pythoninline{random} to be especially useful when
 creating Markov chains. Below is a brief example of some common functions
 inside \pythoninline{random}.
 
-\begin{multicols}{2}
 \begin{pyconcode}
 >>> import random
 >>> print(random.random())
@@ -194,18 +193,15 @@ inside \pythoninline{random}.
 97.48359345305
 \end{pyconcode}
 \begin{pyconcode}
->>> print(random.choice(['joe', 'moe',
-... 'larry', 'shemp', 'curly']))
+>>> print(random.choice(['joe', 'moe', 'larry', 'shemp', 'curly']))
 larry
->>> print(random.choice(['joe', 'moe',
-... 'larry', 'shemp', 'curly']))
+>>> print(random.choice(['joe', 'moe', 'larry', 'shemp', 'curly']))
 shemp
 >>> print(random.randint(1, 100))
 79
 >>> print(random.randint(1, 100))
 12
 \end{pyconcode}
-\end{multicols}
 
 Here's a summary of these functions.
 \begin{table}[!ht]
@@ -235,7 +231,6 @@ random number not based on a uniform distribution:
   \url{https://docs.python.org/3.4/library/random.html}
 \end{center}
 
-\clearpage
 \section{Exercises}
 \label{sec:ex}
 
@@ -319,6 +314,68 @@ $ cat test_piglatin.txt
 elloHay owhay areway ouyay
   \end{bashcode}
   %$
+\end{ex}
+
+\begin{ex}[navigate3.py] Modify navigate.py so that, rather than take
+  instructions from the command line, it reads from a file (specified by user
+  input) to determine what the turtle will do. Additionally, you will be adding
+  the ``split'' command. This command will use instantiation of new turtles in
+  order to draw multiple lines at once. Every new command will apply to every
+  turtle that currently exists. The file will have on instruction per line. The
+  possible instructions are:
+
+  \begin{description}
+    \item[forward X] Move all turtles forward X.
+    \item[left X] Turn all turtles X degrees to the left.
+    \item[right X] Turn all turtles X degrees to the right.
+    \item[split X] Split all turtles into new turtles. Each new turtle will be 
+    turned X degrees to the right.
+  \end{description}
+
+  In order to properly implement split, you will probably need to look up the
+  turtle functions \pythoninline!.position()!, \pythoninline!.setposition()!,
+  \pythoninline!.setheading()!, \pythoninline!.heading()!, \pythoninline!.penup()!, 
+   and
+  \pythoninline!.pendown()!. Turtle documentation is available at
+  \begin{center}
+    \url{https://docs.python.org/3/library/turtle.html}
+  \end{center}
+
+  You will also likely use the \pythoninline!.split()! command when getting
+  input, which splits a single string into an array around the string's
+  spaces.
+  \begin{pyconcode}
+>>> print("this is a phrase".split())
+['this', 'is', 'a', 'phrase']
+>>> print("hi,hi,hi".split(",")
+['hi', 'hi', 'hi']
+  \end{pyconcode}
+
+  \emph{Suggestion:} Split each command into a different function to help keep their logic separate.
+
+  Sample Input File:
+
+  \begin{verbatimcode}
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+split 40
+forward 50
+left 20
+  \end{verbatimcode}
+
+  Sample Output
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{img/nav3_example}
+  \end{center}
 \end{ex}
 
 \pagebreak
