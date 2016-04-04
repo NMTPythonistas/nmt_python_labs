@@ -1,3 +1,4 @@
+% TODO: submit images (either savefig or save button)
 % LAB 9: Matplotlib
 %
 % CSE/IT 107: Introduction to Programming
@@ -42,12 +43,12 @@ never expected to see.''
 In this lab you will learn about generating 2D graphics using
 Matplotlib.  This is a powerful Python library that can be used to
 create detailed visualizations such as scatter plots and
-histograms. You will learn to about Python's list comprehensions,
-which help when modifying lists of data.  There's also an extra credit
-where you use the CSV module to read CSV files.  The key lesson of
-this lab is learning to read Python library documentation. With this
-skill you can learn to use many of Python's free and open-source
-libraries.
+histograms. You will learn about Python's list comprehensions, which
+help when modifying lists of data.  There's also an extra credit where
+you use the built-in CSV module to read CSV files.  The key lesson
+this lab should teach you is to read Python library
+documentation. With this skill you can learn to use many of Python's
+free and open-source libraries.
 
 \pagebreak
 \pagenumbering{arabic}
@@ -77,7 +78,9 @@ TypeError: f() missing 1 required positional argument: 'fst'
 An important feature is that keyword arguments may be labeled
 and listed in any order when calling the function. For example,
 the following function takes two keyword arguments. There are five
-valid ways to call this function.
+valid ways to call this function. You may pass no arguments, then
+the default values aare used. You may pass either argument by itself
+or you may pass both arguments in any order.
 
 \begin{pyconcode}
 >>> def p(greeting="Hello", subject="world"):
@@ -154,9 +157,9 @@ valid ways to call this function.
 \section{List Comprehensions}
 \subsection{Modifying Collections}
 
-List comprehensions can be used to modify lists by doing something to
-each element.  For example, if we want to make every string in a list
-of strings lowercase we can use a for-loop call \pythoninline{.lower()}
+List comprehensions can be used to create new lists by doing something to
+each element of a list. For example, if we want to make every string in a list
+of strings lowercase we can use a for-loop to call \pythoninline{.lower()}
 on each string.
 
 \begin{pyconcode}
@@ -181,10 +184,10 @@ If we have a list of dictionaries containing lists, we can find the maximum
 element in each sublist by using this list comprehension:
 
 \begin{pyconcode}
->>> data = [{'d': [1,2,3]},
+>>> data = [{'d': [1,2,3]}, {'d': [4,5]}
 ...         {'d': [0,0,1]}]
 >>> [max(dictionary['d']) for dictionary in data]
-[3, 1]
+[3, 5, 1]
 \end{pyconcode}
 
 \subsection{Filtering Elements}
@@ -193,7 +196,7 @@ What if we want to exclude elements? In this code, we take a list of words
 and keep all words of length less than 2.
 
 \begin{pyconcode}
->>> strings = ['a', 'ab', 'abb', 'aab']
+>>> strings = ['a', 'ab', 'abb', 'aab', 'aaa']
 >>> result = []
 >>> for string in strings:
 ...    if len(string) <= 2:
@@ -206,7 +209,7 @@ This can be written more concisely by using an \pythoninline{if}
 statement within a list comprehension.
 
 \begin{pyconcode}
->>> strings = ['a', 'ab', 'abb', 'aab']
+>>> strings = ['a', 'ab', 'abb', 'aab', 'aaa']
 >>> [x for x in strings if len(x) <= 2]
 ['a', 'ab']
 \end{pyconcode}
@@ -216,7 +219,7 @@ statement within a list comprehension.
 We can also write multiple \pythoninline{for} statements and
 \pythoninline{if} statements in a list comprehension.
 This example creates a list of floating point numbers by dividing
-two integers
+two integers.
 
 \begin{pyconcode}
 >>> result = [y / x for x in range(10) if x != 0 for y in range(10)]
@@ -259,7 +262,7 @@ examples. All of the following matplotlib functions are documented online at:
 pairs of numeric values. Matplotlib does not take a list of tuples
 representing points, instead it takes two lists. The list of values on
 the x-axis are the first argument and the list of y-axis values form
-the second argument. One of the lists must be in increasing order.
+the second argument. One of the lists must be in ascending order.
 
 \begin{pyconcode}
 >>> import matplotlib.pyplot as plt
@@ -267,12 +270,13 @@ the second argument. One of the lists must be in increasing order.
 >>> plt.show()
 \end{pyconcode}
 
+The \pythoninline{plt.show()} function shows everything drawn by
+previously called plotting functions. This image was draw by
+the previous Matplotlib code:
+
 \begin{center}
 \includegraphics[width=0.6\textwidth]{img/matplotlib_plot1.png}
 \end{center}
-
-Note the \pythoninline{plt.show()} function shows everything drawn by
-previously called plotting functions.
 
 Matplotlib plots can be modified in many ways. The documentation has a
 table of keyword arguments for this function. The columns are Property
@@ -320,7 +324,7 @@ list, which shows how often a value occurs.
 \end{center}
 
 The \pythoninline{bins} argument is used to draw fewer bins of
-data. The histogram is rotated by setting
+data. The histogram is rotated by passing
 \pythoninline{orientation='horizontal'}. See the documentation at:
 
 \begin{center}
@@ -340,20 +344,21 @@ data. The histogram is rotated by setting
 
 \subsection{Scatter plots with \protect{\pythoninline{scatter}} Function}
 
-Scatter plots may be generated using the \pythoninline{plt.scatter} function.
-These plots should be given three arguments \pythoninline{x, y, s}; these are
-arrays indicating the x and y values of the data and the size of each data point.
-The \pythoninline{c} and \pythoninline{alpha} keyword arguments can be used to
-modify color and opacity of data points. Colors are automatically picked if an
-array of values is given. Documentation available at
+Scatter plots may be generated using the \pythoninline{plt.scatter}
+function.  These plots should be given three arguments
+\pythoninline{x, y, s}; these are arrays indicating the x and y values
+of the data and the size of each data point.  The \pythoninline{c} and
+\pythoninline{alpha} keyword arguments can be used to modify color and
+opacity of data points. Colors are automatically picked if an array of
+values is given. Documentation available at
 
 \begin{center}
 \url{http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.hist}
 \end{center}
 
-This plots data with ordered x-values between 0 and 10, randomly generated
+This plots data with x-values from 0 to 10, randomly generated
 y-values between 0 and 10, and sizes between 1200 and 30 with some variation.
-The color scheme are automatically picked according to size.
+The color scheme is automatically picked according to size.
 
 \begin{pyconcode}
 >>> import random
@@ -439,7 +444,7 @@ plt.plot(x, [elem ** 2 * 0.5 for elem in x])
 
 plt.subplot(2, 2, 3)
 #plt.plot(x, y * x ** 2)
-plt.plot(x, [y * x ** 2 for x,y in enumerate(y)])
+plt.plot(x, [elem * index ** 2 for index, elem in enumerate(y)])
 
 plt.subplot(2, 2, 4)
 plt.hist(y)
@@ -583,8 +588,8 @@ plt.show()
 An important part of this lab is reading module documentation. You
 have already seen one third party module (Matplotlib), and
 built-in modules such as \pythoninline{math}. Almost every good Python
-module has good documentation and if you want expertise in a module,
-you should start reading its documentation.  For example, Matplotlib
+module has good documentation and if you want to learn how to use one
+you should start by reading its documentation.  For example, Matplotlib
 supports animation, image rendering, stream plots, error plots,
 contour plots, log scaled axis, and many other features. You can see
 examples and detailed specifications in the Matplotlib docs.
@@ -659,7 +664,7 @@ income per person, and population for the years 2010 and 1960.
 
 You may access the data by completing the extra credit or by importing
 \texttt{country\_data.py}. The data is stored in the \pythoninline{data1960}
-and \pythoninline{2010} values and looks like:
+and \pythoninline{data2010} variables and looks like:
 
 \begin{python3code}
 data1960 = [{'country': 'Andorra',
@@ -672,6 +677,9 @@ data1960 = [{'country': 'Andorra',
     'population': 1407631.0}, ...
 \end{python3code}
 
+See ``200 Years, 200 Countries'' by Hans Rosling if you want a
+good presentation on this data.
+
 Notice the special value \pythoninline{None} is present.
 To check if a variable \pythoninline{x} is \pythoninline{None},
 type \pythoninline{x == None} or \pythoninline{x is None}.
@@ -682,7 +690,7 @@ You are required to:
 \begin{enumerate}
 \item Draw a scatter plot with x and y coordinates set to income and life
 expectancy. If there is a \pythoninline{None} value, replace it with the
-minimum income or the minimum life expectancy.
+minimum income or the minimum life expectancy or an area set to zero.
 
 \item The area of each data point should be related to the population of every
 country. You can choose how to scale the data, but to make it look like the
@@ -696,7 +704,7 @@ scaled_pop = [800 * p / max(pop) for p in pop]
 label: ``Life expectancy'', title: ``Year (year of data)''.
 
 \item Annotate China, Russia, United States, and Afghanistan as shown.
-Annotations should have different coordinates and text coordinates.
+Annotation text should be drawn away from the annotation coordinates.
 You can get an arrow like in the example with this keyword argument:
 
 \begin{python3code}
@@ -799,5 +807,3 @@ used in the exercises for this lab. The submitted file should be named
 \listofextraexercises
 
 \end{document}
-
-
