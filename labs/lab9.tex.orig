@@ -439,12 +439,15 @@ plt.subplot(2, 2, 1)
 plt.plot(x, y)
 
 plt.subplot(2, 2, 2)
-#plt.plot(x, 0.5 * x ** 2)
 plt.plot(x, [elem ** 2 * 0.5 for elem in x])
 
 plt.subplot(2, 2, 3)
+<<<<<<< HEAD
+plt.plot(x, [y * x ** 2 for x,y in enumerate(y)])
+=======
 #plt.plot(x, y * x ** 2)
 plt.plot(x, [elem * index ** 2 for index, elem in enumerate(y)])
+>>>>>>> 95b58ae4be6a059c6c5dce246e64622e6c2f0133
 
 plt.subplot(2, 2, 4)
 plt.hist(y)
@@ -475,10 +478,10 @@ and \pythoninline{plt.title} functions.
 Here's an example:
 
 \begin{python3code}
-import random
+import numpy as np
 import matplotlib.pyplot as plt
-x = [x + 3 for x in range(0,52,2)]
-y = [random.random() * x + x for x in x]
+x = np.linspace(0, 50, num=20)
+y = np.random.random(20) * x + x
 
 plt.plot(x, y)
 plt.xlabel('Time spent coding')
@@ -535,6 +538,7 @@ plt.show()
 Here's an example where subplots have annotations and titles.
 
 \begin{python3code}
+import numpy as np
 import matplotlib.pyplot as plt
 x = [1, 2, 3, 4, 5]
 y1 = [4, 8, 2, 6, 0]
@@ -565,6 +569,7 @@ For example, here are plots of two data sets on the same figure.
 There is also a line drawn at y=8.
 
 \begin{python3code}
+import numpy as np
 import matplotlib.pyplot as plt
 x = [1, 2, 3, 4, 5]
 y1 = [4, 8, 2, 6, 0]
