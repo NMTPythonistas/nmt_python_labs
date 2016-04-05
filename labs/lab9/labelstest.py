@@ -7,6 +7,5 @@ plt.plot(x, y)
 plt.xlabel('Time spent coding')
 plt.ylabel('Winning')
 plt.title('Data plot.')
+plt.savefig('img/matplotlib_labeled1.png')
 plt.show()
-
-plt.savefig('matplotlib_labeled1.png')

@@ -18,4 +18,5 @@ plt.plot(x, [y * x ** 2 for x,y in enumerate(y)])
 plt.subplot(2, 2, 4)
 plt.hist(y)
 
+plt.savefig("img/matplotlib_subplot.png")
 plt.show()
