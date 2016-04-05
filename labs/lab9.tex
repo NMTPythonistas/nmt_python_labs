@@ -637,21 +637,27 @@ y = [10,20,15,5,-10]
 
   Write a program that generates the following charts:
   \begin{enumerate}
-    \item A histogram of average ACT scores with bins of size $1$ between a
-      score of $18$ and $24$.
+    \item A histogram of average ACT scores.
     \item A bar chart where each state/territory is represented by two
       bars, one for the composite ACT score and the other for the total
       score of all 3 SAT tests.
 
       Each SAT section is out of 800 points, while the ACT is out of
-      36 points.  Use these numbers to modify the data so that both bar
-      charts have the same maximum heights.
+      36 points. Each bar should have the same maximum heights, but the
+labels should have the correct SAT or ACT score. See the example image.
     \item Produce the same chart as in part 2, but only for states in which
       less than 50\% take the ACT and more than 50\% take the SAT. (There
       should be 21 states/territories like this.)
   \end{enumerate}
 
   Remember to label your axes and title your graph.
+  Example plots:
+
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{img/actsat_hist.png}
+
+  \includegraphics[width=\textwidth]{img/actsat_bars_all.png}
+  \end{center}
 \end{ex}
 
 \begin{infobox}{Supplementary Files}
