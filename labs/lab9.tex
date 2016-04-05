@@ -529,6 +529,20 @@ plt.show()
 \includegraphics[width=0.85\textwidth]{img/matplotlib_labeled2.png}
 \end{center}
 
+The tick labels can be changed using the \pythoninline{plt.xticks} and
+\pythoninline{plt.yticks} functions. The first argument is a list of
+numbers and the second argument is the list of labels for each value.
+For example,
+\begin{pyconcode}
+>>> plt.plot([1, 2, 3], [400, -100, 20])
+>>> plt.xticks([1, 2, 3], ["Group 1", "Group 2", "Control"], rotation=-45)
+>>> plt.show()
+\end{pyconcode}
+
+\begin{center}
+\includegraphics[width=0.85\textwidth]{img/matplotlib_xticks.png}
+\end{center}
+
 \subsection{Subplots and Annotations}
 
 Here's an example where subplots have annotations and titles.
