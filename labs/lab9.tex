@@ -362,9 +362,9 @@ The color scheme is automatically picked according to size.
 \begin{pyconcode}
 >>> import random
 >>> import matplotlib.pyplot as plt
->>> x = [x + 1 for x in range(0,10)]
->>> y = [(elem + random.random()*10) \% 10 for elem in x]
->>> sizes = [x + random.random()*5 for x in range(30,1200,50)]
+>>> x = [x + 1 for x in range(0, 10)]
+>>> y = [(elem + random.random() * 10) % 10 for elem in x]
+>>> sizes = [200 * elem + random.random() * 9300 for elem in x]
 >>> plt.scatter(x, y, s=sizes, c=sizes, alpha=0.8)
 >>> plt.show()
 \end{pyconcode}
@@ -628,8 +628,9 @@ y = [10,20,15,5,-10]
 \end{ex}
 
 \begin{ex}[plotscores.py]
-  This exercise relies on the \texttt{readscores.py} file from the File I/O
-  lab. You may also rewrite that code using the CSV module.
+  This exercise relies on the \texttt{readscores.py} and
+\texttt{actsat.txt} files from the File I/O lab. You may also rewrite
+that code using the CSV module.
 
   Write a program that generates the following charts:
   \begin{enumerate}
@@ -655,10 +656,6 @@ labels should have the correct SAT or ACT score. See the example image.
   \includegraphics[width=\textwidth]{img/actsat_bars_all.png}
   \end{center}
 \end{ex}
-
-\begin{infobox}{Supplementary Files}
-The \texttt{actsat.txt} file is available on canvas as a lab 7 file.
-\end{infobox}
 
 \begin{ex}[plotcountries.py]
 Use matplotlib to draw scatter plots relating worldwide life expectancy,
