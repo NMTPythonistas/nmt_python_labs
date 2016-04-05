@@ -1,4 +1,3 @@
-% TODO: submit images (either savefig or save button)
 % LAB 9: Matplotlib
 %
 % CSE/IT 107: Introduction to Programming
@@ -275,7 +274,7 @@ previously called plotting functions. This image was draw by
 the previous Matplotlib code:
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_plot1.png}
+\includegraphics[width=0.85\textwidth]{img/matplotlib_plot1.png}
 \end{center}
 
 Matplotlib plots can be modified in many ways. The documentation has a
@@ -296,16 +295,16 @@ are located at
 
 Here's the same plot with a red, dashed line and o's on every data point.
 
+\begin{center}
+\includegraphics[width=0.85\textwidth]{img/matplotlib_plot2.png}
+\end{center}
+
 \begin{pyconcode}
 >>> import matplotlib.pyplot as plt
 >>> plt.plot([1, 2, 3, 4, 5], [10, -10, 40, 50, 60],
 ...          color='red', linestyle='dashed', marker='o')
 >>> plt.show()
 \end{pyconcode}
-
-\begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_plot2.png}
-\end{center}
 
 \subsection{Histograms using the \protect{\pythoninline{hist}}
 Function}
@@ -320,7 +319,7 @@ list, which shows how often a value occurs.
 \end{pyconcode}
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_hist1.png}
+\includegraphics[width=0.85\textwidth]{img/matplotlib_hist1.png}
 \end{center}
 
 The \pythoninline{bins} argument is used to draw fewer bins of
@@ -339,7 +338,7 @@ data. The histogram is rotated by passing
 \end{pyconcode}
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_hist2.png}
+\includegraphics[width=0.85\textwidth]{img/matplotlib_hist2.png}
 \end{center}
 
 \subsection{Scatter plots with \protect{\pythoninline{scatter}} Function}
@@ -409,7 +408,7 @@ between them.
 \end{pyconcode}
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_bar.png}
+\includegraphics[width=0.85\textwidth]{img/matplotlib_bar.png}
 \end{center}
 
 \subsection{Drawing Many Plots with the \protect{\pythoninline{subplot}}
@@ -488,7 +487,7 @@ plt.show()
 \end{python3code}
 
 \begin{center}
-  \includegraphics[width=0.6\textwidth]{img/matplotlib_labeled1.png}
+  \includegraphics[width=0.85\textwidth]{img/matplotlib_labeled1.png}
 \end{center}
 
 What if you want to call attention to an individual data point? Then
@@ -527,7 +526,7 @@ plt.show()
 \end{python3code}
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{img/matplotlib_labeled2.png}
+\includegraphics[width=0.85\textwidth]{img/matplotlib_labeled2.png}
 \end{center}
 
 \subsection{Subplots and Annotations}
@@ -610,7 +609,6 @@ Here's a list of more interesting libraries:
 \url{https://github.com/vinta/awesome-python}
 \end{center}
 
-\newpage
 \section{Exercises}
 \begin{ex}[plotpoints.py]
 Plot the following points. Add labels, a title, and an annotation to the plot
