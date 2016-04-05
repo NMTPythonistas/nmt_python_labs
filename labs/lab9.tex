@@ -641,14 +641,17 @@ that code using the CSV module.
 
       Each SAT section is out of 800 points, while the ACT is out of
       36 points. Each bar should have the same maximum heights, but the
-labels should have the correct SAT or ACT score. See the example image.
+      labels should have the correct SAT or ACT score. See the example
+      image.
     \item Produce the same chart as in part 2, but only for states in which
       less than 50\% take the ACT and more than 50\% take the SAT. (There
       should be 21 states/territories like this.)
   \end{enumerate}
 
-  Remember to label your axes and title your graph.
-  Example plots:
+  Remember to label your axes and title your graph.  You will need the
+  \pythoninline{plt.xticks()} and \pythoninline{plt.yticks()}
+  functions to label the bars and scores. Read the documentation to
+  find out more. Example plots:
 
   \begin{center}
   \includegraphics[width=0.8\textwidth]{img/actsat_hist.png}
