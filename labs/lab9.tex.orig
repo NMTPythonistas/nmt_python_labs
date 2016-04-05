@@ -439,12 +439,15 @@ plt.subplot(2, 2, 1)
 plt.plot(x, y)
 
 plt.subplot(2, 2, 2)
-#plt.plot(x, 0.5 * x ** 2)
 plt.plot(x, [elem ** 2 * 0.5 for elem in x])
 
 plt.subplot(2, 2, 3)
+<<<<<<< HEAD
+plt.plot(x, [y * x ** 2 for x,y in enumerate(y)])
+=======
 #plt.plot(x, y * x ** 2)
 plt.plot(x, [elem * index ** 2 for index, elem in enumerate(y)])
+>>>>>>> 95b58ae4be6a059c6c5dce246e64622e6c2f0133
 
 plt.subplot(2, 2, 4)
 plt.hist(y)
@@ -475,10 +478,10 @@ and \pythoninline{plt.title} functions.
 Here's an example:
 
 \begin{python3code}
-import random
+import numpy as np
 import matplotlib.pyplot as plt
-x = [x + 3 for x in range(0,52,2)]
-y = [random.random() * x + x for x in x]
+x = np.linspace(0, 50, num=20)
+y = np.random.random(20) * x + x
 
 plt.plot(x, y)
 plt.xlabel('Time spent coding')
@@ -535,6 +538,7 @@ plt.show()
 Here's an example where subplots have annotations and titles.
 
 \begin{python3code}
+import numpy as np
 import matplotlib.pyplot as plt
 x = [1, 2, 3, 4, 5]
 y1 = [4, 8, 2, 6, 0]
@@ -565,6 +569,7 @@ For example, here are plots of two data sets on the same figure.
 There is also a line drawn at y=8.
 
 \begin{python3code}
+import numpy as np
 import matplotlib.pyplot as plt
 x = [1, 2, 3, 4, 5]
 y1 = [4, 8, 2, 6, 0]
@@ -635,27 +640,21 @@ y = [10,20,15,5,-10]
 
   Write a program that generates the following charts:
   \begin{enumerate}
-    \item A histogram of average ACT scores.
+    \item A histogram of average ACT scores with bins of size $1$ between a
+      score of $18$ and $24$.
     \item A bar chart where each state/territory is represented by two
       bars, one for the composite ACT score and the other for the total
       score of all 3 SAT tests.
 
       Each SAT section is out of 800 points, while the ACT is out of
-      36 points. Each bar should have the same maximum heights, but the
-labels should have the correct SAT or ACT score. See the example image.
+      36 points.  Use these numbers to modify the data so that both bar
+      charts have the same maximum heights.
     \item Produce the same chart as in part 2, but only for states in which
       less than 50\% take the ACT and more than 50\% take the SAT. (There
       should be 21 states/territories like this.)
   \end{enumerate}
 
   Remember to label your axes and title your graph.
-  Example plots:
-
-  \begin{center}
-  \includegraphics[width=0.8\textwidth]{img/actsat_hist.png}
-
-  \includegraphics[width=\textwidth]{img/actsat_bars_all.png}
-  \end{center}
 \end{ex}
 
 \begin{infobox}{Supplementary Files}
