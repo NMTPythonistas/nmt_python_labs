@@ -1057,7 +1057,7 @@ data1960 = [{'country': 'Andorra',
      'gdp': 1804.0,
      'population': 349233.0}]
 
- data2010 = [{'country': 'Andorra',
+data2010 = [{'country': 'Andorra',
     'expectancy': 83.7,
     'gdp': 38982.0,
     'population': 84419.0},
