@@ -354,75 +354,83 @@ def elements_in(nested_list):
     return count
 \end{python3code}
 
-\subsection{Drawing A Tree}
+\subsection{Drawing A Koch Snowflake}
 
-We can have multiple recursive calls in a function. To draw a type of tree,
-we can use the turtle module to do the following:
+A Koch Snowflake of depth 0 is just an equilateral triangle.  At depth
+1, the straight lines are replaced by spiked lines which we will call
+Koch lines of depth 1.  Here is a comparison of the two:
+
+\begin{center}
+\includegraphics[width=0.49\textwidth]{img/koch0.png}
+\includegraphics[width=0.49\textwidth]{img/koch1.png}
+\end{center}
+
+Instead of drawing Koch lines of depth 1 when drawing the depth 1
+Snowflake, draw Koch lines of depth 2. These are drawn by replacing
+straight lines with Koch lines of depth 1. This gives the Koch curve
+at depth 2.  This process can continue. The Snowflake at depths 2 and
+5 are below.
+
+\begin{center}
+\includegraphics[width=0.49\textwidth]{img/koch2.png}
+\includegraphics[width=0.49\textwidth]{img/koch5.png}
+\end{center}
+
+To draw a Koch snowflake of depth $n$ we can use the Turtle module to:
 
 \begin{enumerate}
-\item If enough has been drawn, stop.
-\item Otherwise, draw a straight line.
-\item Save position and heading (the direction of the turtle)
-\item \textbf{(Recursive call)} Draw a tree half as big as this one
-and place it towards the right.
-\item When finished drawing that tree, restore position and heading.
-\item \textbf{(Recursive call)} Do the same thing to draw a tree to
-the left.
-\item Finished.
+\item Draw an equilateral triangle with Koch lines of depth $n$
+instead of straight lines
+\item To draw a Koch line of depth $0$, draw a straight line.
+\item To draw a Koch line of depth $n$ of length $L$, we will need to
+draw four shorter Koch lines of length $L / 3$ and depth $n-1$.  This
+is how they are arranged:
+\begin{enumerate}
+\item Draw a shorter Koch line along the first third of the Koch line.
+\item Turn $60^\circ$ left and draw a shorter Koch line.
+\item Turn $120^\circ$ right and draw a shorter Koch line.
+\item Turn $60^\circ$ left and draw a shorter Koch line along the last
+third of the Koch line.
+\end{enumerate}
 \end{enumerate}
 
-In code, this looks like:
+The self-referential instructions that ask to draw a shorter Koch line
+while drawing a Koch line will be translated into four recursive calls.
 
 \begin{python3code}
 import turtle
 
-def draw_tree(branch_size, max_branches=5):
-    # done drawing?
-    if max_branches <= 0:
-        return
+def koch_line(width, depth=0):
+    if depth <= 0:
+        turtle.forward(width)
+    else:
+        koch_line(width / 3, depth - 1)
+        turtle.left(60)
 
-    turtle.speed("fastest")
+        koch_line(width / 3, depth - 1)
+        turtle.right(2 * 60)
 
-    # start drawing
-    turtle.pendown()
-    turtle.forward(branch_size)
-    # do not draw anything else
-    turtle.penup()
+        koch_line(width / 3, depth - 1)
+        turtle.left(60)
 
-    # save the current position and direction
-    p, h = turtle.position(), turtle.heading()
+        koch_line(width / 3, depth - 1)
 
-    # draw the right branch
-    turtle.right(45)
-    draw_tree(branch_size / 2, max_branches - 1)
-
-    # jump back
-    turtle.setposition(p)
-    turtle.setheading(h)
-
-    # draw the left branch
-    turtle.left(45)
-    draw_tree(branch_size / 2, max_branches - 1)
-
-def main():
-    # face up
-    turtle.left(90)
-    draw_tree(200, max_branches=9)
-    turtle.done()
+def koch_snowflake(width=100, depth=1):
+    for _ in range(3):
+        koch_line(width, depth)
+        turtle.right(180 - 60)
 
 if __name__ == "__main__":
-    main()
+    # move fast
+    turtle.speed('fastest')
+
+    koch_snowflake(200, 3)
+
+    # display drawing
+    turtle.done()
 \end{python3code}
 
-Notice the instructions ask to draw a smaller tree while drawing a tree.
-This self-referential instruction is translated into the recursive calls
-on lines %%% LINES
-This code generates this turtle graphic:
-
-\begin{center}
-\includegraphics[width=0.5\linewidth]{img/tree.png}
-\end{center}
-
+\newpage
 \section{Overview}
 \begin{itemize}
 \item A typical recursive function calls itself one or more times.
@@ -442,16 +450,17 @@ do with a while loop or a for loop can be done using a recursive function.
 \newpage
 \section{Exercises}
 
-\begin{ex}[palindrome.py] Write a recursive function that determines whether a
-    string is a palindrome. A palindrome is a word that is the same forwards and
-    backwards, for example ``abba''.
+\begin{ex}[palindrome.py] Write a recursive function that determines
+whether a string is a palindrome. A palindrome is a word that is the
+same forwards and backwards, for example ``abba''.
 
-    The function should take in only one argument (the string to check) and
-    return either \lstinline{True} or \lstinline{False}.
+The function should take in only one argument (the string to
+check) and return either \lstinline{True} or \lstinline{False}.
 
-    It is required that your function must be recursive and take only one argument.
-    This is not the easiest way to check if a string is a palindrome, but the goal
-    is to solve a problem recursively, not to check if a value is a palindrome.
+It is required that your function must be recursive and take only
+one argument.  This is not the easiest way to check if a string is a
+palindrome, but the goal is to solve a problem recursively, not to
+check if a value is a palindrome.
 \end{ex}
 
 \begin{ex}[nested.py]
@@ -482,9 +491,6 @@ Here are the Cesaro torn line fractals at depths 1, 2, and 6.
 \includegraphics[width=0.4\textwidth]{img/cesaro1.png}
 \includegraphics[width=0.4\textwidth]{img/cesaro2.png}
 \includegraphics[width=0.8\textwidth]{img/cesaro6.png}
-
-Turtle was not made for depth 9, but here it is:
-\includegraphics[width=0.9\textwidth]{img/cesaro9.png}
 \end{center}
 
 Hints:
